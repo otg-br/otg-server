@@ -1,10 +1,11 @@
 
-# OTG-BR - [![Windows](https://ci.appveyor.com/api/projects/status/y69059itp38j0u65?svg=true)](https://ci.appveyor.com/project/Johncorex/global) 
+# Otg Server - [![Windows](https://ci.appveyor.com/api/projects/status/y69059itp38j0u65?svg=true)](https://ci.appveyor.com/project/Johncorex/global) 
 
 
 ### Informações:
-Somos um servidor Global Map, no momento suportando apenas cliente 10x, OTCv8 e OTC Mobile.
-Com ajuda de nossos colaboradores vamos atualizar para o cliente 13+ e manter a compatibilidade com o 10x standlone.
+Somos uma comunidade criada por brasileiros que visa estabilidade, Esse repositorio é uma versão do nosso engine clean/limpo (sem quests, scripts de tibia global)
+Atualmente temos Datapacks de varios temas como: Global 12x/11x, Global 8.60, Global 8.0, Global 7.6.
+Nosso objetivo é ajudar a comunidade opentibia.
 
 ### Getting Started:
 * [Compiling Linux](https://github.com/otg-br/global/wiki/Compiling-on-Debian-GNU-Linux)
