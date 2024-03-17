@@ -1,38 +1,5 @@
 local startupGlobalStorages = {
-GlobalStorage.TheAncientTombs.AshmunrahSwitchesGlobalStorage,
-GlobalStorage.TheAncientTombs.DiprathSwitchesGlobalStorage,
-GlobalStorage.TheAncientTombs.ThalasSwitchesGlobalStorage,
-GlobalStorage.HeroRathleton.FirstMachines,
-GlobalStorage.HeroRathleton.SecondMachines,
-GlobalStorage.HeroRathleton.ThirdMachines,
-GlobalStorage.HeroRathleton.DeepRunning,
-GlobalStorage.HeroRathleton.HorrorRunning,
-GlobalStorage.HeroRathleton.LavaRunning,
-GlobalStorage.HeroRathleton.MaxxenRunning,
-GlobalStorage.HeroRathleton.LavaCounter,
-GlobalStorage.HeroRathleton.FourthMachines,
-GlobalStorage.FerumbrasAscendantQuest.Crystals.Crystal1,
-GlobalStorage.FerumbrasAscendantQuest.Crystals.Crystal2,
-GlobalStorage.FerumbrasAscendantQuest.Crystals.Crystal3,
-GlobalStorage.FerumbrasAscendantQuest.Crystals.Crystal4,
-GlobalStorage.FerumbrasAscendantQuest.Crystals.Crystal5,
-GlobalStorage.FerumbrasAscendantQuest.Crystals.Crystal6,
-GlobalStorage.FerumbrasAscendantQuest.Crystals.Crystal7,
-GlobalStorage.FerumbrasAscendantQuest.Crystals.Crystal8,
-GlobalStorage.FerumbrasAscendantQuest.Crystals.AllCrystals,
-GlobalStorage.FerumbrasAscendantQuest.FerumbrasEssence,
-GlobalStorage.FerumbrasAscendantQuest.TheShattererLever,
-GlobalStorage.Feroxa.Active,
-GlobalStorage.FerumbrasAscendantQuest.Habitats.AllHabitats,
-GlobalStorage.FerumbrasAscendantQuest.Elements.Active,
-GlobalStorage.FerumbrasAscendantQuest.Elements.First,
-GlobalStorage.FerumbrasAscendantQuest.Elements.Second,
-GlobalStorage.FerumbrasAscendantQuest.Elements.Third,
-GlobalStorage.FerumbrasAscendantQuest.Elements.Done,
-GlobalStorage.lionsRock.Yellow,
-GlobalStorage.lionsRock.Red,
-GlobalStorage.lionsRock.Violet,
-GlobalStorage.lionsRock.Blue
+
 }
 
 local function readFile(filename)
@@ -97,21 +64,19 @@ function onStartup()
 		Game.setStorageValue(startupGlobalStorages[i], 0)
 	end
 
-	local time = os.stime()
+	local time = os.time()
 	db.asyncQuery('TRUNCATE TABLE `players_online`')
 
 	-- zerar storages e permitir compra de boost na store
 	db.query('UPDATE `player_storage` SET `value` = 0 WHERE `player_storage`.`key` = 51052')
 	
-	-- zerar storage da contagem de pontos do evento do castelo
-	db.query('UPDATE `player_storage` SET `value` = 0 WHERE `player_storage`.`key` = '..CASTLE_INFO.STORAGE..'')
 
 	-- deletar as guilds canceladas e rejeitadas
 	db.asyncQuery('DELETE FROM `guild_wars` WHERE `status` = 2')
 	db.asyncQuery('DELETE FROM `guild_wars` WHERE `status` = 3')
 
 	-- deletar as guilds que estão muito tempo pendentes 3 dias
-	db.asyncQuery('DELETE FROM `guild_wars` WHERE `status` = 0 AND (`started` + 72 * 60 * 60) <= ' .. os.stime())
+	db.asyncQuery('DELETE FROM `guild_wars` WHERE `status` = 0 AND (`started` + 72 * 60 * 60) <= ' .. os.time())
 
 	--db.asyncQuery("UPDATE `guild_wars` SET `status` = 4, `ended` = " .. os.stime() .. " WHERE `status` = 1 AND (`started` + 3* 60 * 60) < " .. os.stime())
 	db.asyncQuery('DELETE FROM `players` WHERE `deletion` != 0 AND `deletion` < ' .. time)
@@ -129,16 +94,6 @@ function onStartup()
 		result.free(resultId)
 	end
 
-	-- Ferumbras Ascendant quest
-	for i = 1, #GlobalStorage.FerumbrasAscendantQuest.Habitats do
-		local storage = GlobalStorage.FerumbrasAscendantQuest.Habitats[i]
-		Game.setStorageValue(storage, 0)
-	end
-
-	-- Feroxa worldchange
-	FEROXA_ACTIVATED = false
-	FEROXA_TIME = math.random(os.stime() + 60*60*3, os.stime() + 60*60*12)
-	FEROXA_STAGE = 1
 
 	-- Check house auctions
 	local resultId = db.storeQuery('SELECT `id`, `highest_bidder`, `last_bid`, (SELECT `balance` FROM `players` WHERE `players`.`id` = `highest_bidder`) AS `balance` FROM `houses` WHERE `owner` = 0 AND `bid_end` != 0 AND `bid_end` < ' .. time)
@@ -189,7 +144,7 @@ function onStartup()
 		setGlobalStorageValueDB(GlobalStorage.LastBoostTime, dailytime + (24*60*60))
 	end
 
-	print(">> Boosted monster: ".. Game.getBoostMonster() .. ", next boost in ".. os.sdate("%d/%m/%Y - %X", getGlobalStorageValueDB(GlobalStorage.LastBoostTime)))
+	print(">> Boosted monster: ".. Game.getBoostMonster() .. ", next boost in ".. os.date("%d/%m/%Y - %X", getGlobalStorageValueDB(GlobalStorage.LastBoostTime)))
 
 	-- Client XP Display Mode
 	-- 0 = ignore exp rate /stage
@@ -197,6 +152,6 @@ function onStartup()
 	Game.setStorageValue(GlobalStorage.XpDisplayMode, 1)
 	Game.loadAutomation(false)
 
-	print(">> Start time: ".. os.sdate("%d.%m.%Y - %X"))
+	print(">> Start time: ".. os.date("%d.%m.%Y - %X"))
 
 end

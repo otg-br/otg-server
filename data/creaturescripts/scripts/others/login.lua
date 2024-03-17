@@ -136,7 +136,7 @@ function onLogin(player)
 		113, 114, 115
 	}
 
-	if player:getVipDays() > os.stime() then
+	if player:getVipDays() > os.time() then
 		for _, mount in pairs(vipMounts) do
 			if not player:hasMount(mount) then
 				player:addMount(mount)
@@ -149,7 +149,7 @@ function onLogin(player)
 		1202, 1203, 1204, 1205, 1206, 1207
 	}
 
-	if player:getVipDays() > os.stime() then
+	if player:getVipDays() > os.time() then
 		for _, outfit in pairs(vipOutfits) do
 			-- entregando o outfit
 			player:addOutfit(outfit)
@@ -186,7 +186,7 @@ function onLogin(player)
 			player:sendTextMessage(MESSAGE_STATUS_DEFAULT, loginStr)
 		end
 
-		loginStr = string.format('Your last visit was on %s.', os.sdate('%a %b %d %X %Y', player:getLastLoginSaved()))
+		loginStr = string.format('Your last visit was on %s.', os.date('%a %b %d %X %Y', player:getLastLoginSaved()))
 	end
     
 	AutoLootList:onLogin(player:getId())
@@ -255,7 +255,7 @@ function onLogin(player)
 	end
 
 	if player:getGroup():getId() > 5 then
-		player:sendTextMessage(MESSAGE_INFO_DESCR, "Horario atual no servidor: ".. os.date("%d.%m.%Y - %X") .." \nHorario com dump: "..os.sdate("%d.%m.%Y - %X", os.stime()))
+		player:sendTextMessage(MESSAGE_INFO_DESCR, "Horario atual no servidor: ".. os.date("%d.%m.%Y - %X") .." \nHorario com dump: "..os.sdate("%d.%m.%Y - %X", os.time()))
 	end
 	-- chave-ssh: chavepri1234
 
@@ -298,7 +298,7 @@ function onLogin(player)
 	-- vip devido ao bug la
 	if player:getAccountStorageValue(2) <= 0 then
 		player:addVipDays(3)
-		player:setAccountStorageValue(2, os.stime())
+		player:setAccountStorageValue(2, os.time())
 		-- if table.contains({SKULL_RED, SKULL_BLACK}, player:getSkull()) then
 			-- player:setSkull(SKULL_NONE)
 		-- end
@@ -311,15 +311,15 @@ function onLogin(player)
 		player:sendTextMessage(MESSAGE_INFO_DESCR, string.format("You are logged in using the %s server.", proxy.name))
 	end
 
-	local days = math.max(0, math.ceil((player:getVipDays() - os.stime())  / 86400 ))
-	if player:getVipDays() > os.stime() then
+	local days = math.max(0, math.ceil((player:getVipDays() - os.time())  / 86400 ))
+	if player:getVipDays() > os.time() then
 		player:setStorageValue(Storage.VipSystem, 1)
 	end
 
 	player:sendTextMessage(MESSAGE_INFO_DESCR, string.format("You have %d day%s vip.", days, (days > 1 and "s" or "")))
 
 	if player:getStorageValue(Storage.VipSystem) > -1 then
-		if player:getVipDays() <= os.stime() then
+		if player:getVipDays() <= os.time() then
 			player:setStorageValue(Storage.VipSystem, -1)
 
 			if player:getSex() == 1 then

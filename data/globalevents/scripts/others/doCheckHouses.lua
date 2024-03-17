@@ -1,7 +1,7 @@
 local function doCheckHouses()
 
     local dias = 5
-    local tempo = os.stime() - (dias * 24 * 60 * 60)
+    local tempo = os.time() - (dias * 24 * 60 * 60)
     local registros = db.storeQuery("SELECT `houses`.`owner`, `houses`.`id` FROM `houses`,`players` WHERE `houses`.`owner` != 0 AND `houses`.`owner` = `players`.`id` AND `players`.`lastlogin` <= " .. tempo .. ";")
 
     if registros ~= false then
