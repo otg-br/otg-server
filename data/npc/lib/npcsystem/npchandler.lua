@@ -429,10 +429,10 @@ local storage, duration = 1.4, 0.8
 						if not ret then
 							local callback = self:getCallback(CALLBACK_MESSAGE_DEFAULT)
 							if callback ~= nil and callback(cid, msgtype, msg) then
-								self.talkStart[cid] = os.stime()
+								self.talkStart[cid] = os.time()
 							end
 						else
-							self.talkStart[cid] = os.stime()
+							self.talkStart[cid] = os.time()
 						end
 					end
 				end
@@ -473,8 +473,8 @@ local storage, duration = 1.4, 0.8
 	-- Handles onBuy events. If you wish to handle this yourself, use the CALLBACK_ONBUY callback.
 	function NpcHandler:onBuy(creature, itemid, subType, amount, ignoreCap, inBackpacks)
 		local cid = creature.uid
-		if (os.stime() - getPlayerStorageValue(cid, storage)) >= duration then
-		setPlayerStorageValue(cid, storage, os.stime()) -- DELAY PRA COMPRAR
+		if (os.time() - getPlayerStorageValue(cid, storage)) >= duration then
+		setPlayerStorageValue(cid, storage, os.time()) -- DELAY PRA COMPRAR
 		local callback = self:getCallback(CALLBACK_ONBUY)
 		if callback == nil or callback(cid, itemid, subType, amount, ignoreCap, inBackpacks) then
 			if self:processModuleCallback(CALLBACK_ONBUY, cid, itemid, subType, amount, ignoreCap, inBackpacks) then
@@ -514,7 +514,7 @@ local storage, duration = 1.4, 0.8
 		if callback == nil or callback() then
 			if NPCHANDLER_TALKDELAY == TALKDELAY_ONTHINK then
 				for cid, talkDelay in pairs(self.talkDelay) do
-					if talkDelay.time ~= nil and talkDelay.message ~= nil and os.stime() >= talkDelay.time then
+					if talkDelay.time ~= nil and talkDelay.message ~= nil and os.time() >= talkDelay.time then
 						selfSay(talkDelay.message, cid, talkDelay.publicize and true or false)
 						self.talkDelay[cid] = nil
 					end
@@ -526,7 +526,7 @@ local storage, duration = 1.4, 0.8
 					if focus ~= nil then
 						if not self:isInRange(focus) then
 							self:onWalkAway(focus)
-						elseif self.talkStart[focus] ~= nil and (os.stime() - self.talkStart[focus]) > self.idleTime then
+						elseif self.talkStart[focus] ~= nil and (os.time() - self.talkStart[focus]) > self.idleTime then
 							self:unGreet(focus)
 						else
 							self:updateFocus()

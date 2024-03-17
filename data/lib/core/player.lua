@@ -40,7 +40,7 @@ function Player.checkGnomeRank(self)
 end
 
 function Player.setExhaustion(self, value, time)
-    return self:setStorageValue(value, time + os.stime())
+    return self:setStorageValue(value, time + os.time())
 end
 
 function Player.getExhaustion(self, value)
@@ -48,7 +48,7 @@ function Player.getExhaustion(self, value)
     if storage <= 0 then
         return 0
     end
-    return storage - os.stime()
+    return storage - os.time()
 end
 
 function Player.addFamePoint(self)

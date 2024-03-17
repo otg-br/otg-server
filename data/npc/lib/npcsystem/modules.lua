@@ -233,12 +233,12 @@ if Modules == nil then
 			player:teleportTo(destination)
 			destination:sendMagicEffect(CONST_ME_TELEPORT)
 
-			setPlayerStorageValue(cid, exhausts, 3 + os.stime())
+			setPlayerStorageValue(cid, exhausts, 3 + os.time())
 			player:teleportTo(destination)
 			destination:sendMagicEffect(CONST_ME_TELEPORT)
 
 			-- What a foolish Quest - Mission 3
-			if player:getStorageValue(Storage.WhatAFoolishQuest.PieBoxTimer) > os.stime() then
+			if player:getStorageValue(Storage.WhatAFoolishQuest.PieBoxTimer) > os.time() then
 				if destination ~= Position(32660, 31957, 15) then -- kazordoon steamboat
 					player:setStorageValue(Storage.WhatAFoolishQuest.PieBoxTimer, 1)
 				end
@@ -1083,7 +1083,7 @@ if Modules == nil then
 			parseInfo[TAG_ITEMCOUNT] = a
 			msg = self.npcHandler:parseMessage(msg, parseInfo)
 			player:sendCancelMessage(msg)
-			self.npcHandler.talkStart[cid] = os.stime()
+			self.npcHandler.talkStart[cid] = os.time()
 
 			if a > 0 then
 				player:removeMoneyNpc((a * shopItem.buy) + (b * 20))
@@ -1096,7 +1096,7 @@ if Modules == nil then
 			msg = self.npcHandler:parseMessage(msg, parseInfo)
 			player:sendTextMessage(MESSAGE_INFO_DESCR, msg)
 			player:removeMoneyNpc(totalCost)
-			self.npcHandler.talkStart[cid] = os.stime()
+			self.npcHandler.talkStart[cid] = os.time()
 			return true
 		end
 	end
@@ -1131,13 +1131,13 @@ if Modules == nil then
 			msg = self.npcHandler:parseMessage(msg, parseInfo)
 			player:sendTextMessage(MESSAGE_INFO_DESCR, msg)
 			player:addMoney(amount * shopItem.sell)
-			self.npcHandler.talkStart[cid] = os.stime()
+			self.npcHandler.talkStart[cid] = os.time()
 			return true
 		else
 			local msg = self.npcHandler:getMessage(MESSAGE_NEEDITEM)
 			msg = self.npcHandler:parseMessage(msg, parseInfo)
 			player:sendCancelMessage(msg)
-			self.npcHandler.talkStart[cid] = os.stime()
+			self.npcHandler.talkStart[cid] = os.time()
 			return false
 		end
 	end

@@ -202,8 +202,8 @@ function VoiceModule:init(handler)
 end
 
 function VoiceModule:callbackOnThink()
-	if self.lastVoice < os.stime() then
-		self.lastVoice = os.stime() + self.timeout
+	if self.lastVoice < os.time() then
+		self.lastVoice = os.time() + self.timeout
 		if math.random(100) < self.chance  then
 			local voice = self.voices[math.random(self.voiceCount)]
 			Npc():say(voice.text, voice.talktype)
