@@ -761,6 +761,9 @@ void ProtocolGame::parseSetOutfit(NetworkMessage& msg)
 		newOutfit.lookMount = msg.get<uint16_t>();
 		newOutfit.lookWings = otclientV8 ? msg.get<uint16_t>() : 0;
 	    newOutfit.lookAura = otclientV8 ? msg.get<uint16_t>() : 0;
+		std::string shaderName = otclientV8 ? msg.getString() : "";
+	    Shader* shader = g_game.shaders.getShaderByName(shaderName);
+	    newOutfit.lookShader = shader ? shader->id : 0;
 	} else if (outfitType == 1) {
 		//This value probably has something to do with try outfit variable inside outfit window dialog
 		//if try outfit is set to 2 it expects uint32_t value after mounted and disable mounts from outfit window dialog

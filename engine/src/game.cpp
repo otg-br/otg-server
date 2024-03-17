@@ -5163,8 +5163,8 @@ void Game::playerChangeOutfit(uint32_t playerId, Outfit_t outfit)
 		}
 	}
 
-	if (!outfit.lookShader.empty()) {
-		Shader* shader = shaders.getShaderByName(outfit.lookShader);
+	if (outfit.lookShader) {
+		Shader* shader = shaders.getShaderByID(outfit.lookShader);
 		if (!shader) {
 			return;
 		}
