@@ -8,7 +8,7 @@ function onLogout(player)
 		return false
 	end
 
-	player:setStorageValue(Storage.LoginLogoutExaust, os.stime() + 5)
+
     local playerId = player:getId()
     if nextUseStaminaTime[playerId] ~= nil then
         nextUseStaminaTime[playerId] = nil

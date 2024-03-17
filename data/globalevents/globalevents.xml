@@ -7,9 +7,6 @@
 	<!-- Rent Horses -->
 	<globalevent name="RentedMounts" interval="15000" script="others/checkMount.lua" />
 
-	<!-- Manually Raids -->
-	<globalevent name="raids" interval="1000" script="spawn/raids.lua"/>
-
 	<!-- Others -->
 	<globalevent name="Spawn Damage" interval="9000" script="spawnDamage.lua" />
 	<globalevent type="startup" name="ServerStartup" script="startup.lua" />
