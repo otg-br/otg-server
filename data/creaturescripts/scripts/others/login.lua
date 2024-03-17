@@ -1,62 +1,15 @@
 local events = {
-	'ParasiteWarzone',
-	'ElementalSpheresOverlords',
-	'BigfootBurdenVersperoth',
-	'BigfootBurdenWiggler',
-	'SvargrondArenaKill',
-	'NewFrontierShardOfCorruption',
-	'NewFrontierTirecz',
-	'ServiceOfYalaharDiseasedTrio',
-	'ServiceOfYalaharAzerus',
-	'ServiceOfYalaharQuaraLeaders',
-	'InquisitionBosses',
-	'InquisitionUngreez',
-	'KillingInTheNameOfKills',
-	'KillingInTheNameOfKillss',
-	'KillingInTheNameOfKillsss',
-	'MastersVoiceServants',
-	'SecretServiceBlackKnight',
-	'ThievesGuildNomad',
-	'WotELizardMagistratus',
-	'WotELizardNoble',
-	'WotEKeeper',
-	'WotEBosses',
-	'WotEZalamon',
-	'WarzoneThree',
 	'PlayerDeath',
 	'AdvanceSave',
-	'bossesWarzone',
-	'AdvanceRookgaard',
-	'PythiusTheRotten',
 	'DropLoot',
-	'Yielothax',
 	'BossParticipation',
-	'Energized Raging Mage',
-	'Raging Mage',
 	'DeathCounter',
 	'KillCounter',
 	'bless1',
-	'lowerRoshamuul',
-	'SpikeTaskQuestCrystal',
-	'SpikeTaskQuestDrillworm',
 	'petlogin',
 	'petthink',
-	'UpperSpikeKill',
-	'MiddleSpikeKill',
-	'LowerSpikeKill',
-	'BossesForgotten',
-	'ReplicaServants',
-	'EnergyPrismDeath',
-	'AstralPower',
 	'BossesKill',
-	'TheShattererKill',
-	'BossesHero',
-	'DragonsKill',
-	'deeplingBosses',
-	'theGreatDragonHuntKill',
 	'ImpactAnalyzer',
-	'bossesMissionCults',
-	'BossesTheCurseSpread',
 }
 
 
@@ -106,17 +59,10 @@ local function onMovementRemoveProtection(cid, oldPosition, time)
 		return true
 	end
 
-		-- prote��o de anti-bomb
-	-- player:setStorageValue(Storage.LoginLogoutExaust, os.stime() + 5)
-
 	addEvent(onMovementRemoveProtection, 1000, cid, oldPosition, time - 1)
 end
 
 function onLogin(player)
-	-- Dream Courts Quest
-	if player:getStorageValue(Storage.DreamCourts.UnsafeRelease.hasBait) == 1 then
-		player:setStorageValue(Storage.DreamCourts.UnsafeRelease.hasBait, - 1)
-	end
 	
 	local isTrainingStorage = 12835
 	if player:getStorageValue(isTrainingStorage) >= 1 then
@@ -257,7 +203,6 @@ function onLogin(player)
 	if player:getGroup():getId() > 5 then
 		player:sendTextMessage(MESSAGE_INFO_DESCR, "Horario atual no servidor: ".. os.date("%d.%m.%Y - %X") .." \nHorario com dump: "..os.sdate("%d.%m.%Y - %X", os.time()))
 	end
-	-- chave-ssh: chavepri1234
 
 	-- OPEN CHANNELS
 	if table.contains({"Rookgaard", "Dawnport"}, player:getTown():getName())then
@@ -295,7 +240,7 @@ function onLogin(player)
 		onMovementRemoveProtection(playerId, player:getPosition(), 10)
 	end
 
-	-- vip devido ao bug la
+
 	if player:getAccountStorageValue(2) <= 0 then
 		player:addVipDays(3)
 		player:setAccountStorageValue(2, os.time())
@@ -304,11 +249,6 @@ function onLogin(player)
 		-- end
 
 		player:sendTextMessage(MESSAGE_INFO_DESCR, string.format("[PARABENS] voce recebeu 3 dias VIP."))
-	end
-
-	local proxy = player:getProxyInfo()
-	if proxy then
-		player:sendTextMessage(MESSAGE_INFO_DESCR, string.format("You are logged in using the %s server.", proxy.name))
 	end
 
 	local days = math.max(0, math.ceil((player:getVipDays() - os.time())  / 86400 ))
