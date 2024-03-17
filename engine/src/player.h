@@ -38,6 +38,7 @@
 #include "mounts.h"
 #include "auras.h"
 #include "wings.h"
+#include "shaders.h"
 #include "reward.h"
 #include "rewardchest.h"
 #include "imbuements.h"
@@ -188,6 +189,10 @@ class Player final : public Creature, public Cylinder
 		{
 			return defaultOutfit.lookWings != 0;
 		}
+		bool hasShader() const
+		{
+			return !defaultOutfit.lookShader.empty();
+		}
 		bool toggleMount(bool mount);
 		bool tameMount(uint8_t mountId);
 		bool untameMount(uint8_t mountId);
@@ -200,6 +205,7 @@ class Player final : public Creature, public Cylinder
 		bool hasAura(const Aura* aura) const;
 		uint8_t getCurrentWing() const;
 		void setCurrentWing(uint8_t wingId);
+		bool hasShader(const Shader* shader) const;
 
 		void sendFYIBox(const std::string& message) {
 			if (client) {

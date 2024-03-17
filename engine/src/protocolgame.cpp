@@ -773,12 +773,13 @@ void ProtocolGame::parseSetOutfit(NetworkMessage& msg)
 void ProtocolGame::parseToggleMount(NetworkMessage& msg)
 {
 	int mount = msg.get<int8_t>();
-	int wings = -1, aura = -1;
+	int wings = -1, aura = -1, shader = -1;
 	if (otclientV8 >= 254) {
 		wings = msg.get<int8_t>();
 		aura = msg.get<int8_t>();
+		shader = msg.get<int8_t>();
 	}
-	addGameTask(&Game::playerToggleOutfitExtension, player->getID(), mount, wings, aura);
+	addGameTask(&Game::playerToggleOutfitExtension, player->getID(), mount, wings, aura, shader);
 }
 
 void ProtocolGame::parseApplyImbuemente(NetworkMessage& msg)
@@ -3357,6 +3358,19 @@ void ProtocolGame::sendOutfitWindow()
 			msg.add<uint16_t>(aura->clientId);
 			msg.addString(aura->name);
 		}
+		
+		std::vector<const Shader*> shaders;
+		for (const Shader& shader : g_game.shaders.getShaders()) {
+			if (player->hasShader(&shader)) {
+				shaders.push_back(&shader);
+			}
+		}
+
+		msg.addByte(shaders.size());
+		for (const Shader* shader : shaders) {
+			msg.add<uint16_t>(shader->id);
+			msg.addString(shader->name);
+		}
 	}
 
 	writeToOutputBuffer(msg);
@@ -3769,6 +3783,7 @@ void ProtocolGame::sendFeatures()
 	// place for non-standard OTCv8 features
 	features[GameExtendedOpcode] = true;
 	features[GameWingsAndAura] = true;
+	features[GameOutfitShaders] = true;
 
 	if(features.empty())
 		return;
