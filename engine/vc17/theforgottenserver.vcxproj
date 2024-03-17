@@ -161,6 +161,7 @@
   <ItemGroup>
     <ClCompile Include="..\src\account.cpp" />
     <ClCompile Include="..\src\actions.cpp" />
+	<ClCompile Include="..\src\auras.cpp" />
     <ClCompile Include="..\src\ban.cpp" />
     <ClCompile Include="..\src\baseevents.cpp" />
     <ClCompile Include="..\src\bed.cpp" />
@@ -254,10 +255,12 @@
     <ClCompile Include="..\src\waitlist.cpp" />
     <ClCompile Include="..\src\weapons.cpp" />
     <ClCompile Include="..\src\wildcardtree.cpp" />
+	<ClCompile Include="..\src\wings.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\account.h" />
     <ClInclude Include="..\src\actions.h" />
+	<ClInclude Include="..\src\auras.h" />
     <ClInclude Include="..\src\ban.h" />
     <ClInclude Include="..\src\baseevents.h" />
     <ClInclude Include="..\src\bed.h" />
@@ -353,6 +356,7 @@
     <ClInclude Include="..\src\waitlist.h" />
     <ClInclude Include="..\src\weapons.h" />
     <ClInclude Include="..\src\wildcardtree.h" />
+	<ClInclude Include="..\src\wings.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="theforgottenserver.rc" />

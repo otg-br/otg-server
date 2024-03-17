@@ -759,6 +759,8 @@ void ProtocolGame::parseSetOutfit(NetworkMessage& msg)
 	newOutfit.lookAddons = msg.getByte();
 	if (outfitType == 0) {
 		newOutfit.lookMount = msg.get<uint16_t>();
+		newOutfit.lookWings = otclientV8 ? msg.get<uint16_t>() : 0;
+	    newOutfit.lookAura = otclientV8 ? msg.get<uint16_t>() : 0;
 	} else if (outfitType == 1) {
 		//This value probably has something to do with try outfit variable inside outfit window dialog
 		//if try outfit is set to 2 it expects uint32_t value after mounted and disable mounts from outfit window dialog
@@ -770,8 +772,13 @@ void ProtocolGame::parseSetOutfit(NetworkMessage& msg)
 
 void ProtocolGame::parseToggleMount(NetworkMessage& msg)
 {
-	bool mount = msg.getByte() != 0;
-	addGameTask(&Game::playerToggleMount, player->getID(), mount);
+	int mount = msg.get<int8_t>();
+	int wings = -1, aura = -1;
+	if (otclientV8 >= 254) {
+		wings = msg.get<int8_t>();
+		aura = msg.get<int8_t>();
+	}
+	addGameTask(&Game::playerToggleOutfitExtension, player->getID(), mount, wings, aura);
 }
 
 void ProtocolGame::parseApplyImbuemente(NetworkMessage& msg)
@@ -3323,6 +3330,34 @@ void ProtocolGame::sendOutfitWindow()
 		msg.addByte(0x00);
 		msg.addByte((player->isMounted() ? 0x01 : 0x00));
 	}
+	
+	if (otclientV8) {
+		std::vector<const Wing*> wings;
+		for (const Wing& wing: g_game.wings.getWings()) {
+			if (player->hasWing(&wing)) {
+				wings.push_back(&wing);
+			}
+		}
+
+		msg.addByte(wings.size());
+		for (const Wing* wing : wings) {
+			msg.add<uint16_t>(wing->clientId);
+			msg.addString(wing->name);
+		}
+
+		std::vector<const Aura*> auras;
+		for (const Aura& aura : g_game.auras.getAuras()) {
+			if (player->hasAura(&aura)) {
+				auras.push_back(&aura);
+			}
+		}
+
+		msg.addByte(auras.size());
+		for (const Aura* aura : auras) {
+			msg.add<uint16_t>(aura->clientId);
+			msg.addString(aura->name);
+		}
+	}
 
 	writeToOutputBuffer(msg);
 }
@@ -3733,6 +3768,7 @@ void ProtocolGame::sendFeatures()
 	std::map<GameFeature, bool> features;
 	// place for non-standard OTCv8 features
 	features[GameExtendedOpcode] = true;
+	features[GameWingsAndAura] = true;
 
 	if(features.empty())
 		return;
