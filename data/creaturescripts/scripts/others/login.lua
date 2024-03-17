@@ -201,7 +201,7 @@ function onLogin(player)
 	end
 
 	if player:getGroup():getId() > 5 then
-		player:sendTextMessage(MESSAGE_INFO_DESCR, "Horario atual no servidor: ".. os.date("%d.%m.%Y - %X") .." \nHorario com dump: "..os.sdate("%d.%m.%Y - %X", os.time()))
+		player:sendTextMessage(MESSAGE_INFO_DESCR, "Horario atual no servidor: ".. os.date("%d.%m.%Y - %X") .." \nHorario com dump: "..os.date("%d.%m.%Y - %X", os.time()))
 	end
 
 	-- OPEN CHANNELS
