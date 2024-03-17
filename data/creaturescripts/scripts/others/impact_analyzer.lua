@@ -14,7 +14,7 @@ function onHealthChange(creature, attacker, primaryDamage, primaryType, secondar
 	end
 
 	local player = Player(creature:getId())
-	local k, secondsToGetHealing, currentTime = attacker:getId(), 2, os.stime()
+	local k, secondsToGetHealing, currentTime = attacker:getId(), 2, os.time()
 	if primaryType == COMBAT_HEALING and player then
 		if healingImpact[player:getId()] == nil then
 			healingImpact[player:getId()] = healingImpact[player:getId()] or {0, currentTime}
