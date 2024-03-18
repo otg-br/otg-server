@@ -51,7 +51,7 @@ function Monster:onDropLoot(corpse)
 			hasCharm = true
 		end
 
-		if player:getVipDays() > os.stime() then
+		if player:getVipDays() > os.time() then
 			percent = percent * 1.05
 		end
 
