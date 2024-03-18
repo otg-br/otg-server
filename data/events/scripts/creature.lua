@@ -83,7 +83,7 @@ function Creature:onTargetCombat(target)
 	if target:isPlayer() then
 		if self:isMonster() then
 			local protectionStorage = target:getStorageValue(Storage.combatProtectionStorage)
-			if protectionStorage >= os.stime() then
+			if protectionStorage >= os.time() then
 				return RETURNVALUE_YOUMAYNOTATTACKTHISPLAYER
 			end
 		end
@@ -178,7 +178,7 @@ function Creature:onDrainHealth(attacker, typePrimary, damagePrimary, typeSecond
 		return typePrimary, damagePrimary, typeSecondary, damageSecondary, colorPrimary, colorSecondary
 	end
 
-	local secondsToGetHealing, currentTime = 2, os.stime()
+	local secondsToGetHealing, currentTime = 2, os.time()
 	if attacker and attacker:isPlayer() then
 		if typePrimary ~= COMBAT_HEALING then
 			local k = attacker:getId()
