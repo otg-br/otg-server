@@ -22,7 +22,7 @@ local function updateinfotable(tb, pos)
 	if not pos then
 		pos=2
 	end
-	local time = os.stime()-(1*60*60)
+	local time = os.time()-(1*60*60)
 	for i, pid in pairs(tb) do
 		if pid[pos] < time then
 			table.remove(tb, i)
@@ -37,7 +37,7 @@ function Player:addHealTicks(amount)
 		analyzerHeal[self:getId()] = {}
 	end
   	local count = #analyzerHeal[self:getId()]
-  	analyzerHeal[self:getId()][count + 1] = {amount, os.stime()}
+  	analyzerHeal[self:getId()][count + 1] = {amount, os.time()}
 	analyzerHeal[self:getId()] = updateinfotable(analyzerHeal[self:getId()])
 	return true
 end
@@ -47,7 +47,7 @@ function Player:addDamageTicks(amount)
 	end
 
   	local count = #analyzerDamage[self:getId()]
-  	analyzerDamage[self:getId()][count + 1] = {math.abs(amount), os.stime()}
+  	analyzerDamage[self:getId()][count + 1] = {math.abs(amount), os.time()}
 	analyzerDamage[self:getId()] = updateinfotable(analyzerDamage[self:getId()])
 	return true
 end
@@ -58,7 +58,7 @@ function Player:addExpTicks(amount)
 	end
 
   	local count = #analyzerExp[self:getId()]
-  	analyzerExp[self:getId()][count + 1] = {math.abs(amount), os.stime()}
+  	analyzerExp[self:getId()][count + 1] = {math.abs(amount), os.time()}
 	analyzerExp[self:getId()] = updateinfotable(analyzerExp[self:getId()])
 	return true
 end
@@ -68,7 +68,7 @@ function Player:addWastTicks(itemid)
 		analyzerWaste[self:getId()] = {}
 	end
   	local count = #analyzerWaste[self:getId()]
-  	analyzerWaste[self:getId()][count + 1] = {itemid, os.stime()}
+  	analyzerWaste[self:getId()][count + 1] = {itemid, os.time()}
 	analyzerWaste[self:getId()] = updateinfotable(analyzerWaste[self:getId()])
 	return true
 end
@@ -78,7 +78,7 @@ function Player:addLootTicks(itemid, amount)
 		analyzerLoot[self:getId()] = {}
 	end
   	local count = #analyzerLoot[self:getId()]
-  	analyzerLoot[self:getId()][count + 1] = {itemid, amount, os.stime()}
+  	analyzerLoot[self:getId()][count + 1] = {itemid, amount, os.time()}
 	analyzerLoot[self:getId()] = updateinfotable(analyzerLoot[self:getId()], 3)
 	return true
 end
