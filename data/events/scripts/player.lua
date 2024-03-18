@@ -326,7 +326,7 @@ function Player:onMoveItem(item, count, fromPosition, toPosition, fromCylinder, 
 	if toPosition == Position(32460, 32928, 7) and item.itemid == 2667 then		
 		toPosition:sendMagicEffect(CONST_ME_HEARTS)
 		self:say('You feed the turtle, now you may pass.', TALKTYPE_MONSTER_SAY)
-		Game.setStorageValue(GlobalStorage.secretLibrary.SmallIslands.Turtle, os.stime() + 10*60)
+		Game.setStorageValue(GlobalStorage.secretLibrary.SmallIslands.Turtle, os.time() + 10*60)
 		item:remove(1)
 	end
 
@@ -346,10 +346,10 @@ function Player:onMoveItem(item, count, fromPosition, toPosition, fromCylinder, 
 					if Game.getStorageValue('healthSoul') > 0 then
 						monster:addHealth(-(monster:getHealth() - Game.getStorageValue('healthSoul')))
 					end
-					Game.setStorageValue('checkPiso', os.stime()+30)
+					Game.setStorageValue('checkPiso', os.time()+30)
 				end
 			elseif tileBoss:getTopCreature():getName():lower() == 'the corruptor of souls' then
-				Game.setStorageValue('checkPiso', os.stime()+30)
+				Game.setStorageValue('checkPiso', os.time()+30)
 				item:remove(1)
 			end
 		end
@@ -368,7 +368,7 @@ function Player:onMoveItem(item, count, fromPosition, toPosition, fromCylinder, 
 	}
 
 	--- LIONS ROCK START
-	if self:getStorageValue(lionrock.storages.playerCanDoTasks) - os.stime() < 0 then
+	if self:getStorageValue(lionrock.storages.playerCanDoTasks) - os.time() < 0 then
 		local it = lionsRock[item.itemid]
 		if it then
 			local mayPass = true
@@ -730,7 +730,7 @@ local function useStamina(player)
 	end
 
 	local playerId = player:getId()
-	local currentTime = os.stime()
+	local currentTime = os.time()
 	if not nextUseStaminaTime[playerId] then
 		nextUseStaminaTime[playerId] = currentTime - 2
 	end
@@ -760,7 +760,7 @@ local function useStaminaXp(player)
 	end
 
 	local playerId = player:getId()
-	local currentTime = os.stime()
+	local currentTime = os.time()
 	local timePassed = currentTime - nextUseXpStamina[playerId]
 	if timePassed <= 0 then
 		return
@@ -887,7 +887,7 @@ function Player:onGainExperience(source, exp, rawExp)
 		end
 	end
 
-	if self:getVipDays() > os.stime() then
+	if self:getVipDays() > os.time() then
 		multiplier = 1.10
 	end
 
