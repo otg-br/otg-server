@@ -4,7 +4,7 @@
 struct Shader
 {
 	Shader(uint8_t id, std::string name, bool premium) :
-		name(std::move(name)), id(id), premium(premium) {}
+		id(id), name(std::move(name)), premium(premium) {}
 
 	uint8_t id;
 	std::string name;
