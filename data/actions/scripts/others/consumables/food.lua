@@ -113,15 +113,7 @@ local foods = {
 }
 
 function onUse(player, item, fromPosition, target, toPosition, isHotkey)
-	if item.itemid == 34502 then	
-		if player:getStorageValue(Storage.DreamCourts.TheSevenKeys.Count) == 4 then
-			player:setStorageValue(Storage.DreamCourts.TheSevenKeys.Mushroom, 2)
-			player:setStorageValue(Storage.DreamCourts.TheSevenKeys.Count, player:getStorageValue(Storage.DreamCourts.TheSevenKeys.Count) + 1)
-			item:remove(1)
-			player:say("Munch", TALKTYPE_MONSTER_SAY)
-			return true
-		end
-	end
+
 	
 	if item.itemid == 34914 then -- skelot cake
 		if player:getStorageValue(item.itemid) < os.stime() then
@@ -140,13 +132,6 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 	local food = foods[item.itemid]
 	if not food then
 		return false
-	end
-	
-	if player:getStorageValue(Storage.secretLibrary.Darashia.eatenFood) ~= 1 then
-		if player:getPosition():isInRange(Position(32961, 32280, 10), Position(32964, 32286, 10)) then
-			player:say('Fames est optimus coquus', TALKTYPE_MONSTER_SAY)
-			player:setStorageValue(Storage.secretLibrary.Darashia.eatenFood, 1)
-		end
 	end
 	
 	--player:removeCondition(CONDITION_REGENERATION, CONDITIONID_DEFAULT)
