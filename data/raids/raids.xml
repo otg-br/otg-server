@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<raids>
-    <!-- Raids Thais -->
-<!-- 	<raid name="RatsThais" file="thais/rats.xml" interval2="500" margin="80" />
-	<raid name="Cyclops" file="thais/cyclops.xml" interval2="500" margin="30" />
-	<raid name="Orc SamBP" file="thais/orcsambp.xml" interval2="300" margin="110" />
-	<raid name="Wild Horses" file="thais/wildhorses.xml" interval2="500" margin="80" /> -->
-
-</raids>
