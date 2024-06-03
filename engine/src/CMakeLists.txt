@@ -2,7 +2,6 @@ set(tfs_SRC
 	${CMAKE_CURRENT_LIST_DIR}/otpch.cpp
 	${CMAKE_CURRENT_LIST_DIR}/account.cpp
 	${CMAKE_CURRENT_LIST_DIR}/actions.cpp
-	${CMAKE_CURRENT_LIST_DIR}/auras.cpp
 	${CMAKE_CURRENT_LIST_DIR}/ban.cpp
 	${CMAKE_CURRENT_LIST_DIR}/baseevents.cpp
 	${CMAKE_CURRENT_LIST_DIR}/bed.cpp
@@ -74,7 +73,6 @@ set(tfs_SRC
 	${CMAKE_CURRENT_LIST_DIR}/scriptmanager.cpp
 	${CMAKE_CURRENT_LIST_DIR}/script.cpp
 	${CMAKE_CURRENT_LIST_DIR}/server.cpp
-	${CMAKE_CURRENT_LIST_DIR}/shaders.cpp
 	${CMAKE_CURRENT_LIST_DIR}/signals.cpp
 	${CMAKE_CURRENT_LIST_DIR}/site.cpp
 	${CMAKE_CURRENT_LIST_DIR}/spawn.cpp
@@ -91,6 +89,5 @@ set(tfs_SRC
 	${CMAKE_CURRENT_LIST_DIR}/waitlist.cpp
 	${CMAKE_CURRENT_LIST_DIR}/weapons.cpp
 	${CMAKE_CURRENT_LIST_DIR}/wildcardtree.cpp
-	${CMAKE_CURRENT_LIST_DIR}/wings.cpp
 	PARENT_SCOPE)
 

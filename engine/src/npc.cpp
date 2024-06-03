@@ -203,16 +203,6 @@ bool Npc::loadFromXml()
 			defaultOutfit.lookTypeEx = pugi::cast<uint16_t>(attr.value());
 		}
 		defaultOutfit.lookMount = pugi::cast<uint16_t>(lookNode.attribute("mount").value());
-		if ((attr = lookNode.attribute("wings"))) {
-			defaultOutfit.lookWings = pugi::cast<uint16_t>(attr.value());
-		}
-		if ((attr = lookNode.attribute("aura"))) {
-			defaultOutfit.lookAura = pugi::cast<uint16_t>(attr.value());
-		}
-		if ((attr = lookNode.attribute("shader"))) {
-			Shader* shader = g_game.shaders.getShaderByName(attr.as_string());
-			defaultOutfit.lookShader = shader ? shader->id : 0;
-		}
 
 		currentOutfit = defaultOutfit;
 	}
