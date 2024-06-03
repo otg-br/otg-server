@@ -1,5 +1,5 @@
 -- Brasilia time
-timeGMT = -3*60*60
+timeGMT = 0
 -- Can only login who is adm or has no free pass
 maintenance = false
 
@@ -46,7 +46,7 @@ allowClones = false
 serverName = "Otg Server"
 statusTimeout = 0
 replaceKickOnLogin = true
-maxPacketsPerSecond = 50
+maxPacketsPerSecond = 25
 enableLiveCasting = true
 liveCastPort = 7173
 maxItem = 2000
@@ -92,7 +92,7 @@ timeBetweenExActions = 800
 -- Map
 -- NOTE: set mapName WITHOUT .otbm at the end
 -- NOTE: unzip the map world.rar
-mapName = "forgotten"
+mapName = "dragonsouls11"
 mapAuthor = ""
 
 -- Market
@@ -104,7 +104,7 @@ maxMarketOffersAtATimePerPlayer = 100
 -- MySQL
 mysqlHost = "127.0.0.1"
 mysqlUser = "root"
-mysqlPass = ""
+mysqlPass = "senha"
 mysqlDatabase = "database"
 mysqlPort = 3306
 mysqlSock = ""
@@ -117,7 +117,7 @@ kickIdlePlayerAfterMinutes = 15
 idleWarningTime = 10 * 60 * 1000
 idleKickTime = 15 * 60 * 1000
 maxMessageBuffer = 4
-emoteSpells = false
+emoteSpells = true
 classicEquipmentSlots = false
 allowWalkthrough = true
 storeCoinsPacketSize = 25
@@ -140,11 +140,11 @@ serverSaveShutdown = true
 -- Rates
 -- NOTE: rateExp is not used if you have enabled stages in data/XML/stages.xml
 rateExp = 1
-rateSkill = 50
-rateLoot = 5
-rateMagic = 25
-rateSpawn = 2
-spawnSpeed = 2.0
+rateSkill = 20
+rateLoot = 3
+rateMagic = 15
+rateSpawn = 1
+spawnSpeed = 1.0
 
 -- Monster rates
 rateMonsterHealth = 1.0
@@ -170,7 +170,7 @@ defaultPriority = "high"
 startupDatabaseOptimization = true
 
 -- Status server information
-ownerName = ""
+ownerName = "Otg Server"
 ownerEmail = ""
 url = ""
 location = "Brazil"
