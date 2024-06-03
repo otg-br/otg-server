@@ -1,0 +1,185 @@
+<?xml version="1.0"?>
+<houses>
+	<house name="Central Lane II" houseid="1" entryx="87" entryy="321" entryz="7" rent="9250" townid="2" size="31" />
+	<house name="Central Lane III" houseid="2" entryx="87" entryy="323" entryz="7" rent="17750" townid="2" size="63" />
+	<house name="Central Lane IV" houseid="3" entryx="88" entryy="301" entryz="7" rent="6250" townid="2" size="22" />
+	<house name="Central Lane V" houseid="4" entryx="96" entryy="301" entryz="7" rent="6250" townid="2" size="22" />
+	<house name="Central Lane I" houseid="5" entryx="110" entryy="321" entryz="7" rent="49750" townid="2" size="189" />
+	<house name="Central Shop I" houseid="6" entryx="106" entryy="327" entryz="7" rent="1750" townid="2" size="6" />
+	<house name="Central Shop II" houseid="7" entryx="106" entryy="332" entryz="7" rent="2250" townid="2" size="8" />
+	<house name="Central Shop III" houseid="8" entryx="106" entryy="338" entryz="7" rent="2250" townid="2" size="8" />
+	<house name="Central Shop IV" houseid="9" entryx="106" entryy="344" entryz="7" rent="2250" townid="2" size="8" />
+	<house name="West Side I" houseid="10" entryx="61" entryy="324" entryz="7" rent="16000" townid="2" size="57" />
+	<house name="West Side II" houseid="11" entryx="71" entryy="324" entryz="7" rent="14500" townid="2" size="51" />
+	<house name="Chaos Castle" houseid="12" entryx="70" entryy="311" entryz="7" rent="129500" townid="2" size="380" />
+	<house name="West Side IV" houseid="13" entryx="72" entryy="328" entryz="6" rent="3250" townid="2" size="10" />
+	<house name="West Side V" houseid="14" entryx="72" entryy="328" entryz="6" rent="2500" townid="2" size="7" />
+	<house name="West Side III" houseid="15" entryx="72" entryy="331" entryz="6" rent="3250" townid="2" size="10" />
+	<house name="West Side VI" houseid="16" entryx="72" entryy="331" entryz="6" rent="2500" townid="2" size="7" />
+	<house name="Central Lane Flats I" houseid="17" entryx="85" entryy="337" entryz="7" rent="1750" townid="2" size="4" />
+	<house name="Central Lane Flats II" houseid="18" entryx="88" entryy="337" entryz="7" rent="2500" townid="2" size="7" />
+	<house name="Central Lane Flats III" houseid="19" entryx="85" entryy="337" entryz="7" rent="2500" townid="2" size="7" />
+	<house name="Central Lane Flats IV" houseid="20" entryx="88" entryy="337" entryz="7" rent="2500" townid="2" size="7" />
+	<house name="Central Lane Flats V" houseid="21" entryx="83" entryy="335" entryz="6" rent="5000" townid="2" size="17" />
+	<house name="Central Lane Flats VI" houseid="22" entryx="84" entryy="340" entryz="6" rent="5000" townid="2" size="17" />
+	<house name="Central Lane Park I" houseid="23" entryx="118" entryy="328" entryz="6" rent="5250" townid="2" size="20" />
+	<house name="Central Lane Park IV" houseid="24" entryx="121" entryy="315" entryz="6" rent="5500" townid="2" size="17" />
+	<house name="Central Lane Park III" houseid="25" entryx="121" entryy="315" entryz="6" rent="5500" townid="2" size="17" />
+	<house name="Central Lane Park II" houseid="26" entryx="127" entryy="332" entryz="6" rent="6500" townid="2" size="21" />
+	<house name="Dark Castle" houseid="27" entryx="137" entryy="324" entryz="7" rent="19750" townid="2" size="64" />
+	<house name="North Side VII" houseid="28" entryx="87" entryy="300" entryz="7" rent="13250" townid="2" size="48" />
+	<house name="North Side VI" houseid="29" entryx="96" entryy="300" entryz="7" rent="17000" townid="2" size="62" />
+	<house name="North Side I" houseid="30" entryx="117" entryy="300" entryz="7" rent="5000" townid="2" size="17" />
+	<house name="North Side II" houseid="31" entryx="117" entryy="300" entryz="6" rent="5000" townid="2" size="17" />
+	<house name="North Side III" houseid="32" entryx="118" entryy="300" entryz="6" rent="3750" townid="2" size="12" />
+	<house name="North Side IV" houseid="33" entryx="129" entryy="300" entryz="6" rent="3750" townid="2" size="12" />
+	<house name="North Side V" houseid="34" entryx="131" entryy="302" entryz="6" rent="4000" townid="2" size="13" />
+	<house name="East Side V" houseid="35" entryx="141" entryy="305" entryz="7" rent="11250" townid="2" size="42" />
+	<house name="East Side IV" houseid="36" entryx="150" entryy="307" entryz="7" rent="9500" townid="2" size="35" />
+	<house name="East Side I" houseid="37" entryx="160" entryy="331" entryz="7" rent="24750" townid="2" size="95" />
+	<house name="East Side II" houseid="38" entryx="154" entryy="329" entryz="7" rent="7750" townid="2" size="27" />
+	<house name="East Side III" houseid="39" entryx="157" entryy="334" entryz="6" rent="8000" townid="2" size="26" />
+	<house name="Ship Shop I" houseid="40" entryx="141" entryy="342" entryz="7" rent="4250" townid="2" size="13" />
+	<house name="Ship Shop II" houseid="41" entryx="144" entryy="342" entryz="7" rent="4250" townid="2" size="13" />
+	<house name="Sea Side Barraks I" houseid="42" entryx="137" entryy="373" entryz="6" rent="2500" townid="2" size="7" />
+	<house name="Sea Side Barraks II" houseid="43" entryx="141" entryy="373" entryz="6" rent="2500" townid="2" size="7" />
+	<house name="Sea Side Barraks III" houseid="44" entryx="145" entryy="373" entryz="6" rent="2500" townid="2" size="7" />
+	<house name="Sea Side Barraks IV" houseid="45" entryx="149" entryy="373" entryz="6" rent="2500" townid="2" size="7" />
+	<house name="Sea Side Barraks V" houseid="46" entryx="139" entryy="369" entryz="6" rent="3250" townid="2" size="10" />
+	<house name="Sea Side Barraks VI" houseid="47" entryx="143" entryy="369" entryz="6" rent="3250" townid="2" size="10" />
+	<house name="Sea Side Barraks VII" houseid="48" entryx="147" entryy="369" entryz="6" rent="2250" townid="2" size="6" />
+	<house name="Sea Side Barraks VIII" houseid="49" entryx="150" entryy="369" entryz="6" rent="2250" townid="2" size="6" />
+	<house name="South Side I" houseid="50" entryx="124" entryy="353" entryz="7" rent="59250" townid="2" size="218" />
+	<house name="South Side II" houseid="51" entryx="92" entryy="352" entryz="7" rent="6250" townid="2" size="20" />
+	<house name="South Castle" houseid="52" entryx="102" entryy="380" entryz="7" rent="9000" townid="2" size="31" />
+	<house name="South Sea Side" houseid="53" entryx="80" entryy="368" entryz="7" rent="35750" townid="2" size="133" />
+	<house name="West Rune Side" houseid="54" entryx="78" entryy="353" entryz="7" rent="14500" townid="2" size="55" />
+	<house name="West Side Castle" houseid="55" entryx="68" entryy="351" entryz="7" rent="71000" townid="2" size="123" />
+	<house name="WolfStain Castle" houseid="56" entryx="41" entryy="354" entryz="7" rent="89500" townid="2" size="145" />
+	<house name="Castle Shop 1" houseid="57" entryx="775" entryy="840" entryz="5" rent="9500" townid="3" size="34" />
+	<house name="Castle Shop 2" houseid="58" entryx="766" entryy="834" entryz="7" rent="9500" townid="3" size="34" />
+	<house name="Castle Shop 3" houseid="59" entryx="766" entryy="841" entryz="7" rent="9500" townid="3" size="34" />
+	<house name="Castle Street 5" houseid="60" entryx="708" entryy="816" entryz="7" rent="9250" townid="3" size="34" />
+	<house name="Castle Street 4" houseid="61" entryx="715" entryy="823" entryz="7" rent="8500" townid="3" size="31" />
+	<house name="Castle Street 3" houseid="62" entryx="710" entryy="830" entryz="7" rent="9250" townid="3" size="32" />
+	<house name="Castle Street 2" houseid="63" entryx="714" entryy="831" entryz="7" rent="7750" townid="3" size="28" />
+	<house name="Castle Street 1" houseid="64" entryx="727" entryy="869" entryz="7" rent="14250" townid="3" size="52" />
+	<house name="Edron Flats , Flat 1" houseid="65" entryx="749" entryy="879" entryz="7" rent="4750" townid="3" size="18" />
+	<house name="Edron Flats , Flat 2" houseid="66" entryx="743" entryy="879" entryz="7" rent="2500" townid="3" size="9" />
+	<house name="Edron Flats , Flat 3" houseid="67" entryx="739" entryy="879" entryz="7" rent="2500" townid="3" size="9" />
+	<house name="Edron Flats , Flat 4" houseid="68" entryx="735" entryy="879" entryz="7" rent="2500" townid="3" size="9" />
+	<house name="Edron Flats , Flat 5" houseid="69" entryx="749" entryy="878" entryz="7" rent="2500" townid="3" size="9" />
+	<house name="Edron Flats , Flat 6" houseid="70" entryx="743" entryy="878" entryz="7" rent="2500" townid="3" size="9" />
+	<house name="Edron Flats , Flat 7" houseid="71" entryx="739" entryy="878" entryz="7" rent="2500" townid="3" size="9" />
+	<house name="Edron Flats , Flat 8" houseid="72" entryx="735" entryy="878" entryz="7" rent="2500" townid="3" size="9" />
+	<house name="Edron Flats , Flat 9" houseid="73" entryx="749" entryy="878" entryz="6" rent="2500" townid="3" size="9" />
+	<house name="Edron Flats , Flat 10" houseid="74" entryx="749" entryy="879" entryz="6" rent="2500" townid="3" size="9" />
+	<house name="Edron Flats , Flat 11" houseid="75" entryx="743" entryy="879" entryz="6" rent="2500" townid="3" size="9" />
+	<house name="Edron Flats , Flat 12" houseid="76" entryx="739" entryy="879" entryz="6" rent="2500" townid="3" size="9" />
+	<house name="Edron Flats , Flat 13" houseid="77" entryx="735" entryy="879" entryz="6" rent="2500" townid="3" size="9" />
+	<house name="Edron Flats , Flat 14" houseid="78" entryx="735" entryy="878" entryz="6" rent="2500" townid="3" size="9" />
+	<house name="Edron Flats , Flat 15" houseid="79" entryx="739" entryy="878" entryz="6" rent="2500" townid="3" size="9" />
+	<house name="Edron Flats , Flat 16" houseid="80" entryx="743" entryy="878" entryz="6" rent="2500" townid="3" size="9" />
+	<house name="Edron Flats , Flat 17" houseid="81" entryx="749" entryy="879" entryz="5" rent="2500" townid="3" size="9" />
+	<house name="Edron Flats , Flat 18" houseid="82" entryx="743" entryy="879" entryz="5" rent="2500" townid="3" size="9" />
+	<house name="Edron Flats , Flat 19" houseid="83" entryx="739" entryy="879" entryz="5" rent="2500" townid="3" size="9" />
+	<house name="Edron Flats , Flat 20" houseid="84" entryx="735" entryy="879" entryz="5" rent="2500" townid="3" size="9" />
+	<house name="Edron Flats , Flat 21" houseid="85" entryx="735" entryy="878" entryz="5" rent="2500" townid="3" size="9" />
+	<house name="Edron Flats , Flat 22" houseid="86" entryx="739" entryy="878" entryz="5" rent="2500" townid="3" size="9" />
+	<house name="Edron Flats , Flat 23" houseid="87" entryx="743" entryy="878" entryz="5" rent="2500" townid="3" size="9" />
+	<house name="Edron Flats , Flat 24" houseid="88" entryx="749" entryy="878" entryz="5" rent="4750" townid="3" size="18" />
+	<house name="Edron Flats , Basement 1" houseid="89" entryx="743" entryy="875" entryz="8" rent="9000" townid="3" size="31" />
+	<house name="Edron Flats , Basement 2" houseid="90" entryx="747" entryy="875" entryz="8" rent="9000" townid="3" size="31" />
+	<house name="Central Circle 1" houseid="91" entryx="765" entryy="875" entryz="7" rent="18000" townid="3" size="65" />
+	<house name="Central Circle 2" houseid="92" entryx="772" entryy="875" entryz="7" rent="19750" townid="3" size="72" />
+	<house name="Wood Avenue 5" houseid="93" entryx="798" entryy="866" entryz="7" rent="9250" townid="3" size="32" />
+	<house name="Wood Avenue 1" houseid="94" entryx="791" entryy="834" entryz="7" rent="9250" townid="3" size="32" />
+	<house name="Wood Avenue 2" houseid="95" entryx="789" entryy="843" entryz="7" rent="7750" townid="3" size="26" />
+	<house name="Wood Avenue 3" houseid="96" entryx="786" entryy="850" entryz="7" rent="9250" townid="3" size="32" />
+	<house name="Wood Avenue 4" houseid="97" entryx="797" entryy="854" entryz="7" rent="7750" townid="3" size="26" />
+	<house name="Wood Avenue 4a" houseid="98" entryx="794" entryy="850" entryz="6" rent="6250" townid="3" size="22" />
+	<house name="Wood Avenue 4b" houseid="99" entryx="794" entryy="850" entryz="6" rent="7750" townid="3" size="28" />
+	<house name="Wood Avenue 4c" houseid="100" entryx="794" entryy="847" entryz="6" rent="7750" townid="3" size="26" />
+	<house name="Central Circle 9a" houseid="101" entryx="752" entryy="899" entryz="7" rent="5250" townid="3" size="18" />
+	<house name="Central Circle 9b" houseid="102" entryx="752" entryy="899" entryz="6" rent="5250" townid="3" size="18" />
+	<house name="Central Circle 6 (shop)" houseid="103" entryx="775" entryy="899" entryz="7" rent="22750" townid="3" size="78" />
+	<house name="Central Circle 7 (Shop)" houseid="104" entryx="768" entryy="899" entryz="7" rent="23000" townid="3" size="78" />
+	<house name="Central Circle 8 (Shop)" houseid="105" entryx="761" entryy="899" entryz="7" rent="19000" townid="3" size="62" />
+	<house name="Central Circle 3" houseid="106" entryx="761" entryy="883" entryz="7" rent="18750" townid="3" size="62" />
+	<house name="Central Circle 4" houseid="107" entryx="768" entryy="883" entryz="7" rent="22750" townid="3" size="78" />
+	<house name="Central Circle 5" houseid="108" entryx="775" entryy="883" entryz="7" rent="22750" townid="3" size="78" />
+	<house name="Wood Avenue 6a" houseid="109" entryx="785" entryy="876" entryz="7" rent="8000" townid="3" size="28" />
+	<house name="Wood Avenue 6b" houseid="110" entryx="788" entryy="878" entryz="6" rent="7500" townid="3" size="25" />
+	<house name="Wood Avenue 7" houseid="111" entryx="791" entryy="882" entryz="7" rent="31250" townid="3" size="86" />
+	<house name="Wood Avenue 8" houseid="112" entryx="791" entryy="889" entryz="7" rent="31250" townid="3" size="86" />
+	<house name="Wood Avenue 9a" houseid="113" entryx="788" entryy="889" entryz="7" rent="8000" townid="3" size="28" />
+	<house name="Wood Avenue 9b" houseid="114" entryx="788" entryy="885" entryz="6" rent="7750" townid="3" size="27" />
+	<house name="Wood Avenue 10a" houseid="115" entryx="788" entryy="894" entryz="7" rent="8000" townid="3" size="28" />
+	<house name="Wood Avenue 10b" houseid="116" entryx="788" entryy="892" entryz="6" rent="7750" townid="3" size="26" />
+	<house name="Wood Avenue 11" houseid="117" entryx="791" entryy="897" entryz="7" rent="35250" townid="3" size="122" />
+	<house name="Sky Lane , Guild 1" houseid="118" entryx="781" entryy="909" entryz="7" rent="73750" townid="3" size="256" />
+	<house name="Sky Lane , Guild 2" houseid="119" entryx="786" entryy="910" entryz="7" rent="70500" townid="3" size="241" />
+	<house name="Sky Lane, Sea Tower" houseid="120" entryx="805" entryy="924" entryz="7" rent="23000" townid="3" size="81" />
+	<house name="Sky Lane, Guild 3" houseid="121" entryx="790" entryy="923" entryz="7" rent="66500" townid="3" size="228" />
+	<house name="Center Tirth 5" houseid="122" entryx="436" entryy="204" entryz="7" rent="16500" townid="4" size="57" />
+	<house name="Center Tirth 8" houseid="123" entryx="444" entryy="205" entryz="7" rent="23500" townid="4" size="85" />
+	<house name="Center Tirith 9" houseid="124" entryx="472" entryy="207" entryz="7" rent="19750" townid="4" size="70" />
+	<house name="Center Tirth 6" houseid="125" entryx="448" entryy="208" entryz="7" rent="17000" townid="4" size="61" />
+	<house name="Center Tirth 4" houseid="126" entryx="436" entryy="214" entryz="7" rent="16500" townid="4" size="59" />
+	<house name="Center Tirth 3" houseid="127" entryx="438" entryy="219" entryz="7" rent="16500" townid="4" size="59" />
+	<house name="Center Tirth 1" houseid="128" entryx="444" entryy="230" entryz="7" rent="15000" townid="4" size="53" />
+	<house name="Center Tirth 2" houseid="129" entryx="448" entryy="227" entryz="7" rent="16750" townid="4" size="60" />
+	<house name="Center Tirth 7" houseid="130" entryx="448" entryy="215" entryz="7" rent="17000" townid="4" size="61" />
+	<house name="Guild Hall Tirith 1" houseid="131" entryx="472" entryy="237" entryz="7" rent="0" townid="4" size="315" />
+	<house name="West Tirith 2" houseid="132" entryx="404" entryy="219" entryz="7" rent="5250" townid="4" size="18" />
+	<house name="West Tirith 1" houseid="133" entryx="428" entryy="258" entryz="7" rent="11750" townid="4" size="43" />
+	<house name="East Tirith 1" houseid="134" entryx="465" entryy="261" entryz="7" rent="13000" townid="4" size="49" />
+	<house name="East Tirith 2" houseid="135" entryx="471" entryy="259" entryz="7" rent="6750" townid="4" size="23" />
+	<house name="East Tirith 3" houseid="136" entryx="483" entryy="248" entryz="7" rent="11500" townid="4" size="43" />
+	<house name="East Tirith 4" houseid="137" entryx="490" entryy="246" entryz="7" rent="8000" townid="4" size="29" />
+	<house name="East Tirith 5" houseid="138" entryx="505" entryy="224" entryz="7" rent="11500" townid="4" size="41" />
+	<house name="East Tirith 6" houseid="139" entryx="498" entryy="207" entryz="7" rent="8500" townid="4" size="30" />
+	<house name="East Tirith 7" houseid="140" entryx="489" entryy="199" entryz="7" rent="9750" townid="4" size="36" />
+	<house name="Upside Tirith 3" houseid="141" entryx="416" entryy="219" entryz="6" rent="8750" townid="4" size="29" />
+	<house name="Guild Hall Tirith 3" houseid="142" entryx="434" entryy="239" entryz="6" rent="31500" townid="4" size="109" />
+	<house name="Guild Hall Tirith 2" houseid="143" entryx="469" entryy="243" entryz="6" rent="3350" townid="4" size="122" />
+	<house name="Upside Tirith 2" houseid="144" entryx="487" entryy="232" entryz="6" rent="8000" townid="4" size="28" />
+	<house name="Upside Tirith 1" houseid="145" entryx="492" entryy="226" entryz="6" rent="8500" townid="4" size="28" />
+	<house name="Guild Hall Tirith 5" houseid="146" entryx="470" entryy="221" entryz="5" rent="79000" townid="4" size="297" />
+	<house name="Guild Hall Tirith 6" houseid="147" entryx="430" entryy="219" entryz="5" rent="52750" townid="4" size="192" />
+	<house name="Upside Tirith 4" houseid="148" entryx="461" entryy="207" entryz="4" rent="12500" townid="4" size="48" />
+	<house name="Castle King Carlin" houseid="149" entryx="552" entryy="461" entryz="5" rent="0" townid="2" size="45" />
+	<house name="Raccoon Mansion" houseid="150" entryx="201" entryy="53" entryz="6" rent="0" townid="1" size="398" />
+	<house name="Bree 01" houseid="151" entryx="896" entryy="2020" entryz="7" rent="0" townid="6" size="41" />
+	<house name="Groen Vilage 1" houseid="152" entryx="173" entryy="102" entryz="7" rent="6250" townid="1" size="22" />
+	<house name="Groen Vilage 2" houseid="153" entryx="180" entryy="93" entryz="7" rent="6250" townid="1" size="22" />
+	<house name="Groen Vilage 3" houseid="154" entryx="182" entryy="93" entryz="7" rent="6250" townid="1" size="22" />
+	<house name="Groen Vilage 4" houseid="155" entryx="189" entryy="102" entryz="7" rent="6250" townid="1" size="22" />
+	<house name="Groen Vilage 5" houseid="156" entryx="175" entryy="107" entryz="7" rent="6250" townid="1" size="22" />
+	<house name="Groen Vilage Sky 1" houseid="157" entryx="173" entryy="102" entryz="6" rent="6250" townid="1" size="22" />
+	<house name="Groen Vilage Sky 2" houseid="158" entryx="180" entryy="93" entryz="6" rent="6250" townid="1" size="22" />
+	<house name="Groen Vilage Sky 3" houseid="159" entryx="182" entryy="93" entryz="6" rent="6250" townid="1" size="22" />
+	<house name="Groen Vilage Sky 4" houseid="160" entryx="189" entryy="102" entryz="6" rent="6250" townid="1" size="22" />
+	<house name="Groen Vilage Sky 5" houseid="161" entryx="175" entryy="107" entryz="6" rent="6250" townid="1" size="22" />
+	<house name="Groen Vilage Top 1" houseid="162" entryx="173" entryy="102" entryz="5" rent="6250" townid="1" size="22" />
+	<house name="Groen Vilage Top 2" houseid="163" entryx="180" entryy="93" entryz="5" rent="6250" townid="1" size="22" />
+	<house name="Groen Vilage Top 3" houseid="164" entryx="182" entryy="93" entryz="5" rent="6250" townid="1" size="22" />
+	<house name="Groen Vilage Top 4" houseid="165" entryx="189" entryy="102" entryz="5" rent="6250" townid="1" size="22" />
+	<house name="Groen Vilage Top 5" houseid="166" entryx="178" entryy="107" entryz="5" rent="6250" townid="1" size="22" />
+	<house name="Groen Vilage Centre" houseid="167" entryx="178" entryy="102" entryz="5" rent="3250" townid="1" size="10" />
+	<house name="Bree 02" houseid="168" entryx="904" entryy="2021" entryz="7" rent="0" townid="6" size="21" />
+	<house name="Bree 03" houseid="169" entryx="917" entryy="2020" entryz="7" rent="0" townid="6" size="41" />
+	<house name="Bree 04" houseid="170" entryx="922" entryy="2004" entryz="7" rent="0" townid="6" size="22" />
+	<house name="Bree 05" houseid="171" entryx="910" entryy="2000" entryz="7" rent="0" townid="6" size="26" />
+	<house name="Bree 06" houseid="172" entryx="899" entryy="1992" entryz="7" rent="0" townid="6" size="26" />
+	<house name="Bree 07" houseid="173" entryx="901" entryy="1982" entryz="7" rent="0" townid="6" size="36" />
+	<house name="Bree 08" houseid="174" entryx="893" entryy="1986" entryz="7" rent="0" townid="6" size="25" />
+	<house name="Bree 09" houseid="175" entryx="890" entryy="1996" entryz="7" rent="0" townid="6" size="23" />
+	<house name="Bree 10" houseid="176" entryx="881" entryy="1994" entryz="7" rent="0" townid="6" size="25" />
+	<house name="Bree 11" houseid="177" entryx="871" entryy="2000" entryz="7" rent="0" townid="6" size="45" />
+	<house name="Bree 12" houseid="178" entryx="882" entryy="2001" entryz="7" rent="0" townid="6" size="25" />
+	<house name="Bree 13" houseid="179" entryx="889" entryy="2005" entryz="7" rent="0" townid="6" size="25" />
+	<house name="Bree 14" houseid="180" entryx="883" entryy="2011" entryz="7" rent="0" townid="6" size="44" />
+	<house name="Bree 15" houseid="181" entryx="873" entryy="2007" entryz="7" rent="0" townid="6" size="25" />
+	<house name="Bree 16" houseid="182" entryx="873" entryy="2014" entryz="7" rent="0" townid="6" size="24" />
+</houses>

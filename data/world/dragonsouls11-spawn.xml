@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<spawns>
+	<spawn centerx="110" centery="362" centerz="6" radius="1">
+		<npc name="Eryn" x="-1" y="0" z="6" spawntime="60" />
+	</spawn>
+	<spawn centerx="76" centery="287" centerz="7" radius="1">
+		<npc name="The Forgotten King" x="-1" y="0" z="7" spawntime="60" direction="1" />
+	</spawn>
+	<spawn centerx="120" centery="310" centerz="7" radius="1">
+		<npc name="Alice" x="0" y="1" z="7" spawntime="60" direction="2" />
+	</spawn>
+	<spawn centerx="64" centery="317" centerz="7" radius="1">
+		<npc name="Tyoric" x="1" y="0" z="7" spawntime="60" direction="3" />
+	</spawn>
+	<spawn centerx="56" centery="318" centerz="7" radius="1">
+		<npc name="Riona" x="0" y="-1" z="7" spawntime="60" direction="2" />
+	</spawn>
+	<spawn centerx="95" centery="318" centerz="7" radius="1">
+		<npc name="Banker" x="-1" y="0" z="7" spawntime="60" direction="1" />
+	</spawn>
+	<spawn centerx="103" centery="325" centerz="7" radius="1">
+		<npc name="Deruno" x="0" y="0" z="7" spawntime="60" />
+	</spawn>
+	<spawn centerx="104" centery="361" centerz="7" radius="1">
+		<npc name="Riona" x="0" y="0" z="7" spawntime="60" />
+	</spawn>
+</spawns>

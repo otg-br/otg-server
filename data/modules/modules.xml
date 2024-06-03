@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modules>
+	<!-- Blessings -->
+	<module type="recvbyte" byte="207" script="blessings/blessings.lua" />
+
+	<!-- Daily Reward Wall -->
+	<module type="recvbyte" byte="216" script="dailyreward/dailyrewardmodule.lua" />
+	<module type="recvbyte" byte="217" script="dailyreward/dailyrewardmodule.lua" />
+	<module type="recvbyte" byte="218" script="dailyreward/dailyrewardmodule.lua" />
+</modules>

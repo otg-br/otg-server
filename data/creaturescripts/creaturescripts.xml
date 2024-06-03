@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<creaturescripts>
+
+	<!-- AutoLoot Vankk Master -->
+	<event type="kill" name="AutoLoot" script="autoloot.lua" />
+	
+	<!-- Reflect -->
+	<event type="healthchange" name="reflect" script="others/reflect.lua" />
+	
+	<!-- Custom -->
+	<event type="modalwindow" name="modalWindow_sellingNPCs" script="modal/sellingNPCs_modal.lua"/>
+	<event type="modalwindow" name="modalWindow_teleportScroll" script="modal/teleportScroll_modal.lua"/>
+
+	<!-- Bless -->
+	<event type="modalwindow" name="ModalWindow_Bless" script="modal/bless_modal.lua" />
+
+	<!-- Analyzer -->
+	<event type="healthchange" name="ImpactAnalyzer" script="others/impact_analyzer.lua" />
+
+	<event type="modalwindow" name="AnalyserWindow" script="others/AnalyserWindow.lua" />
+
+	<!--  FLY -->
+	<event type="modalwindow" name="fly" script="fly.lua"/>
+
+    <!-- New Summons (Pets) -->
+    <event type="login" name="petlogin" script="pet.lua" />
+    <event type="logout" name="petlogout" script="pet.lua" />
+	<event type="death" name="petdeath" script="pet.lua" />
+
+    <!-- Modal Window -->
+	<event type="modalwindow" name="ModalWindowHelper" script="modalwindowhelper.lua" />
+
+    <!-- Reward Chest 19/01 -->
+	<event type="login" name="LoginBossPlayer" script="rewardChest/boss.lua" />
+ 	<event type="death" name="BossDeath" script="rewardChest/boss.lua" />
+ 	<event type="healthchange" name="BossParticipation" script="rewardChest/boss.lua" />
+ 	<event type="think" name="BossThink" script="rewardChest/boss.lua" />
+
+	<!-- Recompense by level -->
+	<event type="advance" name="Recompense" script="others/recompense.lua"/>
+
+	<!-- Monsters events -->
+	<event type="death" name="WhiteDeerDeath" script="others/whitedeer.lua" />
+	<event type="death" name="WhiteDeerScoutsDeath" script="others/whitedeer_scouts.lua" />
+	<event type="healthchange" name="sharedLife" script="others/sharedlife.lua" />
+	<event type="think" name="GazharagothHeal" script="others/gaz'haragoth_heal.lua" />
+	<event type="preparedeath" name="MonsterHeal" script="others/monster_heal.lua" />
+	<event type="preparedeath" name="MonsterHeal2" script="others/monster_heal2.lua" />
+	<event type="death" name="NorthernPike" script="others/northern pike.lua" />
+	<event type="think" name="OmrafirExplode" script="others/omrafir explode.lua" />
+	<event type="think" name="ShlorgTp" script="others/shlorg tp.lua" />
+	<event type="think" name="ThePaleCountTp" script="others/the pale count tp.lua" />
+	<event type="think" name="WelterEgg" script="others/welter egg.lua" />
+	<event type="death" name="Wyda" script="others/wyda.lua" />
+	<event type="think" name="ZavarashHide" script="others/zavarash hide.lua" />
+	<event type="death" name="RagingMage" script="others/raging mage.lua" />
+	<event type="death" name="RagingMage2" script="others/raging mage2.lua" />
+	<event type="think" name="GreaterMinion" script="others/greater_minion.lua" />
+	<event type="think" name="SuperiorMinion" script="others/superior_minion.lua" />
+	<event type="think" name="NecromanticMinion" script="others/necromantic_minion.lua" />
+	<event type="think" name="ShargonGrowthCheck" script="others/shargon growth check.lua" />
+	<event type="think" name="TheRavagerHeal" script="others/the ravager heal.lua" />
+	<event type="think" name="CanopicJar" script="others/canopic jar.lua" />
+
+	<!-- Others -->
+	<event type="login" name="AdventurerBlessings" script="adventureblessings.lua"/>
+	<event type="login" name="PlayerLogin" script="others/login.lua" />
+    <event type="login" name="RegenerateStamina" script="others/regeneratestamina.lua" />
+	<event type="login" name="OfflineTraining" script="others/offlinetraining.lua" />
+	<event type="logout" name="PlayerLogout" script="others/logout.lua" />
+	<event type="death" name="PlayerDeath" script="others/playerdeath.lua" />
+	<event type="death" name="DropLoot" script="others/droploot.lua" />
+	<event type="advance" name="AdvanceSave" script="others/advance_save.lua" />
+	<event type="healthchange" name="imbueDamage" script="imbuementElementalProtection.lua"/>
+	
+	<!-- Guild Level System -->
+	<event type="kill" name="guildLevel" script="others/guildLevel.lua" />
+	<event type="healthchange" name="guildLevel_e" script="others/guildLevel.lua" />
+</creaturescripts>
