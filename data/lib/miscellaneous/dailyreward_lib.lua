@@ -1125,7 +1125,7 @@ local function callbackAddItemModal ()
 end
 
 function Player:initDailyRewardSystem()
-    local nextRewardPick = self:getStorageValue(Storage.dailyReward.nextRewardPick)
+    local nextRewardPick = self:getStorageValue(PlayerStorageKeys.dailyReward.nextRewardPick)
 
     if nextRewardPick < (Game.getLastServerSave() - (24*60*60)) then -- 24 hours of the limit time has passed, reset streak
         self:setCurrentDayStreak(0)
@@ -1138,12 +1138,12 @@ function Player:initDailyRewardSystem()
 end
 
 function Player:getLastRewardPick()
-    return math.max(self:getStorageValue(Storage.dailyReward.lastRewardPick),0)
+    return math.max(self:getStorageValue(PlayerStorageKeys.dailyReward.lastRewardPick),0)
 end
 
 function Player:setLastRewardPick(timestamp)
     if tonumber(timestamp) then
-        self:setStorageValue(Storage.dailyReward.lastRewardPick, timestamp)
+        self:setStorageValue(PlayerStorageKeys.dailyReward.lastRewardPick, timestamp)
     else
         print('[WARNING - DAILY REWARD]: Invalid last reward timestamp')
     end
@@ -1151,12 +1151,12 @@ function Player:setLastRewardPick(timestamp)
 end
 
 function Player:getNextRewardPick()
-    return math.max(self:getStorageValue(Storage.dailyReward.nextRewardPick),0)
+    return math.max(self:getStorageValue(PlayerStorageKeys.dailyReward.nextRewardPick),0)
 end
 
 function Player:setNextRewardPick(timestamp)
     if tonumber(timestamp) then
-        self:setStorageValue(Storage.dailyReward.nextRewardPick, timestamp)
+        self:setStorageValue(PlayerStorageKeys.dailyReward.nextRewardPick, timestamp)
     else
         print('[WARNING - DAILY REWARD]: Invalid next reward timestamp')
     end
@@ -1164,11 +1164,11 @@ function Player:setNextRewardPick(timestamp)
 end
 
 function Player:getCurrentDayStreak()
-    return math.max(self:getStorageValue(Storage.dailyReward.streakDays),0)
+    return math.max(self:getStorageValue(PlayerStorageKeys.dailyReward.streakDays),0)
 end
 
 function Player:setCurrentDayStreak(value)
-    self:setStorageValue(Storage.dailyReward.streakDays, value)
+    self:setStorageValue(PlayerStorageKeys.dailyReward.streakDays, value)
 end
 
 function Player:getCurrentRewardLaneIndex(zerobased)
@@ -1181,7 +1181,7 @@ function Player:getCurrentRewardLaneIndex(zerobased)
 end
 
 function Player:setCurrentRewardLaneIndex(value)
-    self:setStorageValue(Storage.dailyReward.currentIndex, value)
+    self:setStorageValue(PlayerStorageKeys.dailyReward.currentIndex, value)
 end
 
 function Player:incrementCurrentRewardLaneIndex()

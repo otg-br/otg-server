@@ -120,5 +120,5 @@ function Game.setStorageValue(key, value)
 end
 
 function Game.getLastServerSave()
-	return Game.getStorageValue(GlobalStorage.LastServerSave)
+	return Game.getStorageValue(GlobalStorageKeys.LastServerSave)
 end

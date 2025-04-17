@@ -22,7 +22,14 @@ PlayerStorageKeys = {
     mutatedPumpkin = 30035,
     achievementsBase = 300000,
     achievementsCounter = 20000,
-    TheNewFrontierMission03 = 30036
+    TheNewFrontierMission03 = 30036,
+    dailyReward = {
+        nextRewardPick = DAILYREWARDSTORAGE_NEXTREWARDPICK,
+        lastRewardPick = DAILYREWARDSTORAGE_LASTREWARDPICK,
+        streakDays = DAILYREWARDSTORAGE_STREAKDAYS,
+        exhaust = 69802,
+        currentIndex = 69803
+    }
 }
 
 GlobalStorageKeys = {
@@ -32,7 +39,6 @@ GlobalStorageKeys = {
     BoostedLootBonus = 69802,
     BoostedExpBonus = 69803
 }
-
 
 postman = {
     Mission01 = 12450,
