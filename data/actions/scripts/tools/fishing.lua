@@ -1,31 +1,28 @@
-local waterIds = {493, 4608, 4609, 4610, 4611, 13550, 13552, 4612, 4613, 4614, 4615, 4616, 4617, 4618, 4619, 4620, 4621, 4622, 4623, 4624, 4625, 7236, 10499, 15401, 15402, 13549}
+local waterIds = {493, 4608, 4609, 4610, 4611, 4612, 4613, 4614, 4615, 4616, 4617, 4618, 4619, 4620, 4621, 4622, 4623, 4624, 4625, 7236, 10499, 15401, 15402}
 local lootTrash = {2234, 2238, 2376, 2509, 2667}
 local lootCommon = {2152, 2167, 2168, 2669, 7588, 7589}
 local lootRare = {2143, 2146, 2149, 7158, 7159}
 local lootVeryRare = {7632, 7633, 10220}
-local lootVeryRare1 = {7632, 13546}
-local lootRare1 = {2143, 13546}
-local lootCommon1 = {2152, 7589, 13546}
-
 local useWorms = true
 
 function onUse(player, item, fromPosition, target, toPosition, isHotkey)
-	if not isInArray(waterIds, target.itemid) then
+	local targetId = target.itemid
+	if not table.contains(waterIds, targetId) then
 		return false
 	end
 
-	local targetId = target.itemid
 	if targetId == 10499 then
 		local owner = target:getAttribute(ITEM_ATTRIBUTE_CORPSEOWNER)
-		if owner ~= 0 and owner ~= player.uid then
+		if owner ~= 0 and owner ~= player:getId() then
 			player:sendTextMessage(MESSAGE_STATUS_SMALL, "You are not the owner.")
 			return true
 		end
 
 		toPosition:sendMagicEffect(CONST_ME_WATERSPLASH)
-		target:remove()
+		target:transform(targetId + 1)
+		target:decay()
 
-		local rareChance = math.random(100)
+		local rareChance = math.random(1, 100)
 		if rareChance == 1 then
 			player:addItem(lootVeryRare[math.random(#lootVeryRare)], 1)
 		elseif rareChance <= 3 then
@@ -37,45 +34,6 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		end
 		return true
 	end
-	
-	if targetId == 13550 then
-		if target:getPosition():isInRange(Position(32608, 32647, 7), Position(32612, 32650, 7)) then
-			if player:getStorageValue(71263) > os.time() then
-				player:sendCancelMessage("You must wait for 20 hours before use fishing rod here.")
-				return true
-			else
-				player:addItem(13546, 1) -- Shimmer Swimmer
-				player:say("A Shimmer Swimmer! It is said that this rare creature only appears once each day in the murkiest of waters!", TALKTYPE_MONSTER_SAY)
-				player:setStorageValue(71263, os.time() + 20*60*60)
-			end
-		end
-	end
-
-	-- COMEÇO
-	if targetId == 13549 then
-		--local owner = target:getAttribute(ITEM_ATTRIBUTE_CORPSEOWNER)
-		--if owner ~= 0 and owner ~= player.uid then
-		--	player:sendTextMessage(MESSAGE_STATUS_SMALL, "You are not the owner.")
-		--	return true
-		--end
-
-		toPosition:sendMagicEffect(CONST_ME_WATERSPLASH)
-		--target:remove()
-
-		local rareChance = math.random(100)
-		if rareChance == 1 then
-			player:addItem(lootVeryRare1[math.random(#lootVeryRare1)], 1)
-	    elseif rareChance <= 3 then
-			player:addItem(lootRare1[math.random(#lootRare1)], 1)
-		elseif rareChance <= 10 then
-			player:addItem(lootCommon1[math.random(#lootCommon1)], 1)
-		else
-			player:addItem(lootTrash[math.random(#lootTrash)], 1)
-		end
-		return true
-	end
-
-	-- FIM
 
 	if targetId ~= 7236 then
 		toPosition:sendMagicEffect(CONST_ME_LOSEENERGY)
@@ -86,8 +44,8 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 	end
 
 	player:addSkillTries(SKILL_FISHING, 1)
-	if math.random(100) <= math.min(math.max(10 + (player:getEffectiveSkillLevel(SKILL_FISHING) - 10) * 0.597, 10), 50) then
-		if useWorms and not player:removeItem("worm", 1) then
+	if math.random(1, 100) <= math.min(math.max(10 + (player:getEffectiveSkillLevel(SKILL_FISHING) - 10) * 0.597, 10), 50) then
+		if useWorms and not player:removeItem(3976, 1) then
 			return true
 		end
 
@@ -95,15 +53,17 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 			target:transform(targetId + 1)
 			target:decay()
 
-			if math.random(100) >= 97 then
+			if math.random(1, 100) >= 97 then
 				player:addItem(15405, 1)
+				player:addAchievement("Desert Fisher")
 				return true
 			end
 		elseif targetId == 7236 then
 			target:transform(targetId + 1)
 			target:decay()
+			player:addAchievementProgress("Exquisite Taste", 250)
 
-			local rareChance = math.random(100)
+			local rareChance = math.random(1, 100)
 			if rareChance == 1 then
 				player:addItem(7158, 1)
 				return true
@@ -115,6 +75,7 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 				return true
 			end
 		end
+		player:addAchievementProgress("Here, Fishy Fishy!", 1000)
 		player:addItem(2667, 1)
 	end
 	return true
