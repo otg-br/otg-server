@@ -496,6 +496,8 @@ class LuaScriptInterface
 		static int luaSendChannelMessage(lua_State* L);
 		static int luaSendGuildChannelMessage(lua_State* L);
 
+		static int luaIsScriptsInterface(lua_State* L);
+
 #ifndef LUAJIT_VERSION
 		static int luaBitNot(lua_State* L);
 		static int luaBitAnd(lua_State* L);
@@ -538,6 +540,7 @@ class LuaScriptInterface
 
 		// table
 		static int luaTableCreate(lua_State* L);
+		static int luaTablePack(lua_State* L);
 
 		// Game
 		static int luaGameGetSpectators(lua_State* L);
@@ -570,6 +573,7 @@ class LuaScriptInterface
 		static int luaGameCreateItem(lua_State* L);
 		static int luaGameCreateContainer(lua_State* L);
 		static int luaGameCreateMonster(lua_State* L);
+		static int luaGameGenerateNpc(lua_State* L);
 		static int luaGameCreateNpc(lua_State* L);
 		static int luaGameCreateTile(lua_State* L);
 		static int luaGameCreateMonsterType(lua_State* L);
@@ -581,6 +585,7 @@ class LuaScriptInterface
 		static int luaGameReload(lua_State* L);
 
 		static int luaGameGetItemByClientId(lua_State* L);
+		static int luaGameGetOfflinePlayer(lua_State* L);
 
 		static int luaGameHasEffect(lua_State* L);
 		static int luaGameHasDistanceEffect(lua_State* L);
@@ -1100,6 +1105,7 @@ class LuaScriptInterface
 		static int luaPlayerGeneratePreyData(lua_State* L);
 		static int luaPlayerGetBonusRerollCount(lua_State* L);
 		static int luaPlayerSetBonusRerollCount(lua_State* L);
+		static int luaPlayerIsOffline(lua_State* L);
 
 		static int luaPlayerGetBaseXpGain(lua_State *L);
 		static int luaPlayerSetBaseXpGain(lua_State *L);
@@ -1172,6 +1178,9 @@ class LuaScriptInterface
 
 		static int luaNpcGetSpeechBubble(lua_State* L);
 		static int luaNpcSetSpeechBubble(lua_State* L);
+		
+		static int luaNpcSetName(lua_State* L);
+		static int luaNpcPlace(lua_State* L);
 
 		// Guild
 		static int luaGuildCreate(lua_State* L);
@@ -1274,6 +1283,7 @@ class LuaScriptInterface
 		static int luaHouseSetAccessList(lua_State* L);
 
 		static int luaHouseKickPlayer(lua_State* L);
+		static int luaHouseIsInvited(lua_State* L);
 
 		// ItemType
 		static int luaItemTypeCreate(lua_State* L);
@@ -1327,10 +1337,13 @@ class LuaScriptInterface
 		static int luaItemTypeGetAmmoType(lua_State* L);
 		static int luaItemTypeGetCorpseType(lua_State* L);
 
+		static int luaItemTypeGetAbilities(lua_State* L);
+
 		static int luaItemTypeGetSpeed(lua_State* L);
 		static int luaItemTypeGetBaseSpeed(lua_State* L);
 		static int luaItemTypeGetDecayTime(lua_State* L);
 		static int luaItemTypeGetShowDuration(lua_State* L);
+		static int luaItemTypeGetWrapableTo(lua_State* L);
 
 		static int luaItemTypeHasSubType(lua_State* L);
 

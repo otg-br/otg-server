@@ -1,14 +1,62 @@
 local events = {
+	'ParasiteWarzone',
+	'ElementalSpheresOverlords',
+	'BigfootBurdenVersperoth',
+	'BigfootBurdenWiggler',
+	'SvargrondArenaKill',
+	'NewFrontierShardOfCorruption',
+	'NewFrontierTirecz',
+	'ServiceOfYalaharDiseasedTrio',
+	'ServiceOfYalaharAzerus',
+	'ServiceOfYalaharQuaraLeaders',
+	'InquisitionBosses',
+	'InquisitionUngreez',
+	'KillingInTheNameOfKills',
+	'KillingInTheNameOfKillss',
+	'KillingInTheNameOfKillsss',
+	'MastersVoiceServants',
+	'SecretServiceBlackKnight',
+	'ThievesGuildNomad',
+	'WotELizardMagistratus',
+	'WotELizardNoble',
+	'WotEKeeper',
+	'WotEBosses',
+	'WotEZalamon',
+	'WarzoneThree',
 	'PlayerDeath',
 	'AdvanceSave',
+	'bossesWarzone',
+	'AdvanceRookgaard',
+	'PythiusTheRotten',
 	'DropLoot',
+	'Yielothax',
+	'BossParticipation',
+	'Energized Raging Mage',
+	'Raging Mage',
 	'DeathCounter',
 	'KillCounter',
 	'bless1',
+	'lowerRoshamuul',
+	'SpikeTaskQuestCrystal',
+	'SpikeTaskQuestDrillworm',
 	'petlogin',
 	'petthink',
+	'UpperSpikeKill',
+	'MiddleSpikeKill',
+	'LowerSpikeKill',
+	'BossesForgotten',
+	'ReplicaServants',
+	'EnergyPrismDeath',
+	'AstralPower',
 	'BossesKill',
+	'TheShattererKill',
+	'BossesHero',
+	'DragonsKill',
+	'deeplingBosses',
+	'theGreatDragonHuntKill',
 	'ImpactAnalyzer',
+	'bossesMissionCults',
+	'BossesTheCurseSpread',
 }
 
 
@@ -58,16 +106,28 @@ local function onMovementRemoveProtection(cid, oldPosition, time)
 		return true
 	end
 
+		-- prote��o de anti-bomb
+	-- player:setStorageValue(Storage.LoginLogoutExaust, os.stime() + 5)
+
 	addEvent(onMovementRemoveProtection, 1000, cid, oldPosition, time - 1)
 end
 
 function onLogin(player)
+	-- Dream Courts Quest
+	if player:getStorageValue(Storage.DreamCourts.UnsafeRelease.hasBait) == 1 then
+		player:setStorageValue(Storage.DreamCourts.UnsafeRelease.hasBait, - 1)
+	end
 	
 	local isTrainingStorage = 12835
 	if player:getStorageValue(isTrainingStorage) >= 1 then
 		player:setStorageValue(isTrainingStorage, -1)
 	end
 
+	if player:getStorageValue(ENTREGAR_QUESTS) < 1 then
+		entregarQuests(player:getId())
+		player:setStorageValue(ENTREGAR_QUESTS, 1)
+	end
+	
 	-- remover dps
 	player:addOutfit(151)
 	player:addOutfit(155)
@@ -132,9 +192,29 @@ function onLogin(player)
 	AutoLootList:onLogin(player:getId())
 	
 	player:sendTextMessage(MESSAGE_STATUS_DEFAULT, loginStr)
-	if Game.getBoostMonster():lower() ~= 'none' and MonsterType(Game.getBoostMonster()) then
-		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("Today's boosted creature: %s\nBoosted creatures yield more experience points, carry more loot than usual and respawn at a faster rate.", MonsterType(Game.getBoostMonster()):getName()))
-	end
+	
+	    local boostMessages = {}
+
+    for _, boosted in ipairs(boostCreature) do
+        local categoryMessage
+        if boosted.category == "normal" then
+            categoryMessage = "Monstro (fraco)"
+        elseif boosted.category == "second" then
+            categoryMessage = "Monstro (médio)"
+        elseif boosted.category == "third" then
+            categoryMessage = "Monstro (forte)"
+        elseif boosted.category == "boss" then
+            categoryMessage = "Boss"
+        end
+        table.insert(boostMessages, string.format("%s: %s [+%d%% exp, +%d%% loot]", 
+            categoryMessage, boosted.name, boosted.exp, boosted.loot))
+    end
+
+    if #boostMessages > 0 then
+        player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "As seguintes criaturas estão boostadas:\n" ..
+            table.concat(boostMessages, "\n") ..
+            "\nMonstros boostados concedem mais loot, experiência e nascem mais rápido.")
+    end
 
 	if player:getClient().version == 1100 then
 		player:openChannel(10) -- LOOT CHANNEL
@@ -145,6 +225,19 @@ function onLogin(player)
 	player:setStorageValue(38 , -1)
 
 	local playerId = player:getId()
+
+	-- DailyReward.init(playerId)
+
+	--[[-- Maintenance mode
+	if (player:getGroup():getId() < 2) then
+	return false
+	else
+
+	end--]]
+
+	if (player:getAccountType() == ACCOUNT_TYPE_GOD) then
+		-- player:openChannel(13) -- Spoof channel
+	end
 
 	if (player:getGroup():getId() > 4) then
 		player:setGhostMode(true)
@@ -181,10 +274,18 @@ function onLogin(player)
 		player:popupFYI(msg)
 	end
 
+	if player:getGroup():getId() > 5 then
+		player:sendTextMessage(MESSAGE_INFO_DESCR, "Horario atual no servidor: ".. os.date("%d.%m.%Y - %X") .." \nHorario com dump: "..os.sdate("%d.%m.%Y - %X", os.stime()))
+	end
+	-- chave-ssh: chavepri1234
 
 	-- OPEN CHANNELS
-	if table.contains({"Raccon", "Carlin"}, player:getTown():getName())then
-		player:openChannel(7) -- help channel
+	if table.contains({"Rookgaard", "Dawnport"}, player:getTown():getName())then
+		--player:openChannel(7) -- help channel
+		player:openChannel(3) -- world chat
+		player:openChannel(6) -- advertsing rook main
+	else
+		--player:openChannel(7) -- help channel
 		player:openChannel(3) -- world chat
 		player:openChannel(5) -- advertsing main
 	end
@@ -208,43 +309,26 @@ function onLogin(player)
 		player:registerEvent("AutoLoot")
 	end
 
-    -- --Imbuements
-	     	player:setStorageValue(10167, 5)
-	     	player:setStorageValue(10132, 1)
-			player:setStorageValue(10133, 1)
-			player:setStorageValue(10134, 1)
-			player:setStorageValue(10135, 1)
-			player:setStorageValue(10136, 1)
-			player:setStorageValue(10137, 1)
-			player:setStorageValue(10138, 1)
-			player:setStorageValue(10148, 1)
-			player:setStorageValue(10139, 1)
-			player:setStorageValue(10142, 1)
-			player:setStorageValue(10146, 1)
-			player:setStorageValue(10145, 1)
-			player:setStorageValue(10144, 1)
-			player:setStorageValue(10143, 1)
-			player:setStorageValue(10151, 1)
-			player:setStorageValue(10163, 1)
-			player:setStorageValue(10164, 1)
-			player:setStorageValue(10165, 1)
-			player:setStorageValue(10166, 1)
-			player:setStorageValue(10168, 1)
-			player:setStorageValue(10169, 1)
-			player:setStorageValue(10150, 1)
-			player:setStorageValue(10152, 1)
-			player:setStorageValue(10154, 1)
-			player:setStorageValue(10156, 1)
-			player:setStorageValue(10158, 1)
-			player:setStorageValue(10160, 1)
-			player:setStorageValue(10162, 1)
 
-			
-			
-			
 	if player:getStorageValue(Storage.combatProtectionStorage) < 1 then
 		player:setStorageValue(Storage.combatProtectionStorage, 1)
 		onMovementRemoveProtection(playerId, player:getPosition(), 10)
+	end
+
+	-- vip devido ao bug la
+	if player:getAccountStorageValue(2) <= 0 then
+		player:addVipDays(3)
+		player:setAccountStorageValue(2, os.stime())
+		-- if table.contains({SKULL_RED, SKULL_BLACK}, player:getSkull()) then
+			-- player:setSkull(SKULL_NONE)
+		-- end
+
+		player:sendTextMessage(MESSAGE_INFO_DESCR, string.format("[PARABENS] voce recebeu 3 dias VIP."))
+	end
+
+	local proxy = player:getProxyInfo()
+	if proxy then
+		player:sendTextMessage(MESSAGE_INFO_DESCR, string.format("You are logged in using the %s server.", proxy.name))
 	end
 
 	local days = math.max(0, math.ceil((player:getVipDays() - os.stime())  / 86400 ))

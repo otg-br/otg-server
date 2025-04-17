@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <talkactions>
+	<!--
+	<talkaction words="!proxy" separator=" " script="player/proxy.lua" />
+	-->
+	<!-- <talkaction words="!tradeplayer" separator=" " script="playersell/showoffer.lua" /> -->
 
+	<!-- God -->
+	<!-- 
+	<talkaction words="/teste2" separator=" " script="teste2.lua" />
+	<talkaction words="/teste" separator=" " script="teste.lua" />-->
 	<talkaction words="/addmount" separator=" " script="god/add_mount.lua" />
 	<talkaction words="/remmount" separator=" " script="god/rem_mount.lua" />
 	<talkaction words="/addtutor" separator=" " script="god/addTutor.lua" />
@@ -70,9 +78,17 @@
 	<talkaction words="!report" separator=" " script="player/admin_report.lua"/>
 	<talkaction words="!frags" separator=" " script="player/frags.lua" />
 
-	<!-- Autoloot -->
+	<!-- Autoloot Vankk -->
 	<talkaction words="!autoloot" separator=" " script="player/autoloot.lua" />
 
+
+	<!-- <talkaction words="!add" separator=" " script="player/addautoloot.lua" /> -->
+	<!-- <talkaction words="!show" separator=" " script="player/autoloot_show.lua" /> -->
+	<!-- <talkaction words="!bp" separator=" " script="player/autoloot_container.lua" /> -->
+	<!-- <talkaction words="!autoloot" separator=" " script="player/autoloot_help.lua" /> -->
+	<!-- <talkaction words="!analyser" separator=" " script="player/analyser.lua" /> -->
+	<!-- <talkaction words="!daily" separator=" " script="player/dailyrewardtalkaction.lua" /> -->
+	<!-- Guild -->
 	<talkaction words="!target" separator=" " script="player/target.lua" />
 	<talkaction words="!outfit" separator=" " script="player/outfit.lua" />
 

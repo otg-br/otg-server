@@ -14,7 +14,10 @@
 	<difficulty id="3" type="1" charm="50" first="2" second="3" final="5" />
 	<difficulty id="4" type="1" charm="100" first="2" second="3" final="5" />
 
-
+<!-- 	<category name="Teste">
+		<race id="226" difficulty="3" ocorrence="2" />
+	</category>
+ -->
 
 	<category name="Amphibic">
 		<race id="262" name="Toad" difficulty="2" ocorrence="1" /> <!-- toad -->

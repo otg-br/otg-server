@@ -1129,7 +1129,7 @@ function Player:initDailyRewardSystem()
 
     if nextRewardPick < (Game.getLastServerSave() - (24*60*60)) then -- 24 hours of the limit time has passed, reset streak
         self:setCurrentDayStreak(0)
-        ---print('reset current day streak')
+        print('reset current day streak')
     end
 
     self:loadStreakBonuses()

@@ -1,5 +1,12 @@
 function onLogout(player)
+	-- if player:getStorageValue(Storage.LoginLogoutExaust) > os.stime() then
+		-- player:sendCancelMessage("You are performing a very fast action.")
+		-- return false
+	-- end
 
+	if player:getName() == "Jaaoo" then
+		return false
+	end
 
 	player:setStorageValue(Storage.LoginLogoutExaust, os.stime() + 5)
     local playerId = player:getId()

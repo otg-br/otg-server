@@ -26,4 +26,8 @@ function onUse(cid, item, fromPosition, itemEx, toPosition)
 		return true
 	end
 
+	if player:getStorageValue(Storage.ForgottenKnowledge.Tomes) > 0 then
+	player:openImbuementWindow(itemEx)
+	return true
+	end
 end
