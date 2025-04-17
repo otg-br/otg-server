@@ -2,26 +2,6 @@ local ITEM_GOLD_COIN      = 2148
 local ITEM_PLATINUM_COIN  = 2152
 local ITEM_CRYSTAL_COIN   = 2160
 
-local ITEM_DEPOT_NULL  = 35000
-local ITEM_DEPOT_I     = 25453
-local ITEM_DEPOT_II    = 25454
-local ITEM_DEPOT_III   = 25455
-local ITEM_DEPOT_IV    = 25456
-local ITEM_DEPOT_V     = 25457
-local ITEM_DEPOT_VI    = 25458
-local ITEM_DEPOT_VII   = 25459
-local ITEM_DEPOT_VIII  = 25460
-local ITEM_DEPOT_IX    = 25461
-local ITEM_DEPOT_X     = 25462
-local ITEM_DEPOT_XI    = 25463
-local ITEM_DEPOT_XII   = 25464
-local ITEM_DEPOT_XIII  = 25465
-local ITEM_DEPOT_XIV   = 25466
-local ITEM_DEPOT_XV    = 25467
-local ITEM_DEPOT_XVI   = 25468
-local ITEM_DEPOT_XVII  = 25469
-local ITEM_DEPOT_XVIII = 35018
-
 local blockTeleportTrashing = true
 
 local STONE_SKIN_AMULET       = 2197   -- ID for Stone Skin Amulet
@@ -129,122 +109,7 @@ event.onMoveItem = function(self, item, count, fromPosition, toPosition, fromCyl
         end
     end
 
-    -- 5) Falcon escutcheon forge
-    if toPosition == Position(33363, 31342, 7) and item.itemid == 33223 then
-        if tile and tile:getItemById(8671) then
-            if self:getItemCount(33303) < 1 then
-                self:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Only a grant of arms from the king or the grand master of the Order of the Falcon permits forging or bearing a falcon escutcheon.")
-                return false
-            else
-                if self:getItemCount(33223) > 0 and self:getItemCount(33300) > 0 then
-                    self:removeItem(33223, 1)
-                    self:removeItem(33300, 1)
-                    self:addItem(33224, 1)
-                    toPosition:sendMagicEffect(CONST_ME_POFF)
-                end
-            end
-        end
-    end
-
-    -- 6) Feeding the turtle [Secret Library]
-    if toPosition == Position(32460, 32928, 7) and item.itemid == 2667 then
-        toPosition:sendMagicEffect(CONST_ME_HEARTS)
-        self:say("You feed the turtle, now you may pass.", TALKTYPE_MONSTER_SAY)
-        Game.setStorageValue(GlobalStorage.secretLibrary.SmallIslands.Turtle, os.stime() + 10 * 60)
-        item:remove(1)
-    end
-
-    -- 7) Cults of Tibia
-    local frompos = Position(33023, 31904, 14)
-    local topos   = Position(33052, 31932, 15)
-    if self:getPosition():isInRange(frompos, topos) and item:getId() == 26397 then
-        local tileBoss = Tile(toPosition)
-        if tileBoss then
-            local topCreature = tileBoss:getTopCreature()
-            if topCreature and topCreature:isMonster() then
-                local nameLower = topCreature:getName():lower()
-                if nameLower == "the remorseless corruptor" then
-                    topCreature:addHealth(-17000)
-                    item:remove(1)
-                    if topCreature:getHealth() <= 300 then
-                        topCreature:remove()
-                        local monster = Game.createMonster("the corruptor of souls", toPosition)
-                        monster:registerEvent("checkPiso")
-                        if Game.getStorageValue("healthSoul") > 0 then
-                            monster:addHealth(-(monster:getHealth() - Game.getStorageValue("healthSoul")))
-                        end
-                        Game.setStorageValue("checkPiso", os.stime() + 30)
-                    end
-                elseif nameLower == "the corruptor of souls" then
-                    Game.setStorageValue("checkPiso", os.stime() + 30)
-                    item:remove(1)
-                end
-            end
-        end
-    end
-
-    -- 8) Lion's Rock
-    local lionsRock = {
-        [2147] = {
-            position = Position(33069, 32298, 9),
-            msg = "You place the ruby on the small socket. A red flame begins to burn.",
-            flameId = 1488,
-            storage = GlobalStorage.lionsRock.Red
-        },
-        [2146] = {
-            position = Position(33069, 32302, 9),
-            msg = "You place the sapphire on the small socket. A blue flame begins to burn.",
-            flameId = 8058,
-            storage = GlobalStorage.lionsRock.Blue
-        },
-        [2150] = {
-            position = Position(33077, 32302, 9),
-            msg = "You place the amethyst on the small socket. A violet flame begins to burn.",
-            flameId = 7473,
-            storage = GlobalStorage.lionsRock.Violet
-        },
-        [9970] = {
-            position = Position(33077, 32298, 9),
-            msg = "You place the topaz on the small socket. A yellow flame begins to burn.",
-            flameId = 1500,
-            storage = GlobalStorage.lionsRock.Yellow
-        }
-    }
-
-    if self:getStorageValue(lionrock.storages.playerCanDoTasks) - os.stime() < 0 then
-        local it = lionsRock[item.itemid]
-        if it and toPosition == it.position then
-            local sqm = Tile(it.position)
-            if sqm and sqm:getItemCountById(it.flameId) < 1 then
-                local flame = Game.createItem(it.flameId, 1, it.position)
-                if flame then
-                    flame:decay()
-                end
-                self:sendTextMessage(MESSAGE_EVENT_ADVANCE, it.msg)
-                Game.setStorageValue(it.storage, 1)
-                item:remove(1)
-
-                -- Check if all four flames have been placed
-                local mayPass = true
-                for _, k in pairs(lionsRock) do
-                    if Game.getStorageValue(k.storage) < 1 then
-                        mayPass = false
-                    end
-                end
-                if mayPass then
-                    local fountain = Game.createItem(6390, 1, Position(33073, 32300, 9))
-                    fountain:setActionId(41357)
-                    local stone = Tile(Position(33073, 32300, 9)):getItemById(3608)
-                    if stone then
-                        stone:remove()
-                    end
-                    self:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Something happens at the center of the room ...")
-                end
-            end
-        end
-    end
-
-    -- 9) SSA exhaust (Stone Skin Amulet)
+    -- 5) SSA exhaust (Stone Skin Amulet)
     if toPosition.x == CONTAINER_POSITION and toPosition.y == CONST_SLOT_NECKLACE and item:getId() == STONE_SKIN_AMULET then
         local pid = self:getId()
         if exhaust[pid] then
@@ -259,7 +124,7 @@ event.onMoveItem = function(self, item, count, fromPosition, toPosition, fromCyl
         end
     end
 
-    -- 10) Prevent moving items from Store Inbox into certain slots
+    -- 6) Prevent moving items from Store Inbox into certain slots
     local containerIdFrom = fromPosition.y - 64
     local containerFrom = self:getContainerById(containerIdFrom)
     if containerFrom then
@@ -321,13 +186,7 @@ event.onMoveItem = function(self, item, count, fromPosition, toPosition, fromCyl
         end
 
         -- Check if the target container is inside the Store Inbox
-        local ignoreArray = {
-            2594, 2589, ITEM_DEPOT_NULL, ITEM_DEPOT_I, ITEM_DEPOT_II, ITEM_DEPOT_III,
-            ITEM_DEPOT_IV, ITEM_DEPOT_V, ITEM_DEPOT_VI, ITEM_DEPOT_VII, ITEM_DEPOT_VIII,
-            ITEM_DEPOT_IX, ITEM_DEPOT_X, ITEM_DEPOT_XI, ITEM_DEPOT_XII, ITEM_DEPOT_XIII,
-            ITEM_DEPOT_XIV, ITEM_DEPOT_XV, ITEM_DEPOT_XVI, ITEM_DEPOT_XVII, ITEM_DEPOT_XVIII
-        }
-        if not isInArray(ignoreArray, containerTo:getId()) and getContainerParent(containerTo) and getContainerParent(containerTo):getId() == ITEM_STORE_INBOX then
+        if getContainerParent(containerTo) and getContainerParent(containerTo):getId() == ITEM_STORE_INBOX then
             self:sendCancelMessage(RETURNVALUE_CONTAINERNOTENOUGHROOM)
             return false
         end
@@ -338,19 +197,19 @@ event.onMoveItem = function(self, item, count, fromPosition, toPosition, fromCyl
         end
     end
 
-    -- 11) Do not allow moving the Gold Pouch itself
+    -- 7) Do not allow moving the Gold Pouch itself
     if item:getId() == GOLD_POUCH then
         self:sendCancelMessage(RETURNVALUE_NOTPOSSIBLE)
         return false
     end
 
-    -- 12) Do not allow moving items with actionID = 8000
+    -- 8) Do not allow moving items with actionID = 8000
     if item:getActionId() == NOT_MOVEABLE_ACTION then
         self:sendCancelMessage(RETURNVALUE_NOTPOSSIBLE)
         return false
     end
 
-    -- 13) Check two-handed weapons logic
+    -- 9) Check two-handed weapons logic
     if toPosition.x ~= CONTAINER_POSITION then
         return true
     end
@@ -384,7 +243,7 @@ event.onMoveItem = function(self, item, count, fromPosition, toPosition, fromCyl
         end
     end
 
-    -- 14) Reward System checks
+    -- 10) Reward System checks
     if toPosition.x == CONTAINER_POSITION then
         local containerId = toPosition.y - 64
         local container = self:getContainerById(containerId)
@@ -409,20 +268,20 @@ event.onMoveItem = function(self, item, count, fromPosition, toPosition, fromCyl
         end
     end
 
-    -- 15) Do not allow moving a boss corpse
+    -- 11) Do not allow moving a boss corpse
     if item:getAttribute(ITEM_ATTRIBUTE_CORPSEOWNER) == 2^31 - 1 then
         self:sendCancelMessage(RETURNVALUE_NOTPOSSIBLE)
         return false
     end
 
-    -- 16) Block throwing items on a Reward Chest
+    -- 12) Block throwing items on a Reward Chest
     if tile and tile:getItemById(ITEM_REWARD_CHEST) then
         self:sendCancelMessage(RETURNVALUE_NOTPOSSIBLE)
         self:getPosition():sendMagicEffect(CONST_ME_POFF)
         return false
     end
 
-    -- 17) Block throwing items on top of teleports
+    -- 13) Block throwing items on top of teleports
     if blockTeleportTrashing and toPosition.x ~= CONTAINER_POSITION then
         local thing = Tile(toPosition):getItemByType(ITEM_TYPE_TELEPORT)
         if thing then
@@ -432,14 +291,14 @@ event.onMoveItem = function(self, item, count, fromPosition, toPosition, fromCyl
         end
     end
 
-    -- 18) Block throwing items on trapdoors
+    -- 14) Block throwing items on trapdoors
     if tile and tile:getItemById(370) then -- Trapdoor
         self:sendCancelMessage(RETURNVALUE_NOTPOSSIBLE)
         self:getPosition():sendMagicEffect(CONST_ME_POFF)
         return false
     end
 
-    -- 19) Check anti-push limit
+    -- 15) Check anti-push limit
     if not antiPush(self, item, count, fromPosition, toPosition, fromCylinder, toCylinder) then
         return false
     end

@@ -1,7 +1,6 @@
 local STORAGE_CAPACITY_IMBUEMENT = 42154
 
 local eventCanBeAppliedImbuement = Event()
-
 eventCanBeAppliedImbuement.canBeAppliedImbuement = function(self, imbuement, item)
 	local categories = {}
 	local slots = ItemType(item:getId()):getImbuingSlots()
@@ -30,11 +29,9 @@ eventCanBeAppliedImbuement.canBeAppliedImbuement = function(self, imbuement, ite
 
 	return true
 end
-
 eventCanBeAppliedImbuement:register()
 
 local eventOnApplyImbuement = Event()
-
 eventOnApplyImbuement.onApplyImbuement = function(self, imbuement, item, slot, protectionCharm)
 	for _, pid in pairs(imbuement:getItems()) do
 		if self:getItemCount(pid.itemid) < pid.count then
@@ -85,11 +82,9 @@ eventOnApplyImbuement.onApplyImbuement = function(self, imbuement, item, slot, p
 	self:sendImbuementPanel(nitem)
 	return true
 end
-
 eventOnApplyImbuement:register()
 
 local eventClearImbuement = Event()
-
 eventClearImbuement.clearImbuement = function(self, item, slot)
 	local slots = ItemType(item:getId()):getImbuingSlots()
 	if slots < slot then
@@ -127,12 +122,10 @@ eventClearImbuement.clearImbuement = function(self, item, slot)
 
 	return true
 end
-
 eventClearImbuement:register()
 
 
 local onCombat = Event()
-
 onCombat.onCombat = function(player, target, item, primaryDamage, primaryType, secondaryDamage, secondaryType)
 	-- Copiar a lógica original da função onCombat aqui, se necessário
 	-- Exemplo:
