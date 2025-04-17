@@ -68,10 +68,10 @@ BoostedCreature = {
         boss = { exp = {min = 30, max = 30}, loot = {min = 15, max = 45} }
     },
     positions = {
-        normal = Position(32367, 32232, 7),
-        second = Position(32369, 32232, 7),
-        third = Position(32371, 32232, 7),
-        boss = Position(32373, 32232, 7)
+        normal = Position(92, 114, 7),
+        second = Position(92, 115, 7),
+        third = Position(92, 117, 7),
+        boss = Position(92, 118, 7)
     },
     messages = {
         normal = "The chosen creature is %s. When killed, you receive +%d experience and +%d loot.",
