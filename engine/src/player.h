@@ -1849,6 +1849,8 @@ class Player final : public Creature, public Cylinder
 		int64_t lastQuickLootNotification = 0;
 		uint32_t myPet = 0;
 
+		uint32_t lastProgressMessageLevel[SKILL_LAST + 1] = {0};
+
 		std::vector<Kill> unjustifiedKills;
 
 		BedItem* bedItem = nullptr;

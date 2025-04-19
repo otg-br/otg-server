@@ -16,6 +16,11 @@
 	<action fromid="29021" toid="29024" script="other/dailyRewardShrine.lua"/>
 	<action fromid="29089" toid="29090" script="other/dailyRewardShrine.lua"/>
 
+
+    <!-- Exercise Training System -->
+	<action fromid="33082" toid="33087" script="other/exerciseTraining.lua" allowfaruse="1"/>
+	<action fromid="32127" toid="32129" script="other/exerciseTraining.lua" allowfaruse="1"/>
+
 	<!-- Market -->
 	<action itemid="14405" function="market" />
 
