@@ -1,7 +1,7 @@
 local function ServerSave()
 	Game.setGameState(GAME_STATE_CLOSED)
 
-	setGlobalStorageValueDB(GlobalStorage.LastServerSave, os.time()) -- needed for the daily reward system
+	setGlobalStorageValueDB(GlobalStorageKeys.LastServerSave, os.time()) -- needed for the daily reward system
 
 	local pc = 0
 	for i, player in pairs(Game.getPlayers()) do

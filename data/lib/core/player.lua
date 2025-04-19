@@ -554,7 +554,7 @@ end
 function Player.updateExpState(self)
 	local useGrinding = true
 	local isPremium = configManager.getBoolean(configKeys.FREE_PREMIUM) and true or self:isPremium()
-	if Game.getStorageValue(GlobalStorage.XpDisplayMode) > 0 then
+	if Game.getStorageValue(GlobalStorageKeys.XpDisplayMode) > 0 then
 		-- displayRate = 1
 		displayRate = Game.getExperienceStage(self:getLevel())
 	else
