@@ -1172,7 +1172,7 @@ function Player:setCurrentDayStreak(value)
 end
 
 function Player:getCurrentRewardLaneIndex(zerobased)
-    local rewardIndex = math.max(self:getStorageValue(Storage.dailyReward.currentIndex),0)
+    local rewardIndex = math.max(self:getStorageValue(PlayerStorageKeys.dailyReward.currentIndex),0)
     if not zerobased then
         rewardIndex = rewardIndex+1
     end
