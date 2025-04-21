@@ -23,6 +23,7 @@ PlayerStorageKeys = {
     achievementsBase = 300000,
     achievementsCounter = 20000,
     TheNewFrontierMission03 = 30036,
+    combatProtectionStorage = 50722,
     dailyReward = {
         nextRewardPick = DAILYREWARDSTORAGE_NEXTREWARDPICK,
         lastRewardPick = DAILYREWARDSTORAGE_LASTREWARDPICK,

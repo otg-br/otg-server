@@ -98,7 +98,7 @@ function Creature:onTargetCombat(target)
 
     if target:isPlayer() then
         if self:isMonster() then
-            local protectionStorage = target:getStorageValue(Storage.combatProtectionStorage)
+            local protectionStorage = target:getStorageValue(PlayerStorageKeys.combatProtectionStorage)
             if protectionStorage >= os.stime() then
                 return RETURNVALUE_YOUMAYNOTATTACKTHISPLAYER
             end
