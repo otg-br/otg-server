@@ -92,7 +92,7 @@ timeBetweenExActions = 800
 -- Map
 -- NOTE: set mapName WITHOUT .otbm at the end
 -- NOTE: unzip the map world.rar
-mapName = "dragonsouls11"
+mapName = "forgotten"
 mapAuthor = ""
 
 -- Market
