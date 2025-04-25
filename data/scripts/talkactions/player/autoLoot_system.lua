@@ -50,13 +50,11 @@ system_autoloot_onKill:register()
 local function addQuickItem(playerId, itemId, itemName)
     local player = Player(playerId)
     if not player then
-        print(string.format("[AUTO LOOT ERROR] Failed to add item %d for playerId %d: Player not found.", itemId, playerId))
         return false
     end
 
     local itemType = ItemType(itemId)
     if not itemType or itemType:getId() == 0 then
-        print(string.format("[AUTO LOOT ERROR] Invalid item ID %d for playerId %d.", itemId, playerId))
         return false
     end
 
@@ -92,7 +90,6 @@ end
 local function removeQuickItem(playerId, itemId, itemName)
     local player = Player(playerId)
     if not player then
-        print(string.format("[AUTO LOOT ERROR] Failed to remove item %d for playerId %d: Player not found.", itemId, playerId))
         return false
     end
 
@@ -131,7 +128,6 @@ end
 local function showMonsterLootModal(playerId, monsterName)
     local player = Player(playerId)
     if not player then
-        print(string.format("[AUTO LOOT ERROR] Failed to show monster loot modal for playerId %d: Player not found.", playerId))
         return false
     end
 
@@ -215,7 +211,6 @@ end
 local function openLootListModal(playerId)
     local player = Player(playerId)
     if not player then
-        print(string.format("[AUTO LOOT ERROR] Failed to open loot list modal for playerId %d: Player not found.", playerId))
         return false
     end
 
@@ -225,11 +220,6 @@ local function openLootListModal(playerId)
     }
 
     local lootList = AutoLootList:getItemList(playerId)
-    if not lootList then
-        player:sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "[AUTO LOOT] - Your loot list is empty.")
-        return false
-    end
-
     for _, loot in pairs(lootList) do
         local itemType = ItemType(loot.item_id)
         if itemType then
@@ -258,7 +248,6 @@ end
 -- Move an item to the player's Gold Pouch
 local function moveToGoldPouch(player, item)
     if not player or not item then
-        print(string.format("[AUTO LOOT ERROR] Failed to move item to Gold Pouch: Player or item is nil."))
         return false
     end
 
@@ -268,28 +257,52 @@ local function moveToGoldPouch(player, item)
         return false
     end
 
-    local moved = item:moveTo(goldPouch)
-    if not moved then
-        print(string.format("[AUTO LOOT ERROR] Failed to move item %d to Gold Pouch for playerId %d.", item:getId(), player:getId()))
-    end
-    return moved
+    return item:moveTo(goldPouch)
 end
 
--- Event triggered when a creature is killed
-local system_autoloot_onKill = CreatureEvent("AutoLoot")
-function system_autoloot_onKill.onKill(creature, target)
-    if not target:isMonster() then
-        return true
+-- Modified function to handle auto-looting items
+function AutoLootList.getLootItem(self, playerId, position)
+    local player = Player(playerId)
+    if not player then
+        return false
     end
 
-    addEvent(AutoLootList.getLootItem, 100, AutoLootList, creature:getId(), target:getPosition())
+    local tile = Tile(position)
+    if not tile then
+        return false
+    end
+
+    local corpse = tile:getTopDownItem()
+    if not corpse or not corpse:isContainer() then
+        return false
+    end
+
+    local items = {}
+    for i = 0, corpse:getSize() - 1 do
+        local item = corpse:getItem(i)
+        if item then
+            table.insert(items, item)
+        end
+    end
+
+    for _, item in ipairs(items) do
+        if self:itemInList(playerId, item:getId()) then
+            local itemMoved = moveToGoldPouch(player, item)
+            
+            if itemMoved then
+                player:sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, string.format("[AUTO LOOT] - The item %s has been moved to your Gold Pouch.", item:getName()))
+            end
+        end
+    end
+
     return true
 end
-system_autoloot_onKill:register()
 
 -- TalkAction for auto-loot commands
 local system_autoloot_talk = TalkAction("!autoloot", "/autoloot")
+
 function system_autoloot_talk.onSay(player, words, param, type)
+    -- Check cooldown for the autoloot command
     if player:getStorageValue(AUTO_LOOT_COOLDOWN_STORAGE) > os.time() then
         player:sendCancelMessage(string.format("You are on cooldown. Please wait %d seconds to use the command again.", config.exhaustTime))
         return false
