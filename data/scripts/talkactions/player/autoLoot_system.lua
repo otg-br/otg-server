@@ -67,7 +67,7 @@ local function addQuickItem(playerId, itemId, itemName)
     end
 
     -- Check if the player has reached the maximum number of items in their list
-    local maxItems = player:getPremiumEndsAt() > 0 and config.premiumMaxItems or config.freeMaxItems
+    local maxItems = player:getPremiumDays() > 0 and config.premiumMaxItems or config.freeMaxItems
     if AutoLootList:itemInList(playerId, itemId) then
         player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, string.format("[AUTO LOOT] - The item %s is already in your loot list.", itemName))
         return false
@@ -99,7 +99,7 @@ local function removeQuickItem(playerId, itemId, itemName)
     if not AutoLootList:itemInList(playerId, itemId) then
         player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, string.format("[AUTO LOOT] - The item %s is not in your loot list.", itemName))
         return false
-    }
+    end
 
     -- Remove the item from the player's auto-loot list
     local itemRemoved = AutoLootList:removeItem(playerId, itemId)
