@@ -1,3 +1,4 @@
+-- Item IDs
 local ITEM_GOLD_COIN      = 2148
 local ITEM_PLATINUM_COIN  = 2152
 local ITEM_CRYSTAL_COIN   = 2160
@@ -11,16 +12,23 @@ local ITEM_SUPPLY_STASH       = 26386
 local ITEM_STORE_INBOX        = 26052  -- ID for Store Inbox
 local CONTAINER_POSITION      = 65535  -- Macro for container position
 local CONST_SLOT_STORE_INBOX  = 11     -- Slot index for the Store Inbox
-local CONTAINER_WEIGHT        = 100000 -- 10k = 10000 oz | this function is only for containers, item below the weight determined here can be moved inside the container, for others items look game.cpp at the src
+local CONST_SLOT_NECKLACE     = 2      -- Slot index for necklace (used for SSA)
+local CONST_SLOT_LEFT         = 5      -- Slot index for left hand
+local CONST_SLOT_RIGHT        = 6      -- Slot index for right hand
+local ITEM_REWARD_CONTAINER   = 26379  -- Adjust according to your server
+local ITEM_REWARD_CHEST       = 26382  -- Adjust according to your server
 
 local exercise_ids            = {32384, 32385, 32386, 32387, 32388, 32389}
 local dummies                 = {32147, 32148, 32143, 32144, 32145, 32146}
 local bathTube                = {29312, 29313}
 local NOT_MOVEABLE_ACTION     = 8000
 
--- SSA exhaust
-local exhaust = {}
+-- Global table for SSA exhaust (persists across script reloads)
+if not exhaust then
+    exhaust = {}
+end
 
+-- Check if a value exists in an array
 function isInArray(array, value)
     if type(array) ~= "table" then
         return false
@@ -33,6 +41,7 @@ function isInArray(array, value)
     return false
 end
 
+-- Safely get a container by ID
 local function safeGetContainerById(player, id)
     if type(id) ~= "number" then
         return nil
@@ -48,6 +57,7 @@ local function safeGetContainerById(player, id)
     return nil
 end
 
+-- Check if a container has nested containers
 local function hasNestedContainer(item)
     if item:isContainer() then
         local container = item:getContainer()
@@ -61,43 +71,58 @@ local function hasNestedContainer(item)
     return false
 end
 
+-- Anti-spam system for pushing items to tiles
 local function antiPush(player, item, count, fromPosition, toPosition, fromCylinder, toCylinder)
+    -- Ignore if the destination is a container
+    if toPosition.x == CONTAINER_POSITION then
+        return true
+    end
+
+    -- Check if toPosition is valid
     local tile = Tile(toPosition)
-    if tile and (tile:getItemCount() + count) > 20 then
+    if not tile then
+        player:sendCancelMessage(RETURNVALUE_NOTPOSSIBLE)
+        return false
+    end
+
+    -- Read the maximum items per tile from config.lua
+    local maxItemsPerTile = configManager.getNumber("maxItemsPerTile") or 20
+
+    -- Check the item limit per tile (considering the number of items being moved)
+    if (tile:getItemCount() + count) > maxItemsPerTile then
         player:sendCancelMessage("You can't push more items to this position.")
         return false
     end
     return true
 end
 
+-- Main event: onMoveItem
 local event = Event()
 event.onMoveItem = function(self, item, count, fromPosition, toPosition, fromCylinder, toCylinder)
+    -- Validate the item
+    if not item or not item:isItem() then
+        self:sendCancelMessage(RETURNVALUE_NOTPOSSIBLE)
+        return false
+    end
+
     -- 1) Exercise Weapons
-    if isInArray(exercise_ids, item.itemid) then
+    if isInArray(exercise_ids, item:getId()) then
         self:sendCancelMessage("You cannot move this item outside this container.")
         return false
     end
 
     -- 2) Dummies
-    if isInArray(dummies, item.itemid) then
-        if not toPosition:getTile():getHouse() then
+    if isInArray(dummies, item:getId()) then
+        if not Tile(toPosition):getHouse() then
             self:sendCancelMessage("You cannot move this item outside the house.")
             return false
         end
     end
 
-    -- 3) Block movement if tile already has more than 20 items
-    local tile = Tile(toPosition)
-    if tile and tile:getItemCount() > 20 then
-        self:sendCancelMessage(RETURNVALUE_NOTPOSSIBLE)
-        return false
-    end
-
-    -- 4) Moving bathtub
-    local bathTube = {29312, 29313}
-    if isInArray(bathTube, item.itemid) then
+    -- 3) Moving bathtub
+    if isInArray(bathTube, item:getId()) then
         local fromTile = Tile(fromPosition)
-        local toTile   = Tile(toPosition)
+        local toTile = Tile(toPosition)
         if fromTile then
             if fromTile:getTopCreature() then
                 self:sendCancelMessage("You cannot move this item with someone inside.")
@@ -109,35 +134,34 @@ event.onMoveItem = function(self, item, count, fromPosition, toPosition, fromCyl
         end
     end
 
-    -- 5) SSA exhaust (Stone Skin Amulet)
+    -- 4) SSA exhaust (Stone Skin Amulet)
     if toPosition.x == CONTAINER_POSITION and toPosition.y == CONST_SLOT_NECKLACE and item:getId() == STONE_SKIN_AMULET then
-        local pid = self:getId()
-        if exhaust[pid] then
+        local playerId = self:getId()
+        if exhaust[playerId] then
             self:sendCancelMessage(RETURNVALUE_YOUAREEXHAUSTED)
             return false
         else
-            exhaust[pid] = true
-            addEvent(function(pidParam)
-                exhaust[pidParam] = false
-            end, 2000, pid)
+            exhaust[playerId] = true
+            local ssaExhaustTime = configManager.getNumber("ssaExhaustTime") or 2000
+            addEvent(function(playerIdParam)
+                exhaust[playerIdParam] = nil
+            end, ssaExhaustTime, playerId)
             return true
         end
     end
 
-    -- 6) Prevent moving items from Store Inbox into certain slots
+    -- 5) Prevent moving items from Store Inbox or Supply Stash into certain slots
     local containerIdFrom = fromPosition.y - 64
     local containerFrom = self:getContainerById(containerIdFrom)
     if containerFrom then
-        if containerFrom:getId() == ITEM_STORE_INBOX and (toPosition.y >= 1 and toPosition.y <= 11 and toPosition.y ~= 3) then
-            self:sendCancelMessage(RETURNVALUE_CONTAINERNOTENOUGHROOM)
-            return false
-        end
-        if containerFrom:getId() == ITEM_SUPPLY_STASH and (toPosition.y >= 1 and toPosition.y <= 11 and toPosition.y ~= 3) then
+        if (containerFrom:getId() == ITEM_STORE_INBOX or containerFrom:getId() == ITEM_SUPPLY_STASH) and 
+           (toPosition.y >= 1 and toPosition.y <= 11 and toPosition.y ~= 3) then
             self:sendCancelMessage(RETURNVALUE_CONTAINERNOTENOUGHROOM)
             return false
         end
     end
 
+    -- Helper function to get the parent container
     local function getContainerParent(item)
         local parent = item:getParent()
         if parent and parent:isItem() then
@@ -151,20 +175,17 @@ event.onMoveItem = function(self, item, count, fromPosition, toPosition, fromCyl
 
     local containerTo = self:getContainerById(toPosition.y - 64)
     if containerTo then
-        if containerTo:getId() == ITEM_STORE_INBOX then
+        if containerTo:getId() == ITEM_STORE_INBOX or containerTo:getId() == ITEM_SUPPLY_STASH then
             self:sendCancelMessage(RETURNVALUE_CONTAINERNOTENOUGHROOM)
             return false
         end
-        if containerTo:getId() == ITEM_SUPPLY_STASH then
-            self:sendCancelMessage(RETURNVALUE_CONTAINERNOTENOUGHROOM)
-            return false
-        end
-        -- Gold Pouch
+
+        -- Gold Pouch handling
         if containerTo:getId() == GOLD_POUCH then
             -- Only coins can be moved
-            if (item:getId() ~= ITEM_CRYSTAL_COIN and
-                item:getId() ~= ITEM_PLATINUM_COIN and
-                item:getId() ~= ITEM_GOLD_COIN) then
+            if not (item:getId() == ITEM_CRYSTAL_COIN or
+                    item:getId() == ITEM_PLATINUM_COIN or
+                    item:getId() == ITEM_GOLD_COIN) then
                 self:sendCancelMessage("You can only move money to this container.")
                 return false
             end
@@ -178,110 +199,118 @@ event.onMoveItem = function(self, item, count, fromPosition, toPosition, fromCyl
             local goldValue = worth[item:getId()]
             if goldValue then
                 local newBalance = self:getBankBalance() + (goldValue * item:getCount())
-                item:remove()
-                self:setBankBalance(newBalance)
-                self:sendTextMessage(MESSAGE_STATUS_DEFAULT, string.format("Your new bank balance is %d gps.", newBalance))
-                return true
+                if item:remove() then
+                    self:setBankBalance(newBalance)
+                    self:sendTextMessage(MESSAGE_STATUS_DEFAULT, string.format("Your new bank balance is %d gps.", newBalance))
+                    return true
+                else
+                    self:sendCancelMessage("Failed to process the transaction.")
+                    return false
+                end
             end
         end
 
         -- Check if the target container is inside the Store Inbox
-        if getContainerParent(containerTo) and getContainerParent(containerTo):getId() == ITEM_STORE_INBOX then
+        local parentContainer = getContainerParent(containerTo)
+        if parentContainer and parentContainer:getId() == ITEM_STORE_INBOX then
             self:sendCancelMessage(RETURNVALUE_CONTAINERNOTENOUGHROOM)
             return false
         end
 
-        local iType = ItemType(containerTo:getId())
-        if iType:isCorpse() then
+        -- Prevent moving items into corpses
+        local itemType = ItemType(containerTo:getId())
+        if itemType:isCorpse() then
             return false
         end
     end
 
-    -- 7) Do not allow moving the Gold Pouch itself
+    -- 6) Do not allow moving the Gold Pouch itself
     if item:getId() == GOLD_POUCH then
         self:sendCancelMessage(RETURNVALUE_NOTPOSSIBLE)
         return false
     end
 
-    -- 8) Do not allow moving items with actionID = 8000
+    -- 7) Do not allow moving items with actionID = 8000
     if item:getActionId() == NOT_MOVEABLE_ACTION then
         self:sendCancelMessage(RETURNVALUE_NOTPOSSIBLE)
         return false
     end
 
-    -- 9) Check two-handed weapons logic
-    if toPosition.x ~= CONTAINER_POSITION then
-        return true
-    end
+    -- 8) Check two-handed weapons logic
+    if toPosition.x == CONTAINER_POSITION then
+        if item:getTopParent() == self and bit.band(toPosition.y, 0x40) == 0 then
+            local itemType = ItemType(item:getId())
+            local moveItem
 
-    if item:getTopParent() == self and bit.band(toPosition.y, 0x40) == 0 then
-        local itemType = ItemType(item:getId())
-        local moveItem
-
-        -- If the item is two-handed and being placed in the left hand slot
-        if bit.band(itemType:getSlotPosition(), SLOTP_TWO_HAND) ~= 0 and toPosition.y == CONST_SLOT_LEFT then
-            moveItem = self:getSlotItem(CONST_SLOT_RIGHT)
-            if moveItem and itemType:getWeaponType() == WEAPON_DISTANCE and ItemType(moveItem:getId()):getWeaponType() == WEAPON_QUIVER then
-                return true
+            -- If the item is two-handed and being placed in the left hand slot
+            if bit.band(itemType:getSlotPosition(), SLOTP_TWO_HAND) ~= 0 and toPosition.y == CONST_SLOT_LEFT then
+                moveItem = self:getSlotItem(CONST_SLOT_RIGHT)
+                if moveItem and itemType:getWeaponType() == WEAPON_DISTANCE and ItemType(moveItem:getId()):getWeaponType() == WEAPON_QUIVER then
+                    return true
+                end
+            -- If the item is a shield in the right hand, check left hand for two-handed
+            elseif itemType:getWeaponType() == WEAPON_SHIELD and toPosition.y == CONST_SLOT_RIGHT then
+                moveItem = self:getSlotItem(CONST_SLOT_LEFT)
+                if moveItem and bit.band(ItemType(moveItem:getId()):getSlotPosition(), SLOTP_TWO_HAND) == 0 then
+                    return true
+                end
             end
-        -- If the item is a shield in the right hand, check left hand for two-handed
-        elseif itemType:getWeaponType() == WEAPON_SHIELD and toPosition.y == CONST_SLOT_RIGHT then
-            moveItem = self:getSlotItem(CONST_SLOT_LEFT)
-            if moveItem and bit.band(ItemType(moveItem:getId()):getSlotPosition(), SLOTP_TWO_HAND) == 0 then
-                return true
+
+            if moveItem then
+                local parent = item:getParent()
+                if parent:getSize() >= parent:getCapacity() then
+                    self:sendTextMessage(MESSAGE_STATUS_SMALL, Game.getReturnMessage(RETURNVALUE_CONTAINERNOTENOUGHROOM))
+                    return false
+                else
+                    local moved = moveItem:moveTo(parent)
+                    if not moved then
+                        self:sendCancelMessage(RETURNVALUE_CONTAINERNOTENOUGHROOM)
+                        return false
+                    end
+                    return true
+                end
             end
         end
-
-        if moveItem then
-            local parent = item:getParent()
-            if parent:getSize() == parent:getCapacity() then
-                self:sendTextMessage(MESSAGE_STATUS_SMALL, Game.getReturnMessage(RETURNVALUE_CONTAINERNOTENOUGHROOM))
-                return false
-            else
-                return moveItem:moveTo(parent)
-            end
-        end
     end
 
-    -- 10) Reward System checks
+    -- 9) Reward System checks
     if toPosition.x == CONTAINER_POSITION then
         local containerId = toPosition.y - 64
         local container = self:getContainerById(containerId)
-        if not container then
-            return true
-        end
-
-        -- Do not allow inserting items into the Reward Container or Reward Chest
-        local itemId = container:getId()
-        if itemId == ITEM_REWARD_CONTAINER or itemId == ITEM_REWARD_CHEST then
-            self:sendCancelMessage(RETURNVALUE_NOTPOSSIBLE)
-            return false
-        end
-
-        -- Do not allow inserting items into a boss corpse if its corpseowner == 2^31 - 1
-        local tileCheck = Tile(container:getPosition())
-        for _, corpseItem in ipairs(tileCheck:getItems() or {}) do
-            if corpseItem:getAttribute(ITEM_ATTRIBUTE_CORPSEOWNER) == 2^31 - 1 and corpseItem:getName() == container:getName() then
+        if container then
+            -- Do not allow inserting items into the Reward Container or Reward Chest
+            local itemId = container:getId()
+            if itemId == ITEM_REWARD_CONTAINER or itemId == ITEM_REWARD_CHEST then
                 self:sendCancelMessage(RETURNVALUE_NOTPOSSIBLE)
                 return false
+            end
+
+            -- Do not allow inserting items into a boss corpse if its corpseowner == 2^31 - 1
+            local tileCheck = Tile(container:getPosition())
+            for _, corpseItem in ipairs(tileCheck:getItems() or {}) do
+                if ItemType(corpseItem:getId()):isCorpse() and corpseItem:getAttribute(ITEM_ATTRIBUTE_CORPSEOWNER) == 2147483647 and corpseItem:getName() == container:getName() then
+                    self:sendCancelMessage(RETURNVALUE_NOTPOSSIBLE)
+                    return false
+                end
             end
         end
     end
 
-    -- 11) Do not allow moving a boss corpse
-    if item:getAttribute(ITEM_ATTRIBUTE_CORPSEOWNER) == 2^31 - 1 then
+    -- 10) Do not allow moving a boss corpse
+    if ItemType(item:getId()):isCorpse() and item:getAttribute(ITEM_ATTRIBUTE_CORPSEOWNER) == 2147483647 then
         self:sendCancelMessage(RETURNVALUE_NOTPOSSIBLE)
         return false
     end
 
-    -- 12) Block throwing items on a Reward Chest
+    -- 11) Block throwing items on a Reward Chest
+    local tile = Tile(toPosition)
     if tile and tile:getItemById(ITEM_REWARD_CHEST) then
         self:sendCancelMessage(RETURNVALUE_NOTPOSSIBLE)
         self:getPosition():sendMagicEffect(CONST_ME_POFF)
         return false
     end
 
-    -- 13) Block throwing items on top of teleports
+    -- 12) Block throwing items on top of teleports
     if blockTeleportTrashing and toPosition.x ~= CONTAINER_POSITION then
         local thing = Tile(toPosition):getItemByType(ITEM_TYPE_TELEPORT)
         if thing then
@@ -291,14 +320,14 @@ event.onMoveItem = function(self, item, count, fromPosition, toPosition, fromCyl
         end
     end
 
-    -- 14) Block throwing items on trapdoors
+    -- 13) Block throwing items on trapdoors
     if tile and tile:getItemById(370) then -- Trapdoor
         self:sendCancelMessage(RETURNVALUE_NOTPOSSIBLE)
         self:getPosition():sendMagicEffect(CONST_ME_POFF)
         return false
     end
 
-    -- 15) Check anti-push limit
+    -- 14) Check anti-push limit
     if not antiPush(self, item, count, fromPosition, toPosition, fromCylinder, toCylinder) then
         return false
     end
