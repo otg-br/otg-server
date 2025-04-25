@@ -92,7 +92,7 @@ function loginMessage.onLogin(player)
     local balance = player:getBankBalance()
     if balance > 0 then
         local formattedBalance = type(formatNumber) == "function" and formatNumber(balance) or tostring(balance)
-        player:sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "Your Bank Balance is: $" .. formattedBalance .. " gold coins.")
+        player:sendTextMessage(MESSAGE_STATUS_CONSOLE_ORANGE, "Your Bank Balance is: $" .. formattedBalance .. " gold coins.")
     end
 
     -- Inbox Notification
