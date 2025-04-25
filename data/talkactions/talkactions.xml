@@ -78,14 +78,7 @@
 	<talkaction words="!report" separator=" " script="player/admin_report.lua"/>
 	<talkaction words="!frags" separator=" " script="player/frags.lua" />
 
-	<!-- Autoloot Vankk -->
-	<talkaction words="!autoloot" separator=" " script="player/autoloot.lua" />
 
-
-	<!-- <talkaction words="!add" separator=" " script="player/addautoloot.lua" /> -->
-	<!-- <talkaction words="!show" separator=" " script="player/autoloot_show.lua" /> -->
-	<!-- <talkaction words="!bp" separator=" " script="player/autoloot_container.lua" /> -->
-	<!-- <talkaction words="!autoloot" separator=" " script="player/autoloot_help.lua" /> -->
 	<!-- <talkaction words="!analyser" separator=" " script="player/analyser.lua" /> -->
 	<!-- <talkaction words="!daily" separator=" " script="player/dailyrewardtalkaction.lua" /> -->
 	<!-- Guild -->

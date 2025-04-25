@@ -5,9 +5,6 @@
 	<!-- hirelings -->
 	<globalevent name="hirelingSave" type="shutdown" script="others/hireling_save.lua"/>
 	
-	<!-- Autoloot -->
-	<globalevent name="autoloot" type="startup" script="autoloot.lua"/>
-
 	<!-- Others -->
 	<globalevent type="startup" name="ServerStartup" script="startup.lua" />
 	<globalevent type="record" name="PlayerRecord" script="record.lua" />
