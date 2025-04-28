@@ -44,6 +44,6 @@ We use the [issue tracker no GitHub](https://github.com/otg-br/global/issues). R
 
 ### Special Thanks
 
--   our crew (Erick Nunes, Johncore, Leonardo Pereira, worthdavi, marson schneider, LukST, guibruxo)
+-   our crew (Erick Nunes, Johncore, Leonardo Pereira, worthdavi, marson schneider, LukST, guibruxo, Mateus Roberto)
 -   [our contributors](https://github.com/otg-br/global/graphs/contributors)
 -   otland/forgottenserver and contributors.
