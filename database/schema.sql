@@ -1573,6 +1573,8 @@ CREATE TABLE `players` (
 	`looklegs` int(11) NOT NULL DEFAULT 0,
 	`looktype` int(11) NOT NULL DEFAULT 136,
 	`lookaddons` int(11) NOT NULL DEFAULT 0,
+	`lookwings` int(11) NOT NULL DEFAULT 0,
+	`lookauras` int(11) NOT NULL DEFAULT 0,
 	`maglevel` int(11) NOT NULL DEFAULT 0,
 	`mana` int(11) NOT NULL DEFAULT 0,
 	`manamax` int(11) NOT NULL DEFAULT 0,
