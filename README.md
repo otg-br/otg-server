@@ -1,7 +1,7 @@
 
 ![enter image description here](https://i.postimg.cc/MTGqtx4h/otgserver-logo-arte.png)
 
-# Otg Server (Support 11x / Otcv8 / Otc Menah)
+# Otg Server (Support 11x / Otcv8 / Otc Mehah)
 
 
 ### Informações PT:
