@@ -1594,6 +1594,12 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(ITEM_ATTRIBUTE_PLURALNAME)
 	registerEnum(ITEM_ATTRIBUTE_WEIGHT)
 	registerEnum(ITEM_ATTRIBUTE_ATTACK)
+	registerEnum(ITEM_ATTRIBUTE_ELEMENTICE)
+	registerEnum(ITEM_ATTRIBUTE_ELEMENTEARTH)
+	registerEnum(ITEM_ATTRIBUTE_ELEMENTFIRE)
+	registerEnum(ITEM_ATTRIBUTE_ELEMENTENERGY)
+	registerEnum(ITEM_ATTRIBUTE_ELEMENTDEATH)
+	registerEnum(ITEM_ATTRIBUTE_ELEMENTHOLY)
 	registerEnum(ITEM_ATTRIBUTE_CLASSIFICATION)
 	registerEnum(ITEM_ATTRIBUTE_TIER)
 	registerEnum(ITEM_ATTRIBUTE_DEFENSE)
@@ -2412,6 +2418,7 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Item", "getCustomAttribute", LuaScriptInterface::luaItemGetCustomAttribute);
 	registerMethod("Item", "setCustomAttribute", LuaScriptInterface::luaItemSetCustomAttribute);
 	registerMethod("Item", "removeCustomAttribute", LuaScriptInterface::luaItemRemoveCustomAttribute);
+
 
 	registerMethod("Item", "moveTo", LuaScriptInterface::luaItemMoveTo);
 	registerMethod("Item", "transform", LuaScriptInterface::luaItemTransform);
@@ -7302,6 +7309,8 @@ int LuaScriptInterface::luaItemRemoveCustomAttribute(lua_State* L) {
 	}
 	return 1;
 }
+
+
 
 int LuaScriptInterface::luaItemSerializeAttributes(lua_State* L)
 {

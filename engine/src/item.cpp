@@ -759,6 +759,67 @@ Attr_ReadValue Item::readAttr(AttrTypes_t attr, PropStream& propStream)
 			break;
 		}
 
+		// Dynamic element attributes for upgrade system
+		case ATTR_ELEMENTICE: {
+			uint16_t elementDamage;
+			if (!propStream.read<uint16_t>(elementDamage)) {
+				return ATTR_READ_ERROR;
+			}
+
+			setIntAttr(ITEM_ATTRIBUTE_ELEMENTICE, elementDamage);
+			break;
+		}
+
+		case ATTR_ELEMENTEARTH: {
+			uint16_t elementDamage;
+			if (!propStream.read<uint16_t>(elementDamage)) {
+				return ATTR_READ_ERROR;
+			}
+
+			setIntAttr(ITEM_ATTRIBUTE_ELEMENTEARTH, elementDamage);
+			break;
+		}
+
+		case ATTR_ELEMENTFIRE: {
+			uint16_t elementDamage;
+			if (!propStream.read<uint16_t>(elementDamage)) {
+				return ATTR_READ_ERROR;
+			}
+
+			setIntAttr(ITEM_ATTRIBUTE_ELEMENTFIRE, elementDamage);
+			break;
+		}
+
+		case ATTR_ELEMENTENERGY: {
+			uint16_t elementDamage;
+			if (!propStream.read<uint16_t>(elementDamage)) {
+				return ATTR_READ_ERROR;
+			}
+
+			setIntAttr(ITEM_ATTRIBUTE_ELEMENTENERGY, elementDamage);
+			break;
+		}
+
+		case ATTR_ELEMENTDEATH: {
+			uint16_t elementDamage;
+			if (!propStream.read<uint16_t>(elementDamage)) {
+				return ATTR_READ_ERROR;
+			}
+
+			setIntAttr(ITEM_ATTRIBUTE_ELEMENTDEATH, elementDamage);
+			break;
+		}
+
+		case ATTR_ELEMENTHOLY: {
+			uint16_t elementDamage;
+			if (!propStream.read<uint16_t>(elementDamage)) {
+				return ATTR_READ_ERROR;
+			}
+
+			setIntAttr(ITEM_ATTRIBUTE_ELEMENTHOLY, elementDamage);
+			break;
+		}
+
 		default:
 			return ATTR_READ_ERROR;
 	}
@@ -934,6 +995,37 @@ void Item::serializeAttr(PropWriteStream& propWriteStream) const
 	if (hasAttribute(ITEM_ATTRIBUTE_WRAPID)) {
 		propWriteStream.write<uint8_t>(ATTR_WRAPID);
 		propWriteStream.write<uint16_t>(getIntAttr(ITEM_ATTRIBUTE_WRAPID));
+	}
+
+	// Dynamic element attributes for upgrade system
+	if (hasAttribute(ITEM_ATTRIBUTE_ELEMENTICE)) {
+		propWriteStream.write<uint8_t>(ATTR_ELEMENTICE);
+		propWriteStream.write<uint16_t>(getIntAttr(ITEM_ATTRIBUTE_ELEMENTICE));
+	}
+	
+	if (hasAttribute(ITEM_ATTRIBUTE_ELEMENTEARTH)) {
+		propWriteStream.write<uint8_t>(ATTR_ELEMENTEARTH);
+		propWriteStream.write<uint16_t>(getIntAttr(ITEM_ATTRIBUTE_ELEMENTEARTH));
+	}
+	
+	if (hasAttribute(ITEM_ATTRIBUTE_ELEMENTFIRE)) {
+		propWriteStream.write<uint8_t>(ATTR_ELEMENTFIRE);
+		propWriteStream.write<uint16_t>(getIntAttr(ITEM_ATTRIBUTE_ELEMENTFIRE));
+	}
+	
+	if (hasAttribute(ITEM_ATTRIBUTE_ELEMENTENERGY)) {
+		propWriteStream.write<uint8_t>(ATTR_ELEMENTENERGY);
+		propWriteStream.write<uint16_t>(getIntAttr(ITEM_ATTRIBUTE_ELEMENTENERGY));
+	}
+	
+	if (hasAttribute(ITEM_ATTRIBUTE_ELEMENTDEATH)) {
+		propWriteStream.write<uint8_t>(ATTR_ELEMENTDEATH);
+		propWriteStream.write<uint16_t>(getIntAttr(ITEM_ATTRIBUTE_ELEMENTDEATH));
+	}
+	
+	if (hasAttribute(ITEM_ATTRIBUTE_ELEMENTHOLY)) {
+		propWriteStream.write<uint8_t>(ATTR_ELEMENTHOLY);
+		propWriteStream.write<uint16_t>(getIntAttr(ITEM_ATTRIBUTE_ELEMENTHOLY));
 	}
 
 	if (hasAttribute(ITEM_ATTRIBUTE_CUSTOM)) {
@@ -1243,7 +1335,37 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 				begin = false;
 				s << " (Atk:" << attack;
 
-				if (it.abilities && it.abilities->elementType != COMBAT_NONE && it.abilities->elementDamage != 0) {
+				// Show dynamic elements (priority over static)
+				std::vector<std::pair<CombatType_t, uint16_t>> dynamicElements;
+				if (item) {
+					dynamicElements.push_back({COMBAT_ICEDAMAGE, item->getElementDamage(COMBAT_ICEDAMAGE)});
+					dynamicElements.push_back({COMBAT_EARTHDAMAGE, item->getElementDamage(COMBAT_EARTHDAMAGE)});
+					dynamicElements.push_back({COMBAT_FIREDAMAGE, item->getElementDamage(COMBAT_FIREDAMAGE)});
+					dynamicElements.push_back({COMBAT_ENERGYDAMAGE, item->getElementDamage(COMBAT_ENERGYDAMAGE)});
+					dynamicElements.push_back({COMBAT_DEATHDAMAGE, item->getElementDamage(COMBAT_DEATHDAMAGE)});
+					dynamicElements.push_back({COMBAT_HOLYDAMAGE, item->getElementDamage(COMBAT_HOLYDAMAGE)});
+				}
+				
+				bool hasAnyDynamicElement = false;
+				if (item) {
+					for (const auto& element : dynamicElements) {
+						if (element.second > 0) {
+							hasAnyDynamicElement = true;
+							break;
+						}
+					}
+				}
+				
+				if (hasAnyDynamicElement) {
+					// Show physical + dynamic elements
+					s << " physical";
+					for (const auto& element : dynamicElements) {
+						if (element.second > 0) {
+							s << " + " << element.second << ' ' << getCombatName(element.first);
+						}
+					}
+				} else if (it.abilities && it.abilities->elementType != COMBAT_NONE && it.abilities->elementDamage != 0) {
+					// Fallback to static element from XML
 					s << " physical + " << it.abilities->elementDamage << ' ' << getCombatName(it.abilities->elementType);
 				}
 			}

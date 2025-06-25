@@ -114,6 +114,12 @@ enum AttrTypes_t {
 	ATTR_WRAPID = 41,
 	ATTR_CLASSIFICATION = 42,
 	ATTR_TIER = 43,
+	ATTR_ELEMENTICE = 44,
+	ATTR_ELEMENTEARTH = 45,
+	ATTR_ELEMENTFIRE = 46,
+	ATTR_ELEMENTENERGY = 47,
+	ATTR_ELEMENTDEATH = 48,
+	ATTR_ELEMENTHOLY = 49,
 };
 
 enum Attr_ReadValue {
@@ -428,7 +434,7 @@ class ItemAttributes
 		};
 
 		std::forward_list<Attribute> attributes;
-		uint32_t attributeBits = 0;
+		uint64_t attributeBits = 0;
 
 		const std::string& getStrAttr(itemAttrTypes type) const;
 		void setStrAttr(itemAttrTypes type, const std::string& value);
@@ -517,7 +523,8 @@ class ItemAttributes
 			| ITEM_ATTRIBUTE_DURATION | ITEM_ATTRIBUTE_DECAYSTATE | ITEM_ATTRIBUTE_CORPSEOWNER | ITEM_ATTRIBUTE_CHARGES
 			| ITEM_ATTRIBUTE_FLUIDTYPE | ITEM_ATTRIBUTE_DOORID | ITEM_ATTRIBUTE_DECAYTO | ITEM_ATTRIBUTE_IMBUINGSLOTS
 			| ITEM_ATTRIBUTE_OPENED | ITEM_ATTRIBUTE_QUICKLOOTCONTAINER | ITEM_ATTRIBUTE_IMBUED | ITEM_ATTRIBUTE_WRAPID
-			| ITEM_ATTRIBUTE_CLASSIFICATION | ITEM_ATTRIBUTE_TIER;
+			| ITEM_ATTRIBUTE_CLASSIFICATION | ITEM_ATTRIBUTE_TIER | ITEM_ATTRIBUTE_ELEMENTICE | ITEM_ATTRIBUTE_ELEMENTEARTH
+			| ITEM_ATTRIBUTE_ELEMENTFIRE | ITEM_ATTRIBUTE_ELEMENTENERGY | ITEM_ATTRIBUTE_ELEMENTDEATH | ITEM_ATTRIBUTE_ELEMENTHOLY;
 		const static uint64_t stringAttributeTypes = ITEM_ATTRIBUTE_DESCRIPTION | ITEM_ATTRIBUTE_TEXT | ITEM_ATTRIBUTE_WRITER
 			| ITEM_ATTRIBUTE_NAME | ITEM_ATTRIBUTE_ARTICLE | ITEM_ATTRIBUTE_PLURALNAME | ITEM_ATTRIBUTE_SPECIAL;
 
@@ -907,6 +914,51 @@ class Item : virtual public Thing
 				return getIntAttr(ITEM_ATTRIBUTE_TIER);
 			}
 			return items[id].tier;
+		}
+		
+		// Dynamic element functions (following same pattern as getAttack)
+		uint16_t getElementDamage(CombatType_t combatType) const {
+			switch (combatType) {
+				case COMBAT_ICEDAMAGE:
+					if (hasAttribute(ITEM_ATTRIBUTE_ELEMENTICE)) {
+						return static_cast<uint16_t>(getIntAttr(ITEM_ATTRIBUTE_ELEMENTICE));
+					}
+					break;
+				case COMBAT_EARTHDAMAGE:
+					if (hasAttribute(ITEM_ATTRIBUTE_ELEMENTEARTH)) {
+						return static_cast<uint16_t>(getIntAttr(ITEM_ATTRIBUTE_ELEMENTEARTH));
+					}
+					break;
+				case COMBAT_FIREDAMAGE:
+					if (hasAttribute(ITEM_ATTRIBUTE_ELEMENTFIRE)) {
+						return static_cast<uint16_t>(getIntAttr(ITEM_ATTRIBUTE_ELEMENTFIRE));
+					}
+					break;
+				case COMBAT_ENERGYDAMAGE:
+					if (hasAttribute(ITEM_ATTRIBUTE_ELEMENTENERGY)) {
+						return static_cast<uint16_t>(getIntAttr(ITEM_ATTRIBUTE_ELEMENTENERGY));
+					}
+					break;
+				case COMBAT_DEATHDAMAGE:
+					if (hasAttribute(ITEM_ATTRIBUTE_ELEMENTDEATH)) {
+						return static_cast<uint16_t>(getIntAttr(ITEM_ATTRIBUTE_ELEMENTDEATH));
+					}
+					break;
+				case COMBAT_HOLYDAMAGE:
+					if (hasAttribute(ITEM_ATTRIBUTE_ELEMENTHOLY)) {
+						return static_cast<uint16_t>(getIntAttr(ITEM_ATTRIBUTE_ELEMENTHOLY));
+					}
+					break;
+				default:
+					break;
+			}
+			
+			// Fallback to static element from ItemType
+			const ItemType& it = items[id];
+			if (it.abilities && it.abilities->elementType == combatType) {
+				return it.abilities->elementDamage;
+			}
+			return 0;
 		}
 
 		uint32_t getWorth() const;

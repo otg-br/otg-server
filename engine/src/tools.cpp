@@ -1052,6 +1052,18 @@ itemAttrTypes stringToItemAttribute(const std::string& str)
 		return ITEM_ATTRIBUTE_CLASSIFICATION;
 	} else if (str == "tier") {
 		return ITEM_ATTRIBUTE_TIER;
+	} else if (str == "elementice") {
+		return ITEM_ATTRIBUTE_ELEMENTICE;
+	} else if (str == "elementearth") {
+		return ITEM_ATTRIBUTE_ELEMENTEARTH;
+	} else if (str == "elementfire") {
+		return ITEM_ATTRIBUTE_ELEMENTFIRE;
+	} else if (str == "elementenergy") {
+		return ITEM_ATTRIBUTE_ELEMENTENERGY;
+	} else if (str == "elementdeath") {
+		return ITEM_ATTRIBUTE_ELEMENTDEATH;
+	} else if (str == "elementholy") {
+		return ITEM_ATTRIBUTE_ELEMENTHOLY;
 	}
 	return ITEM_ATTRIBUTE_NONE;
 }

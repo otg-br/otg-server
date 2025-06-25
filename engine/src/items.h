@@ -240,10 +240,10 @@ class ItemType
 		std::string runeSpellName;
 		std::string vocationString;
 
-		std::unique_ptr<Abilities> abilities;
-		std::unique_ptr<ConditionDamage> conditionDamage;
+			std::unique_ptr<Abilities> abilities;
+	std::unique_ptr<ConditionDamage> conditionDamage;
 
-		uint32_t weight = 0;
+	uint32_t weight = 0;
 		uint32_t levelDoor = 0;
 		uint32_t decayTime = 0;
 		uint32_t wieldInfo = 0;

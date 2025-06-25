@@ -600,7 +600,11 @@ int32_t WeaponMelee::getElementDamage(const Player* player, const Creature*, con
 	}
 
 	int32_t attackSkill = player->getWeaponSkill(item);
-	int32_t attackValue = elementDamage;
+	// Use dynamic element damage (priority) or static fallback
+	int32_t attackValue = item->getElementDamage(elementType);
+	if (attackValue == 0) {
+		attackValue = elementDamage; // fallback to static value
+	}
 	float attackFactor = player->getAttackFactor();
 
 	int32_t maxValue = Weapons::getMaxWeaponDamage(player->getLevel(), attackSkill, attackValue, attackFactor);
@@ -810,7 +814,11 @@ int32_t WeaponDistance::getElementDamage(const Player* player, const Creature* t
 		return 0;
 	}
 
-	int32_t attackValue = elementDamage;
+	// Use dynamic element damage (priority) or static fallback
+	int32_t attackValue = item->getElementDamage(elementType);
+	if (attackValue == 0) {
+		attackValue = elementDamage; // fallback to static value
+	}
 	if (item->getWeaponType() == WEAPON_AMMO) {
 		Item* weapon = player->getWeapon(true);
 		if (weapon) {

@@ -15,7 +15,25 @@ local itemFunctions = {
 	["attack"] = { isActive = true, targetFunction = function (item, target) return item:setAttribute(ITEM_ATTRIBUTE_ATTACK, target) end },
 	["defense"] = { isActive = true, targetFunction = function (item, target) return item:setAttribute(ITEM_ATTRIBUTE_DEFENSE, target) end },
 	["extradefense"] = { isActive = true, targetFunction = function (item, target) return item:setAttribute(ITEM_ATTRIBUTE_EXTRADEFENSE, target) end },
-	["armor"] = { isActive = true, targetFunction = function (item, target) return item:setAttribute(ITEM_ATTRIBUTE_ARMOR, target) end }
+	["armor"] = { isActive = true, targetFunction = function (item, target) return item:setAttribute(ITEM_ATTRIBUTE_ARMOR, target) end },
+	["tier"] = { isActive = true, targetFunction = function (item, target) return item:setAttribute(ITEM_ATTRIBUTE_TIER, target) end },
+	["classification"] = { isActive = true, targetFunction = function (item, target) return item:setAttribute(ITEM_ATTRIBUTE_CLASSIFICATION, target) end },
+	
+	-- Dynamic element attributes for upgrade system
+	["elementice"] = { isActive = true, targetFunction = function (item, target) return item:setAttribute(ITEM_ATTRIBUTE_ELEMENTICE, target) end },
+	["elementearth"] = { isActive = true, targetFunction = function (item, target) return item:setAttribute(ITEM_ATTRIBUTE_ELEMENTEARTH, target) end },
+	["elementfire"] = { isActive = true, targetFunction = function (item, target) return item:setAttribute(ITEM_ATTRIBUTE_ELEMENTFIRE, target) end },
+	["elementenergy"] = { isActive = true, targetFunction = function (item, target) return item:setAttribute(ITEM_ATTRIBUTE_ELEMENTENERGY, target) end },
+	["elementdeath"] = { isActive = true, targetFunction = function (item, target) return item:setAttribute(ITEM_ATTRIBUTE_ELEMENTDEATH, target) end },
+	["elementholy"] = { isActive = true, targetFunction = function (item, target) return item:setAttribute(ITEM_ATTRIBUTE_ELEMENTHOLY, target) end },
+	
+	-- Shortcuts for elements
+	["ice"] = { isActive = true, targetFunction = function (item, target) return item:setAttribute(ITEM_ATTRIBUTE_ELEMENTICE, target) end },
+	["earth"] = { isActive = true, targetFunction = function (item, target) return item:setAttribute(ITEM_ATTRIBUTE_ELEMENTEARTH, target) end },
+	["fire"] = { isActive = true, targetFunction = function (item, target) return item:setAttribute(ITEM_ATTRIBUTE_ELEMENTFIRE, target) end },
+	["energy"] = { isActive = true, targetFunction = function (item, target) return item:setAttribute(ITEM_ATTRIBUTE_ELEMENTENERGY, target) end },
+	["death"] = { isActive = true, targetFunction = function (item, target) return item:setAttribute(ITEM_ATTRIBUTE_ELEMENTDEATH, target) end },
+	["holy"] = { isActive = true, targetFunction = function (item, target) return item:setAttribute(ITEM_ATTRIBUTE_ELEMENTHOLY, target) end }
 }
 
 local creatureFunctions = {
