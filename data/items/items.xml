@@ -3313,6 +3313,7 @@
 		<attribute key="weaponType" value="sword" />
 		<attribute key="extradef" value="3" />
 		<attribute key="imbuingSlots" value="2" />
+		<attribute key="classification" value="2"/>
 	</item>
 	<item id="2401" article="a" name="staff">
 		<attribute key="weight" value="3800" />

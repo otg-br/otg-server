@@ -20,6 +20,11 @@
 #ifndef FS_ENUMS_H_003445999FEE4A67BCECBE918B0124CE
 #define FS_ENUMS_H_003445999FEE4A67BCECBE918B0124CE
 
+#include <cstdint>
+#include <string>
+#include <list>
+#include <utility>
+
 enum RuleViolationType_t : uint8_t {
 	REPORT_TYPE_NAME = 0,
 	REPORT_TYPE_STATEMENT = 1,
@@ -122,7 +127,7 @@ enum ThreadState {
 	THREAD_STATE_TERMINATED,
 };
 
-enum itemAttrTypes : uint32_t {
+enum itemAttrTypes : uint64_t {
 	ITEM_ATTRIBUTE_NONE,
 
 	ITEM_ATTRIBUTE_ACTIONID = 1 << 0,
@@ -155,6 +160,8 @@ enum itemAttrTypes : uint32_t {
 	ITEM_ATTRIBUTE_DECAYTO = 1 << 27,
 	ITEM_ATTRIBUTE_IMBUED = 1 << 28,
 	ITEM_ATTRIBUTE_WRAPID = 1 << 29,
+	ITEM_ATTRIBUTE_CLASSIFICATION = 1 << 30,
+	ITEM_ATTRIBUTE_TIER = 1ULL << 32,
 
 	ITEM_ATTRIBUTE_CUSTOM = 1U << 31
 };

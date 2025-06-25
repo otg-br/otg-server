@@ -535,6 +535,10 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 			it.wrapContainer = valueAttribute.as_bool();
 		} else if (tmpStrValue == "imbuingslots") {
 			it.imbuingSlots = pugi::cast<int32_t>(valueAttribute.value());
+		} else if (tmpStrValue == "classification") {
+			it.classification = pugi::cast<uint32_t>(valueAttribute.value());
+		} else if (tmpStrValue == "tier") {
+			it.tier = pugi::cast<uint32_t>(valueAttribute.value());
 		} else if (tmpStrValue == "wrapableto" || tmpStrValue == "unwrapableto") {
 			it.wrapableTo = pugi::cast<int32_t>(valueAttribute.value());
 			it.wrapable = true;

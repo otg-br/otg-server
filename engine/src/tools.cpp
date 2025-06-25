@@ -1048,6 +1048,10 @@ itemAttrTypes stringToItemAttribute(const std::string& str)
 		return ITEM_ATTRIBUTE_DOORID;
 	} else if (str == "wrapid") {
 		return ITEM_ATTRIBUTE_WRAPID;
+	} else if (str == "classification") {
+		return ITEM_ATTRIBUTE_CLASSIFICATION;
+	} else if (str == "tier") {
+		return ITEM_ATTRIBUTE_TIER;
 	}
 	return ITEM_ATTRIBUTE_NONE;
 }
