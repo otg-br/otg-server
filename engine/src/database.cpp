@@ -47,8 +47,17 @@ bool Database::connect()
 	mysql_options(handle, MYSQL_OPT_RECONNECT, &reconnect);
 
 	// Remove ssl verification
+#ifdef MYSQL_OPT_SSL_VERIFY_SERVER_CERT
 	bool ssl_enabled = false;
 	mysql_options(handle, MYSQL_OPT_SSL_VERIFY_SERVER_CERT, &ssl_enabled);
+#elif defined(MYSQL_OPT_SSL_MODE)
+	// For newer MySQL/MariaDB versions
+	const char* ssl_mode = "DISABLED";
+	mysql_options(handle, MYSQL_OPT_SSL_MODE, ssl_mode);
+#else
+	// If neither option is available, skip SSL verification setup
+	// SSL verification will be handled by MySQL defaults
+#endif
 
 	// connects to database
 	if (!mysql_real_connect(handle, g_config.getString(ConfigManager::MYSQL_HOST).c_str(), g_config.getString(ConfigManager::MYSQL_USER).c_str(), g_config.getString(ConfigManager::MYSQL_PASS).c_str(), g_config.getString(ConfigManager::MYSQL_DB).c_str(), g_config.getNumber(ConfigManager::SQL_PORT), g_config.getString(ConfigManager::MYSQL_SOCK).c_str(), 0)) {
