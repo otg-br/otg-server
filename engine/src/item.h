@@ -120,6 +120,14 @@ enum AttrTypes_t {
 	ATTR_ELEMENTENERGY = 47,
 	ATTR_ELEMENTDEATH = 48,
 	ATTR_ELEMENTHOLY = 49,
+	
+	// Dynamic absorb percent attributes for serialization
+	ATTR_ABSORBICE = 50,
+	ATTR_ABSORBEARTH = 51,
+	ATTR_ABSORBFIRE = 52,
+	ATTR_ABSORBENERGY = 53,
+	ATTR_ABSORBDEATH = 54,
+	ATTR_ABSORBHOLY = 55,
 };
 
 enum Attr_ReadValue {
@@ -524,7 +532,9 @@ class ItemAttributes
 			| ITEM_ATTRIBUTE_FLUIDTYPE | ITEM_ATTRIBUTE_DOORID | ITEM_ATTRIBUTE_DECAYTO | ITEM_ATTRIBUTE_IMBUINGSLOTS
 			| ITEM_ATTRIBUTE_OPENED | ITEM_ATTRIBUTE_QUICKLOOTCONTAINER | ITEM_ATTRIBUTE_IMBUED | ITEM_ATTRIBUTE_WRAPID
 			| ITEM_ATTRIBUTE_CLASSIFICATION | ITEM_ATTRIBUTE_TIER | ITEM_ATTRIBUTE_ELEMENTICE | ITEM_ATTRIBUTE_ELEMENTEARTH
-			| ITEM_ATTRIBUTE_ELEMENTFIRE | ITEM_ATTRIBUTE_ELEMENTENERGY | ITEM_ATTRIBUTE_ELEMENTDEATH | ITEM_ATTRIBUTE_ELEMENTHOLY;
+			| ITEM_ATTRIBUTE_ELEMENTFIRE | ITEM_ATTRIBUTE_ELEMENTENERGY | ITEM_ATTRIBUTE_ELEMENTDEATH | ITEM_ATTRIBUTE_ELEMENTHOLY
+			| ITEM_ATTRIBUTE_ABSORBICE | ITEM_ATTRIBUTE_ABSORBEARTH | ITEM_ATTRIBUTE_ABSORBFIRE | ITEM_ATTRIBUTE_ABSORBENERGY
+			| ITEM_ATTRIBUTE_ABSORBDEATH | ITEM_ATTRIBUTE_ABSORBHOLY;
 		const static uint64_t stringAttributeTypes = ITEM_ATTRIBUTE_DESCRIPTION | ITEM_ATTRIBUTE_TEXT | ITEM_ATTRIBUTE_WRITER
 			| ITEM_ATTRIBUTE_NAME | ITEM_ATTRIBUTE_ARTICLE | ITEM_ATTRIBUTE_PLURALNAME | ITEM_ATTRIBUTE_SPECIAL;
 
@@ -957,6 +967,54 @@ class Item : virtual public Thing
 			const ItemType& it = items[id];
 			if (it.abilities && it.abilities->elementType == combatType) {
 				return it.abilities->elementDamage;
+			}
+			return 0;
+		}
+		
+		// Dynamic absorb percent functions (following same pattern as getElementDamage)
+		uint16_t getAbsorbPercent(CombatType_t combatType) const {
+			switch (combatType) {
+				case COMBAT_ICEDAMAGE:
+					if (hasAttribute(ITEM_ATTRIBUTE_ABSORBICE)) {
+						return static_cast<uint16_t>(getIntAttr(ITEM_ATTRIBUTE_ABSORBICE));
+					}
+					break;
+				case COMBAT_EARTHDAMAGE:
+					if (hasAttribute(ITEM_ATTRIBUTE_ABSORBEARTH)) {
+						return static_cast<uint16_t>(getIntAttr(ITEM_ATTRIBUTE_ABSORBEARTH));
+					}
+					break;
+				case COMBAT_FIREDAMAGE:
+					if (hasAttribute(ITEM_ATTRIBUTE_ABSORBFIRE)) {
+						return static_cast<uint16_t>(getIntAttr(ITEM_ATTRIBUTE_ABSORBFIRE));
+					}
+					break;
+				case COMBAT_ENERGYDAMAGE:
+					if (hasAttribute(ITEM_ATTRIBUTE_ABSORBENERGY)) {
+						return static_cast<uint16_t>(getIntAttr(ITEM_ATTRIBUTE_ABSORBENERGY));
+					}
+					break;
+				case COMBAT_DEATHDAMAGE:
+					if (hasAttribute(ITEM_ATTRIBUTE_ABSORBDEATH)) {
+						return static_cast<uint16_t>(getIntAttr(ITEM_ATTRIBUTE_ABSORBDEATH));
+					}
+					break;
+				case COMBAT_HOLYDAMAGE:
+					if (hasAttribute(ITEM_ATTRIBUTE_ABSORBHOLY)) {
+						return static_cast<uint16_t>(getIntAttr(ITEM_ATTRIBUTE_ABSORBHOLY));
+					}
+					break;
+				default:
+					break;
+			}
+			
+			// Fallback to static absorb from ItemType abilities
+			const ItemType& it = items[id];
+			if (it.abilities) {
+				size_t index = combatTypeToIndex(combatType);
+				if (index < COMBAT_COUNT) {
+					return it.abilities->absorbPercent[index];
+				}
 			}
 			return 0;
 		}

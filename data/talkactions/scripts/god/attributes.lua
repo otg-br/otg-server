@@ -33,7 +33,15 @@ local itemFunctions = {
 	["fire"] = { isActive = true, targetFunction = function (item, target) return item:setAttribute(ITEM_ATTRIBUTE_ELEMENTFIRE, target) end },
 	["energy"] = { isActive = true, targetFunction = function (item, target) return item:setAttribute(ITEM_ATTRIBUTE_ELEMENTENERGY, target) end },
 	["death"] = { isActive = true, targetFunction = function (item, target) return item:setAttribute(ITEM_ATTRIBUTE_ELEMENTDEATH, target) end },
-	["holy"] = { isActive = true, targetFunction = function (item, target) return item:setAttribute(ITEM_ATTRIBUTE_ELEMENTHOLY, target) end }
+	["holy"] = { isActive = true, targetFunction = function (item, target) return item:setAttribute(ITEM_ATTRIBUTE_ELEMENTHOLY, target) end },
+	
+	-- Dynamic absorb percent attributes (cumulative)
+	["absorbice"] = { isActive = true, targetFunction = function (item, target) return item:setAttribute(ITEM_ATTRIBUTE_ABSORBICE, target) end },
+	["absorbearth"] = { isActive = true, targetFunction = function (item, target) return item:setAttribute(ITEM_ATTRIBUTE_ABSORBEARTH, target) end },
+	["absorbfire"] = { isActive = true, targetFunction = function (item, target) return item:setAttribute(ITEM_ATTRIBUTE_ABSORBFIRE, target) end },
+	["absorbenergy"] = { isActive = true, targetFunction = function (item, target) return item:setAttribute(ITEM_ATTRIBUTE_ABSORBENERGY, target) end },
+	["absorbdeath"] = { isActive = true, targetFunction = function (item, target) return item:setAttribute(ITEM_ATTRIBUTE_ABSORBDEATH, target) end },
+	["absorbholy"] = { isActive = true, targetFunction = function (item, target) return item:setAttribute(ITEM_ATTRIBUTE_ABSORBHOLY, target) end }
 }
 
 local creatureFunctions = {

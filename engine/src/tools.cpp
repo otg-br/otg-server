@@ -1064,6 +1064,18 @@ itemAttrTypes stringToItemAttribute(const std::string& str)
 		return ITEM_ATTRIBUTE_ELEMENTDEATH;
 	} else if (str == "elementholy") {
 		return ITEM_ATTRIBUTE_ELEMENTHOLY;
+	} else if (str == "absorbice") {
+		return ITEM_ATTRIBUTE_ABSORBICE;
+	} else if (str == "absorbearth") {
+		return ITEM_ATTRIBUTE_ABSORBEARTH;
+	} else if (str == "absorbfire") {
+		return ITEM_ATTRIBUTE_ABSORBFIRE;
+	} else if (str == "absorbenergy") {
+		return ITEM_ATTRIBUTE_ABSORBENERGY;
+	} else if (str == "absorbdeath") {
+		return ITEM_ATTRIBUTE_ABSORBDEATH;
+	} else if (str == "absorbholy") {
+		return ITEM_ATTRIBUTE_ABSORBHOLY;
 	}
 	return ITEM_ATTRIBUTE_NONE;
 }

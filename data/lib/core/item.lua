@@ -70,3 +70,28 @@ function Item.getNameLoot(self, version)
 	end
 	return s
 end
+
+-- Métodos para obter atributos do item
+function Item.getArmor(self)
+	local armor = self:getAttribute(ITEM_ATTRIBUTE_ARMOR)
+	if armor ~= 0 then
+		return armor
+	end
+	return self:getType():getArmor()
+end
+
+function Item.getAttack(self)
+	local attack = self:getAttribute(ITEM_ATTRIBUTE_ATTACK)
+	if attack ~= 0 then
+		return attack
+	end
+	return self:getType():getAttack()
+end
+
+function Item.getDefense(self)
+	local defense = self:getAttribute(ITEM_ATTRIBUTE_DEFENSE)
+	if defense ~= 0 then
+		return defense
+	end
+	return self:getType():getDefense()
+end

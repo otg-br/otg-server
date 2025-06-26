@@ -1600,6 +1600,15 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(ITEM_ATTRIBUTE_ELEMENTENERGY)
 	registerEnum(ITEM_ATTRIBUTE_ELEMENTDEATH)
 	registerEnum(ITEM_ATTRIBUTE_ELEMENTHOLY)
+	
+	// Dynamic absorb percent attributes
+	registerEnum(ITEM_ATTRIBUTE_ABSORBICE)
+	registerEnum(ITEM_ATTRIBUTE_ABSORBEARTH)
+	registerEnum(ITEM_ATTRIBUTE_ABSORBFIRE)
+	registerEnum(ITEM_ATTRIBUTE_ABSORBENERGY)
+	registerEnum(ITEM_ATTRIBUTE_ABSORBDEATH)
+	registerEnum(ITEM_ATTRIBUTE_ABSORBHOLY)
+	
 	registerEnum(ITEM_ATTRIBUTE_CLASSIFICATION)
 	registerEnum(ITEM_ATTRIBUTE_TIER)
 	registerEnum(ITEM_ATTRIBUTE_DEFENSE)
@@ -2415,6 +2424,7 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Item", "getAttribute", LuaScriptInterface::luaItemGetAttribute);
 	registerMethod("Item", "setAttribute", LuaScriptInterface::luaItemSetAttribute);
 	registerMethod("Item", "removeAttribute", LuaScriptInterface::luaItemRemoveAttribute);
+	registerMethod("Item", "getAbsorbPercent", LuaScriptInterface::luaItemGetAbsorbPercent);
 	registerMethod("Item", "getCustomAttribute", LuaScriptInterface::luaItemGetCustomAttribute);
 	registerMethod("Item", "setCustomAttribute", LuaScriptInterface::luaItemSetCustomAttribute);
 	registerMethod("Item", "removeCustomAttribute", LuaScriptInterface::luaItemRemoveCustomAttribute);
@@ -3019,6 +3029,7 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("ItemType", "getArmor", LuaScriptInterface::luaItemTypeGetArmor);
 	registerMethod("ItemType", "getWeaponType", LuaScriptInterface::luaItemTypeGetWeaponType);
 
+	registerMethod("ItemType", "getAbsorbPercent", LuaScriptInterface::luaItemTypeGetAbsorbPercent);
 	registerMethod("ItemType", "getElementType", LuaScriptInterface::luaItemTypeGetElementType);
 	registerMethod("ItemType", "getElementDamage", LuaScriptInterface::luaItemTypeGetElementDamage);
 
@@ -7187,7 +7198,28 @@ int LuaScriptInterface::luaItemSetAttribute(lua_State* L)
 	}
 
 	if (ItemAttributes::isIntAttrType(attribute)) {
-		item->setIntAttr(attribute, getNumber<int32_t>(L, 3));
+		int32_t value = getNumber<int32_t>(L, 3);
+		
+		// Check if this is an absorb percent attribute - make it cumulative
+		switch (attribute) {
+			case ITEM_ATTRIBUTE_ABSORBICE:
+			case ITEM_ATTRIBUTE_ABSORBEARTH:
+			case ITEM_ATTRIBUTE_ABSORBFIRE:
+			case ITEM_ATTRIBUTE_ABSORBENERGY:
+			case ITEM_ATTRIBUTE_ABSORBDEATH:
+			case ITEM_ATTRIBUTE_ABSORBHOLY:
+			{
+				// Add to existing value instead of overwriting
+				int32_t currentValue = item->getIntAttr(attribute);
+				value += currentValue;
+				break;
+			}
+			default:
+				// Normal behavior for other attributes
+				break;
+		}
+		
+		item->setIntAttr(attribute, value);
 		pushBoolean(L, true);
 	} else if (ItemAttributes::isStrAttrType(attribute)) {
 		item->setStrAttr(attribute, getString(L, 3));
@@ -7223,6 +7255,20 @@ int LuaScriptInterface::luaItemRemoveAttribute(lua_State* L)
 		reportErrorFunc("Attempt to erase protected key \"uid\"");
 	}
 	pushBoolean(L, ret);
+	return 1;
+}
+
+int LuaScriptInterface::luaItemGetAbsorbPercent(lua_State* L)
+{
+	// item:getAbsorbPercent(combatType)
+	Item* item = getUserdata<Item>(L, 1);
+	if (!item) {
+		lua_pushnil(L);
+		return 1;
+	}
+	
+	CombatType_t combatType = getNumber<CombatType_t>(L, 2);
+	lua_pushnumber(L, item->getAbsorbPercent(combatType));
 	return 1;
 }
 
@@ -14283,6 +14329,36 @@ int LuaScriptInterface::luaItemTypeGetAbilities(lua_State* L)
 			lua_rawseti(L, -2, i + 1);
 		}
 		lua_setfield(L, -2, "reflectPercent");
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaItemTypeGetAbsorbPercent(lua_State* L)
+{
+	// itemType:getAbsorbPercent()
+	const ItemType* itemType = getUserdata<const ItemType>(L, 1);
+	if (!itemType) {
+		lua_pushnil(L);
+		return 1;
+	}
+
+	auto& abilities = itemType->abilities;
+	if (abilities) {
+		lua_createtable(L, COMBAT_COUNT, 0);
+		int index = 0;
+
+		for (size_t i = 0; i < COMBAT_COUNT; ++i) {
+			if (abilities->absorbPercent[i] == 0) {
+				continue;
+			}
+			lua_createtable(L, 0, 3);
+			setField(L, "combattype", indexToCombatType(i));
+			setField(L, "combatname", getCombatName(indexToCombatType(i)));
+			setField(L, "absorbpercent", abilities->absorbPercent[i]);
+			lua_rawseti(L, -2, ++index);
+		}
+	} else {
+		lua_pushnil(L);
 	}
 	return 1;
 }

@@ -820,6 +820,67 @@ Attr_ReadValue Item::readAttr(AttrTypes_t attr, PropStream& propStream)
 			break;
 		}
 
+		// Dynamic absorb percent attributes for upgrade system
+		case ATTR_ABSORBICE: {
+			uint16_t absorbPercent;
+			if (!propStream.read<uint16_t>(absorbPercent)) {
+				return ATTR_READ_ERROR;
+			}
+
+			setIntAttr(ITEM_ATTRIBUTE_ABSORBICE, absorbPercent);
+			break;
+		}
+
+		case ATTR_ABSORBEARTH: {
+			uint16_t absorbPercent;
+			if (!propStream.read<uint16_t>(absorbPercent)) {
+				return ATTR_READ_ERROR;
+			}
+
+			setIntAttr(ITEM_ATTRIBUTE_ABSORBEARTH, absorbPercent);
+			break;
+		}
+
+		case ATTR_ABSORBFIRE: {
+			uint16_t absorbPercent;
+			if (!propStream.read<uint16_t>(absorbPercent)) {
+				return ATTR_READ_ERROR;
+			}
+
+			setIntAttr(ITEM_ATTRIBUTE_ABSORBFIRE, absorbPercent);
+			break;
+		}
+
+		case ATTR_ABSORBENERGY: {
+			uint16_t absorbPercent;
+			if (!propStream.read<uint16_t>(absorbPercent)) {
+				return ATTR_READ_ERROR;
+			}
+
+			setIntAttr(ITEM_ATTRIBUTE_ABSORBENERGY, absorbPercent);
+			break;
+		}
+
+		case ATTR_ABSORBDEATH: {
+			uint16_t absorbPercent;
+			if (!propStream.read<uint16_t>(absorbPercent)) {
+				return ATTR_READ_ERROR;
+			}
+
+			setIntAttr(ITEM_ATTRIBUTE_ABSORBDEATH, absorbPercent);
+			break;
+		}
+
+		case ATTR_ABSORBHOLY: {
+			uint16_t absorbPercent;
+			if (!propStream.read<uint16_t>(absorbPercent)) {
+				return ATTR_READ_ERROR;
+			}
+
+			setIntAttr(ITEM_ATTRIBUTE_ABSORBHOLY, absorbPercent);
+			break;
+		}
+
 		default:
 			return ATTR_READ_ERROR;
 	}
@@ -1026,6 +1087,37 @@ void Item::serializeAttr(PropWriteStream& propWriteStream) const
 	if (hasAttribute(ITEM_ATTRIBUTE_ELEMENTHOLY)) {
 		propWriteStream.write<uint8_t>(ATTR_ELEMENTHOLY);
 		propWriteStream.write<uint16_t>(getIntAttr(ITEM_ATTRIBUTE_ELEMENTHOLY));
+	}
+
+	// Dynamic absorb percent attributes for upgrade system
+	if (hasAttribute(ITEM_ATTRIBUTE_ABSORBICE)) {
+		propWriteStream.write<uint8_t>(ATTR_ABSORBICE);
+		propWriteStream.write<uint16_t>(getIntAttr(ITEM_ATTRIBUTE_ABSORBICE));
+	}
+	
+	if (hasAttribute(ITEM_ATTRIBUTE_ABSORBEARTH)) {
+		propWriteStream.write<uint8_t>(ATTR_ABSORBEARTH);
+		propWriteStream.write<uint16_t>(getIntAttr(ITEM_ATTRIBUTE_ABSORBEARTH));
+	}
+	
+	if (hasAttribute(ITEM_ATTRIBUTE_ABSORBFIRE)) {
+		propWriteStream.write<uint8_t>(ATTR_ABSORBFIRE);
+		propWriteStream.write<uint16_t>(getIntAttr(ITEM_ATTRIBUTE_ABSORBFIRE));
+	}
+	
+	if (hasAttribute(ITEM_ATTRIBUTE_ABSORBENERGY)) {
+		propWriteStream.write<uint8_t>(ATTR_ABSORBENERGY);
+		propWriteStream.write<uint16_t>(getIntAttr(ITEM_ATTRIBUTE_ABSORBENERGY));
+	}
+	
+	if (hasAttribute(ITEM_ATTRIBUTE_ABSORBDEATH)) {
+		propWriteStream.write<uint8_t>(ATTR_ABSORBDEATH);
+		propWriteStream.write<uint16_t>(getIntAttr(ITEM_ATTRIBUTE_ABSORBDEATH));
+	}
+	
+	if (hasAttribute(ITEM_ATTRIBUTE_ABSORBHOLY)) {
+		propWriteStream.write<uint8_t>(ATTR_ABSORBHOLY);
+		propWriteStream.write<uint16_t>(getIntAttr(ITEM_ATTRIBUTE_ABSORBHOLY));
 	}
 
 	if (hasAttribute(ITEM_ATTRIBUTE_CUSTOM)) {
@@ -1704,6 +1796,8 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 
 			if (!show) {
 				bool protectionBegin = true;
+				
+				// First show static absorptions from ItemType
 				for (size_t i = 0; i < COMBAT_COUNT; ++i) {
 					if (it.abilities->absorbPercent[i] == 0) {
 						continue;
@@ -1724,8 +1818,66 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 						s << ", ";
 					}
 
-					s << getCombatName(indexToCombatType(i)) << ' ' << std::showpos << it.abilities->absorbPercent[i] << std::noshowpos << '%';
+					// Check if this element has dynamic bonus and combine values
+					CombatType_t combatType = indexToCombatType(i);
+					int32_t totalAbsorb = it.abilities->absorbPercent[i];
+					
+					// Add dynamic absorb if item exists
+					if (item) {
+						itemAttrTypes dynamicAttr = ITEM_ATTRIBUTE_NONE;
+						switch (combatType) {
+							case COMBAT_ICEDAMAGE: dynamicAttr = ITEM_ATTRIBUTE_ABSORBICE; break;
+							case COMBAT_EARTHDAMAGE: dynamicAttr = ITEM_ATTRIBUTE_ABSORBEARTH; break;
+							case COMBAT_FIREDAMAGE: dynamicAttr = ITEM_ATTRIBUTE_ABSORBFIRE; break;
+							case COMBAT_ENERGYDAMAGE: dynamicAttr = ITEM_ATTRIBUTE_ABSORBENERGY; break;
+							case COMBAT_DEATHDAMAGE: dynamicAttr = ITEM_ATTRIBUTE_ABSORBDEATH; break;
+							case COMBAT_HOLYDAMAGE: dynamicAttr = ITEM_ATTRIBUTE_ABSORBHOLY; break;
+							default: break;
+						}
+						
+						if (dynamicAttr != ITEM_ATTRIBUTE_NONE && item->hasAttribute(dynamicAttr)) {
+							totalAbsorb += item->getIntAttr(dynamicAttr);
+						}
+					}
+					
+					s << getCombatName(combatType) << ' ' << std::showpos << totalAbsorb << std::noshowpos << '%';
 				}
+				
+				// Now show ONLY dynamic absorptions that don't have static counterparts
+				if (item) {
+					std::vector<std::pair<itemAttrTypes, CombatType_t>> dynamicAttributes = {
+						{ITEM_ATTRIBUTE_ABSORBICE, COMBAT_ICEDAMAGE},
+						{ITEM_ATTRIBUTE_ABSORBEARTH, COMBAT_EARTHDAMAGE},
+						{ITEM_ATTRIBUTE_ABSORBFIRE, COMBAT_FIREDAMAGE},
+						{ITEM_ATTRIBUTE_ABSORBENERGY, COMBAT_ENERGYDAMAGE},
+						{ITEM_ATTRIBUTE_ABSORBDEATH, COMBAT_DEATHDAMAGE},
+						{ITEM_ATTRIBUTE_ABSORBHOLY, COMBAT_HOLYDAMAGE}
+					};
+					
+					for (const auto& attr : dynamicAttributes) {
+						// Only show if item has dynamic absorb BUT no static absorb for this element
+						if (item->hasAttribute(attr.first) && it.abilities->absorbPercent[combatTypeToIndex(attr.second)] == 0) {
+							int32_t dynamicValue = item->getIntAttr(attr.first);
+							if (dynamicValue > 0) {
+								if (protectionBegin) {
+									protectionBegin = false;
+									if (begin) {
+										begin = false;
+										s << " (";
+									} else {
+										s << ", ";
+									}
+									s << "protection ";
+								} else {
+									s << ", ";
+								}
+								
+								s << getCombatName(attr.second) << ' ' << std::showpos << dynamicValue << std::noshowpos << '%';
+							}
+						}
+					}
+				}
+				
 			} else {
 				if (begin) {
 					begin = false;
