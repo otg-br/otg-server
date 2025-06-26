@@ -1189,6 +1189,7 @@ void ValueCallback::getMinMaxValues(Player* player, CombatDamage& damage) const
 				}
 
 				damage.secondary.type = weapon->getElementType();
+				damage.secondary.value = weapon->getElementDamage(player, nullptr, tool);
 			}
 
 			lua_pushnumber(L, player->getWeaponSkill(tool));
