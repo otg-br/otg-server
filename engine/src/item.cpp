@@ -1317,7 +1317,85 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 			if (!begin) {
 			s << ')';
 			}
-		} else if (it.weaponType != WEAPON_AMMO) {
+		} else if (it.weaponType == WEAPON_AMMO) {
+			bool begin = true;
+			
+			int32_t attack = item ? item->getAttack() : it.attack;
+			if (attack != 0) {
+				begin = false;
+				s << " (Atk:" << attack;
+
+				// Show dynamic elements (priority over static)
+				std::vector<std::pair<CombatType_t, uint16_t>> dynamicElements;
+				if (item) {
+					dynamicElements.push_back({COMBAT_ICEDAMAGE, item->getElementDamage(COMBAT_ICEDAMAGE)});
+					dynamicElements.push_back({COMBAT_EARTHDAMAGE, item->getElementDamage(COMBAT_EARTHDAMAGE)});
+					dynamicElements.push_back({COMBAT_FIREDAMAGE, item->getElementDamage(COMBAT_FIREDAMAGE)});
+					dynamicElements.push_back({COMBAT_ENERGYDAMAGE, item->getElementDamage(COMBAT_ENERGYDAMAGE)});
+					dynamicElements.push_back({COMBAT_DEATHDAMAGE, item->getElementDamage(COMBAT_DEATHDAMAGE)});
+					dynamicElements.push_back({COMBAT_HOLYDAMAGE, item->getElementDamage(COMBAT_HOLYDAMAGE)});
+				}
+				
+				bool hasAnyDynamicElement = false;
+				if (item) {
+					for (const auto& element : dynamicElements) {
+						if (element.second > 0) {
+							hasAnyDynamicElement = true;
+							break;
+						}
+					}
+				}
+				
+				if (hasAnyDynamicElement) {
+					// Show physical + dynamic elements
+					s << " physical";
+					for (const auto& element : dynamicElements) {
+						if (element.second > 0) {
+							const char* elementName = "unknown";
+							switch (element.first) {
+								case COMBAT_ICEDAMAGE: elementName = "ice"; break;
+								case COMBAT_FIREDAMAGE: elementName = "fire"; break;
+								case COMBAT_ENERGYDAMAGE: elementName = "energy"; break;
+								case COMBAT_EARTHDAMAGE: elementName = "earth"; break;
+								case COMBAT_DEATHDAMAGE: elementName = "death"; break;
+								case COMBAT_HOLYDAMAGE: elementName = "holy"; break;
+								default: break;
+							}
+							s << " + " << element.second << ' ' << elementName;
+						}
+					}
+				} else if (it.abilities && it.abilities->elementType != COMBAT_NONE && it.abilities->elementDamage != 0) {
+					// Fallback to static element from XML
+					const char* elementName = "unknown";
+					switch (it.abilities->elementType) {
+						case COMBAT_ICEDAMAGE: elementName = "ice"; break;
+						case COMBAT_FIREDAMAGE: elementName = "fire"; break;
+						case COMBAT_ENERGYDAMAGE: elementName = "energy"; break;
+						case COMBAT_EARTHDAMAGE: elementName = "earth"; break;
+						case COMBAT_DEATHDAMAGE: elementName = "death"; break;
+						case COMBAT_HOLYDAMAGE: elementName = "holy"; break;
+						default: break;
+					}
+					s << " physical + " << it.abilities->elementDamage << ' ' << elementName;
+				}
+			}
+
+			// Show max hit chance if available
+			int32_t maxHitChance = it.maxHitChance;
+			if (maxHitChance > 0) {
+				if (begin) {
+					begin = false;
+					s << " (";
+				} else {
+					s << ", ";
+				}
+				s << "Max Hit%+" << maxHitChance;
+			}
+
+			if (!begin) {
+				s << ')';
+			}
+		} else if (it.weaponType != WEAPON_NONE) {
 			bool begin = true;
 
 			int32_t attack, defense, extraDefense;
@@ -1361,12 +1439,32 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 					s << " physical";
 					for (const auto& element : dynamicElements) {
 						if (element.second > 0) {
-							s << " + " << element.second << ' ' << getCombatName(element.first);
+							const char* elementName = "unknown";
+							switch (element.first) {
+								case COMBAT_ICEDAMAGE: elementName = "ice"; break;
+								case COMBAT_FIREDAMAGE: elementName = "fire"; break;
+								case COMBAT_ENERGYDAMAGE: elementName = "energy"; break;
+								case COMBAT_EARTHDAMAGE: elementName = "earth"; break;
+								case COMBAT_DEATHDAMAGE: elementName = "death"; break;
+								case COMBAT_HOLYDAMAGE: elementName = "holy"; break;
+								default: break;
+							}
+							s << " + " << element.second << ' ' << elementName;
 						}
 					}
 				} else if (it.abilities && it.abilities->elementType != COMBAT_NONE && it.abilities->elementDamage != 0) {
 					// Fallback to static element from XML
-					s << " physical + " << it.abilities->elementDamage << ' ' << getCombatName(it.abilities->elementType);
+					const char* elementName = "unknown";
+					switch (it.abilities->elementType) {
+						case COMBAT_ICEDAMAGE: elementName = "ice"; break;
+						case COMBAT_FIREDAMAGE: elementName = "fire"; break;
+						case COMBAT_ENERGYDAMAGE: elementName = "energy"; break;
+						case COMBAT_EARTHDAMAGE: elementName = "earth"; break;
+						case COMBAT_DEATHDAMAGE: elementName = "death"; break;
+						case COMBAT_HOLYDAMAGE: elementName = "holy"; break;
+						default: break;
+					}
+					s << " physical + " << it.abilities->elementDamage << ' ' << elementName;
 				}
 			}
 
