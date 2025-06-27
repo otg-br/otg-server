@@ -1426,7 +1426,7 @@ void Player::onRemoveCreature(Creature* creature, bool isLogout)
 		clearPartyInvitations();
 
 		if (party) {
-			party->leaveParty(this);
+			party->leaveParty(this, true);
 		}
 
 		g_chat->removeUserFromAllChannels(*this);
