@@ -7,11 +7,11 @@ dofile('data/lib/core/core.lua')
 -- Compatibility library for our old Lua API
 dofile('data/lib/compat/compat.lua')
 
-dofile('data/lib/rewardboss.lua')
+dofile('data/lib/customlib/rewardboss.lua')
 
-dofile('data/lib/guild.lua')
+dofile('data/lib/customlib/guild.lua')
 
-dofile('data/lib/modalwindow.lua')
+dofile('data/lib/customlib/modalwindow.lua')
 
 
 -- Tables library
@@ -27,4 +27,4 @@ dofile('data/lib/customlib/guildLevel.lua')
 dofile('data/lib/debugging/dump.lua')
 
 -- Autoloot
-dofile('data/lib/autoloot.lua')
+dofile('data/lib/customlib/autoloot.lua')

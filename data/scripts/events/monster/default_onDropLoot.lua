@@ -16,7 +16,6 @@ event.onDropLoot = function(self, corpse)
     local bonusPrey = 0
     local hasCharm = false
     
-    -- Guild Level System
     if player then
         local random = (player:getPreyBonusLoot(mType) >= math.random(100))
         if player:getPreyBonusLoot(mType) > 0 and random then
@@ -39,7 +38,6 @@ event.onDropLoot = function(self, corpse)
             end
         end
         
-        -- charm
         local currentCharm = player:getMonsterCharm(mType:raceId())
         if currentCharm == 14 then
             percent = percent * 1.10
