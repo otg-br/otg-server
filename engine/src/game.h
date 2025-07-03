@@ -504,8 +504,6 @@ class Game
 
 		std::forward_list<Item*> getMarketItemList(uint16_t wareId, uint16_t sufficientCount, DepotLocker* depotLocker);
 
-		static void updatePremium(Account& account);
-
 		// Store
 		void playerOpenStore(uint32_t playerId, bool openStore, StoreOffers* offers = nullptr);
 		void playerBuyStoreOffer(uint32_t playerId, const StoreOffer& offer, std::string& param);

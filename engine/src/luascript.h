@@ -1026,13 +1026,8 @@ class LuaScriptInterface
 		static int luaPlayerRemoveMount(lua_State* L);
 		static int luaPlayerHasMount(lua_State* L);
 
-		static int luaPlayerGetPremiumDays(lua_State* L);
-		static int luaPlayerAddPremiumDays(lua_State* L);
-		static int luaPlayerRemovePremiumDays(lua_State* L);
-
-		static int luaPlayerGetVipDays(lua_State* L);
-		static int luaPlayerAddVipDays(lua_State* L);
-		static int luaPlayerRemoveVipDays(lua_State* L);
+		static int luaPlayerGetPremiumEndsAt(lua_State* L);
+		static int luaPlayerSetPremiumEndsAt(lua_State* L);
 
 		static int luaPlayerGetTibiaCoins(lua_State* L);
 		static int luaPlayerAddTibiaCoins(lua_State* L);

@@ -3489,14 +3489,16 @@ void Game::playerBuyStoreOffer(uint32_t playerId, const StoreOffer& offer, std::
 		successfully = true;
 		returnmessage << "You have purchased " << std::to_string(thisOffer->getCount()) << "x " << thisOffer->getName() << " for " << thisOffer->getPrice(player) <<" coins";
 	} else if (offerType == OFFER_TYPE_PREMIUM) {
-		if (player->premiumDays != std::numeric_limits<uint16_t>::max()) {
+		if (player->premiumEndsAt != std::numeric_limits<time_t>::max()) {
 			player->sendStoreError(STORE_ERROR_PURCHASE, "You have reached the maximum premium limit");
 			return;
 		}
 
-		int32_t addDays = std::min<int32_t>(0xFFFE - player->premiumDays, thisOffer->getCount(true));
-		player->setPremiumDays(player->premiumDays + addDays);
-		IOLoginData::addPremiumDays(player->getAccount(), addDays);
+		time_t now = time(nullptr);
+		time_t addTime = thisOffer->getCount(true) * 86400;
+		time_t endTime = std::min<time_t>(now + static_cast<time_t>(0xFFFE) * 86400, player->premiumEndsAt + addTime);
+		player->premiumEndsAt = endTime;
+		IOLoginData::setPremiumEndsAt(player->getAccount(), endTime);
 		successfully = true;
 		returnmessage << "You have purchased " << thisOffer->getName() << " for " << thisOffer->getPrice(player) <<" coins";
 	} else if (offerType == OFFER_TYPE_VIP) {
@@ -6886,40 +6888,6 @@ void Game::updateCreatureType(Creature* creature)
 	}
 }
 
-void Game::updatePremium(Account& account)
-{
-	bool save = false;
-	time_t timeNow = OS_TIME(nullptr);
-
-	if (account.premiumDays != 0 && account.premiumDays != std::numeric_limits<uint16_t>::max()) {
-		if (account.lastDay == 0) {
-			account.lastDay = timeNow;
-			save = true;
-		} else {
-			uint32_t days = (timeNow - account.lastDay) / 86400;
-			if (days > 0) {
-				if (days >= account.premiumDays) {
-					account.premiumDays = 0;
-					account.lastDay = 0;
-				} else {
-					account.premiumDays -= days;
-					time_t remainder = (timeNow - account.lastDay) % 86400;
-					account.lastDay = timeNow - remainder;
-				}
-
-				save = true;
-			}
-		}
-	} else if (account.lastDay != 0) {
-		account.lastDay = 0;
-		save = true;
-	}
-
-	if (save && !IOLoginData::saveAccount(account)) {
-		std::cout << "> ERROR: Failed to save account: " << account.name << "!" << std::endl;
-	}
-}
-
 void Game::loadMotdNum()
 {
 	Database& db = Database::getInstance();
@@ -8519,7 +8487,7 @@ bool Game::hasDistanceEffect(uint8_t effectId) {
 
 bool Game::isExpertPvpEnabled()
 {
-	return g_config.getBoolean(ConfigManager::EXPERT_PVP);
+    return g_config.getBoolean(ConfigManager::EXPERT_PVP);
 }
 
 void Game::updateSpectatorsPvp(Thing* thing)

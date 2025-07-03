@@ -4649,12 +4649,12 @@ bool Player::isPremium() const
 		return true;
 	}
 
-	return premiumDays > 0;
+	return premiumEndsAt > time(nullptr);
 }
 
-void Player::setPremiumDays(int32_t v)
+void Player::setPremiumTime(time_t premiumEndsAt)
 {
-	premiumDays = v;
+	this->premiumEndsAt = premiumEndsAt;
 	sendBasicData();
 }
 
