@@ -56,8 +56,12 @@ replayProtocolPort = 7174
 
 -- Version Manual
 clientVersionMin = 1100
-clientVersionMax = 1291
-clientVersionStr = "Only support outdated 10.00 and version 12.91"
+clientVersionMax = 1220
+clientVersionStr = "Only support outdated 10.00 and version 12.20"
+
+-- Anti Multi-Client System
+antiMultiClientEnabled = true
+antiMultiClientLimit = 2
 
 -- Depot Limit
 freeDepotLimit = 2000
