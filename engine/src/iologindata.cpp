@@ -162,7 +162,7 @@ bool IOLoginData::loginserverAuthenticationEmail(const std::string& name, const 
 	Database& db = Database::getInstance();
 
 	std::ostringstream query;
-	query << "SELECT `id`, `name`, `email`, `password`, `secret`, `type`, `premdays`, `vip_time`, `lastday` FROM `accounts` WHERE `email` = " << db.escapeString(name);
+	query << "SELECT `id`, `name`, `email`, `password`, `secret`, `type`, `premium_ends_at`, `vip_time` FROM `accounts` WHERE `email` = " << db.escapeString(name);
 	DBResult_ptr result = db.storeQuery(query.str());
 	if (!result) {
 		return false;
@@ -351,7 +351,11 @@ bool IOLoginData::preloadPlayer(Player* player, const std::string& name)
 	player->accountType = static_cast<AccountType_t>(result->getNumber<uint16_t>("account_type"));
 	player->coinBalance = result->getNumber<uint32_t>("coinbalance");
 	player->tournamentCoinBalance = result->getNumber<uint32_t>("tournamentBalance");
-	player->premiumEndsAt = result->getNumber<time_t>("premium_ends_at");
+	if (!g_config.getBoolean(ConfigManager::FREE_PREMIUM)) {
+		player->premiumEndsAt = result->getNumber<time_t>("premium_ends_at");
+	} else {
+		player->premiumEndsAt = 0;
+	}
 	player->viptime = result->getNumber<uint32_t>("vip_time");
 	query.str(std::string());
 	query << "SELECT `guild_id`, `rank_id`, `nick` FROM `guild_membership` WHERE `player_id` = " << player->getGUID();
