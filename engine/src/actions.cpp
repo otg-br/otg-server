@@ -27,6 +27,7 @@
 #include "pugicast.h"
 #include "spells.h"
 #include "rewardchest.h"
+#include <unordered_set>
 
 extern Game g_game;
 extern Spells* g_spells;
@@ -461,7 +462,22 @@ bool Actions::useItem(Player* player, const Position& pos, uint8_t index, Item* 
 			return false;
 		}
 
-		player->setNextPotionAction(OTSYS_TIME() + g_config.getNumber(ConfigManager::ACTIONS_DELAY_INTERVAL));
+		bool fastPotions = g_config.getBoolean(ConfigManager::POTION_FAST_USE);
+		if (it.type == ITEM_TYPE_POTION && fastPotions) {
+			static std::unordered_set<uint16_t> fastPotionSet;
+			if (fastPotionSet.empty()) {
+				const auto& vec = g_config.getFastPotionList();
+				fastPotionSet.insert(vec.begin(), vec.end());
+			}
+
+			if (fastPotionSet.find(item->getID()) != fastPotionSet.end()) {
+				// no delay
+			} else {
+				player->setNextPotionAction(OTSYS_TIME() + g_config.getNumber(ConfigManager::ACTIONS_DELAY_INTERVAL));
+			}
+		} else {
+			player->setNextPotionAction(OTSYS_TIME() + g_config.getNumber(ConfigManager::ACTIONS_DELAY_INTERVAL));
+		}
 	} else {
 		player->setNextAction(OTSYS_TIME() + g_config.getNumber(ConfigManager::ACTIONS_DELAY_INTERVAL));
 	}
@@ -483,12 +499,29 @@ bool Actions::useItemEx(Player* player, const Position& fromPos, const Position&
                         uint8_t toStackPos, Item* item, bool isHotkey, Creature* creature/* = nullptr*/)
 {
 	const ItemType& it = Item::items[item->getID()];
+
 	if (it.isRune() || it.type == ITEM_TYPE_POTION) {
 		if (player->walkExhausted()) {
 			player->sendCancelMessage(RETURNVALUE_YOUAREEXHAUSTED);
 			return false;
 		}
-		player->setNextPotionAction(OTSYS_TIME() + g_config.getNumber(ConfigManager::EX_ACTIONS_DELAY_INTERVAL));
+
+		bool fastPotions = g_config.getBoolean(ConfigManager::POTION_FAST_USE);
+		if (it.type == ITEM_TYPE_POTION && fastPotions) {
+			static std::unordered_set<uint16_t> fastPotionSet;
+			if (fastPotionSet.empty()) {
+				const auto& vec = g_config.getFastPotionList();
+				fastPotionSet.insert(vec.begin(), vec.end());
+			}
+
+			if (fastPotionSet.find(item->getID()) != fastPotionSet.end()) {
+				// no delay
+			} else {
+				player->setNextPotionAction(OTSYS_TIME() + g_config.getNumber(ConfigManager::EX_ACTIONS_DELAY_INTERVAL));
+			}
+		} else {
+			player->setNextPotionAction(OTSYS_TIME() + g_config.getNumber(ConfigManager::EX_ACTIONS_DELAY_INTERVAL));
+		}
 	} else {
 		player->setNextAction(OTSYS_TIME() + g_config.getNumber(ConfigManager::EX_ACTIONS_DELAY_INTERVAL));
 	}

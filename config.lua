@@ -93,6 +93,12 @@ houseRentPeriod = "never"
 timeBetweenActions = 500
 timeBetweenExActions = 800
 
+
+fastUseHealthPotions = false   -- enable/disable feature simultaneously with fastPotionList
+fastPotionList = {26031, 26030, 8473, 7591, 8472, 7588, 26029,
+                   7590, 7589, 7620, 7618, 8704, 8474}
+
+
 -- Map
 -- NOTE: set mapName WITHOUT .otbm at the end
 -- NOTE: unzip the map world.rar

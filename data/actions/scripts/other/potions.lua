@@ -1,3 +1,9 @@
+Storage = Storage or {}
+Storage.emptyVials = Storage.emptyVials or { emptyVial = 55000, exhaust = 55001 }
+
+-- Table to control potion exhaust per player
+playerDelayPotion = playerDelayPotion or {}
+
 local berserk = Condition(CONDITION_ATTRIBUTES)
 berserk:setParameter(CONDITION_PARAM_TICKS, 10 * 60 * 1000)
 berserk:setParameter(CONDITION_PARAM_SKILL_MELEE, 5)

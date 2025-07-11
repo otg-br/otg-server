@@ -66,6 +66,7 @@ class ConfigManager
 			YELL_ALLOW_PREMIUM,
 			BLESS_RUNE,
 			ANTI_MULTI_CLIENT_ENABLED,
+			POTION_FAST_USE,
 
 			LAST_BOOLEAN_CONFIG /* this must be the last one */
 		};
@@ -179,6 +180,9 @@ class ConfigManager
 		float getFloat(floating_config_t what) const;
 		double getDouble(doubling_config_t what) const;
 		std::pair<bool, const ConfigManager::ProxyInfo&> getProxyInfo(uint16_t proxyId);
+		const std::vector<uint16_t>& getFastPotionList() const {
+			return fastPotionList;
+		}
 
 		std::string const& setConfigFileLua(const std::string& what) {
 			configFileLua = { what };
@@ -196,6 +200,7 @@ class ConfigManager
 		float floating[LAST_FLOATING_CONFIG] = {};
 		double doubling[LAST_DOUBLING_CONFIG] = {};
 		std::map<uint16_t, ProxyInfo> proxyList;
+		std::vector<uint16_t> fastPotionList;
 
 		bool loaded = false;
 };
