@@ -20,6 +20,7 @@
 #include "otpch.h"
 #include <boost/range/adaptor/reversed.hpp>
 #include "protocolgamebase.h"
+#include "protocolgame.h"
 #include "game.h"
 #include "iologindata.h"
 #include "tile.h"
@@ -193,6 +194,16 @@ void ProtocolGameBase::AddOutfit(NetworkMessage& msg, const Outfit_t& outfit)
 	}
 
 	msg.add<uint16_t>(outfit.lookMount);
+
+	// OTCv8 extended outfit attributes: wings, aura and shader
+	if (auto protoGame = dynamic_cast<ProtocolGame*>(this)) {
+		if (protoGame->otclientV8) {
+			msg.add<uint16_t>(outfit.lookWings);
+			msg.add<uint16_t>(outfit.lookAura);
+			Shader* shader = g_game.shaders.getShaderByID(outfit.lookShader);
+			msg.addString(shader ? shader->name : "");
+		}
+	}
 }
 
 void ProtocolGameBase::checkCreatureAsKnown(uint32_t id, bool& known, uint32_t& removedKnown)

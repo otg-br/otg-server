@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<auras>
+<aura id="1" clientid="1657" name="Blue Aura" speed="20" />
+	<aura id="2" clientid="1658" name="Dark Aura" speed="20" />
+	<aura id="3" clientid="1659" name="War Bear" speed="20" />
+	<aura id="4" clientid="1660" name="Fire Aura" speed="20" />
+	<aura id="5" clientid="1661" name="aura1" speed="20" />
+</auras>

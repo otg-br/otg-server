@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wings>
+<wing id="1" clientid="1655" name="Widow Queen" speed="20" />
+	<wing id="3" clientid="1656" name="Wings" speed="20" /> 
+	<wing id="4" clientid="1672" name="Wings" speed="20" /> 
+	<wing id="4" clientid="1673" name="Wings" speed="20" />
+	<wing id="5" clientid="1674" name="Wings" speed="20" />
+</wings>

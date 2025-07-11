@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shaders>
+	<shader id="1" name="Rainbow Outfit" premium="no" unlocked="yes" enabled="yes" />
+	<shader id="2" name="Brazil Outfit" premium="no" unlocked="yes" enabled="yes" />
+	<shader id="3" name="Gold Outfit" premium="no" unlocked="yes" enabled="yes" />
+	<shader id="4" name="Sweden Outfit" premium="no" unlocked="yes" enabled="yes" />
+	<shader id="5" name="Polska Outfit" premium="no" unlocked="yes" enabled="yes" />
+	<shader id="6" name="Stars Outfit" premium="no" unlocked="yes" enabled="yes" />
+	<shader id="7" name="Rainbow Outline" premium="no" unlocked="yes" enabled="yes" />
+	<shader id="8" name="Dual Outfit" premium="no" unlocked="yes" enabled="yes" />
+	<shader id="9" name="Red Outline" premium="no" unlocked="yes" enabled="yes" />
+	<shader id="10" name="Slim Outline" premium="no" unlocked="yes" enabled="yes" />
+	<shader id="11" name="Line Outline" premium="no" unlocked="yes" enabled="yes" />
+	<shader id="12" name="Retro Outline" premium="no" unlocked="yes" enabled="yes" />
+	<shader id="13" name="Circle Outfit" premium="no" unlocked="yes" enabled="yes" />
+    <shader id="14" name="outline rainbow" premium="no" unlocked="yes" enabled="yes" />
+</shaders>

@@ -36,6 +36,9 @@
 #include "groups.h"
 #include "town.h"
 #include "mounts.h"
+#include "auras.h"
+#include "wings.h"
+#include "shaders.h"
 #include "reward.h"
 #include "rewardchest.h"
 #include "imbuements.h"
@@ -170,14 +173,42 @@ class Player final : public Creature, public Cylinder
 
 		uint8_t getCurrentMount() const;
 		void setCurrentMount(uint8_t mountId);
-		bool isMounted() const {
+		bool isMounted() const
+		{
 			return defaultOutfit.lookMount != 0;
+		}
+		bool hasMount() const
+		{
+			return defaultOutfit.lookMount != 0;
+		}
+		bool hasAura() const
+		{
+			return defaultOutfit.lookAura != 0;
+		}
+		bool hasWings() const
+		{
+			return defaultOutfit.lookWings != 0;
+		}
+		bool hasShader() const
+		{
+			return defaultOutfit.lookShader != 0;
 		}
 		bool toggleMount(bool mount);
 		bool tameMount(uint8_t mountId);
 		bool untameMount(uint8_t mountId);
 		bool hasMount(const Mount* mount) const;
 		void dismount();
+
+		bool hasWing(const Wing* wing) const;
+		bool addWing(uint8_t wingId);
+		uint8_t getCurrentAura() const;
+		void setCurrentAura(uint8_t auraId);
+		bool hasAura(const Aura* aura) const;
+		bool addAura(uint8_t auraId);
+		uint8_t getCurrentWing() const;
+		void setCurrentWing(uint8_t wingId);
+		bool hasShader(const Shader* shader) const;
+		bool addShader(uint8_t shaderId);
 
 		void sendFYIBox(const std::string& message) {
 			if (client) {

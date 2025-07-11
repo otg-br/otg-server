@@ -190,6 +190,13 @@ void mainLoader(int argc, char* argv[], ServiceManager* services)
 		std::cout << "> No tables were optimized." << std::endl;
 	}
 
+	// Load shaders
+	std::cout << ">> Loading shaders" << std::endl;
+	if (!g_game.shaders.loadFromXml()) {
+		startupErrorMessage("Unable to load shaders!");
+		return;
+	}
+	
 	//load vocations
 	std::cout << ">> Loading vocations" << std::endl;
 	if (!g_vocations.loadFromXml()) {

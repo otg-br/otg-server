@@ -995,6 +995,36 @@ MonsterType* Monsters::loadMonster(const std::string& file, const std::string& m
 			mType->info.outfit.lookMount = pugi::cast<uint16_t>(attr.value());
 		}
 
+		if ((attr = node.attribute("aura"))) {
+			mType->info.outfit.lookAura = pugi::cast<uint16_t>(attr.value());
+		}
+
+		if ((attr = node.attribute("wings"))) {
+			mType->info.outfit.lookWings = pugi::cast<uint16_t>(attr.value());
+		}
+
+		if ((attr = node.attribute("shader"))) {
+			std::string shaderValue = attr.as_string();
+			Shader* shader = nullptr;
+			
+			bool isNumeric = true;
+			for (char c : shaderValue) {
+				if (!std::isdigit(c)) {
+					isNumeric = false;
+					break;
+				}
+			}
+			
+			if (isNumeric) {
+				uint8_t shaderId = static_cast<uint8_t>(std::stoi(shaderValue));
+				shader = g_game.shaders.getShaderByID(shaderId);
+			} else {
+				shader = g_game.shaders.getShaderByName(shaderValue);
+			}
+			
+			mType->info.outfit.lookShader = shader ? shader->id : 0;
+		}
+
 		if ((attr = node.attribute("corpse"))) {
 			mType->info.lookcorpse = pugi::cast<uint16_t>(attr.value());
 		}

@@ -446,6 +446,7 @@ class ProtocolGame final : public ProtocolGameBase
 		void parseBestiaryTracker(NetworkMessage& msg);
 
 		friend class Player;
+		friend class ProtocolGameBase;
 		
 		uint16_t otclientV8 = 0;
 
