@@ -1361,7 +1361,7 @@ void Player::onChangeZone(ZoneType_t zone)
 			onAttackedCreatureDisappear(false);
 		}
 
-		if (!group->access && isMounted()) {
+		if (!group->access && isMounted() && !g_config.getBoolean(ConfigManager::ALLOW_MOUNT_IN_PZ)) {
 			dismount();
 			g_game.internalCreatureChangeOutfit(this, defaultOutfit);
 			wasMounted = true;
@@ -4913,7 +4913,7 @@ bool Player::toggleMount(bool mount)
 			return false;
 		}
 
-		if (!group->access && tile->hasFlag(TILESTATE_PROTECTIONZONE)) {
+		if (!group->access && tile->hasFlag(TILESTATE_PROTECTIONZONE) && !g_config.getBoolean(ConfigManager::ALLOW_MOUNT_IN_PZ)) {
 			sendCancelMessage(RETURNVALUE_ACTIONNOTPERMITTEDINPROTECTIONZONE);
 			return false;
 		}
