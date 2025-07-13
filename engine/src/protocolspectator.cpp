@@ -186,7 +186,7 @@ void ProtocolSpectator::addDummyCreature(NetworkMessage& msg, const uint32_t& cr
 	msg.addString("Dummy");
 	msg.addByte(0x00); // health percent
 	msg.addByte(DIRECTION_NORTH); // direction
-	AddOutfit(msg, player->getCurrentOutfit()); // outfit
+	AddOutfit(msg, player->getCurrentOutfit(), true); // outfit
 	msg.addByte(0); // light level
 	msg.addByte(0); // light color
 	msg.add<uint16_t>(200); // speed
@@ -410,7 +410,7 @@ void ProtocolSpectator::release()
 
 void ProtocolSpectator::writeToOutputBuffer(const NetworkMessage& msg, bool broadcast)
 {
-	(void)broadcast; // Marca o parâmetro como usado
+	(void)broadcast; // Marca o parï¿½metro como usado
 	OutputMessage_ptr out = getOutputBuffer(msg.getLength());
 	out->append(msg);
 }

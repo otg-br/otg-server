@@ -58,6 +58,9 @@ struct TextMessage
 	TextMessage(MessageClasses type, std::string text) : type(type), text(std::move(text)) {}
 };
 
+static constexpr size_t OTCV8_LENGTH = 5;
+static constexpr char OTCV8_NAME[] = "OTCV8";
+
 class ProtocolGame final : public ProtocolGameBase
 {
 	public:
@@ -448,7 +451,9 @@ class ProtocolGame final : public ProtocolGameBase
 		friend class Player;
 		friend class ProtocolGameBase;
 		
-		uint16_t otclientV8 = 0;
+		bool isOTCv8 = false;
+		bool isMehah = false;
+		bool isOTC = false;
 
 		// Helpers so we don't need to bind every time
 		template <typename Callable, typename... Args>

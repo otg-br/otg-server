@@ -179,31 +179,39 @@ void ProtocolGameBase::onConnect()
 	send(std::move(output));
 }
 
-void ProtocolGameBase::AddOutfit(NetworkMessage& msg, const Outfit_t& outfit)
+void ProtocolGameBase::AddOutfit(NetworkMessage& msg, const Outfit_t& outfit, bool addMount)
 {
-	msg.add<uint16_t>(outfit.lookType);
-
-	if (outfit.lookType != 0) {
-		msg.addByte(outfit.lookHead);
-		msg.addByte(outfit.lookBody);
-		msg.addByte(outfit.lookLegs);
-		msg.addByte(outfit.lookFeet);
-		msg.addByte(outfit.lookAddons);
-	} else {
-		msg.addItemId(outfit.lookTypeEx);
-	}
-
-	msg.add<uint16_t>(outfit.lookMount);
-
-	// OTCv8 extended outfit attributes: wings, aura and shader
-	if (auto protoGame = dynamic_cast<ProtocolGame*>(this)) {
-		if (protoGame->otclientV8) {
-			msg.add<uint16_t>(outfit.lookWings);
-			msg.add<uint16_t>(outfit.lookAura);
-			Shader* shader = g_game.shaders.getShaderByID(outfit.lookShader);
-			msg.addString(shader ? shader->name : "");
-		}
-	}
+	uint16_t lookType = outfit.lookType;
+    if (!player->isOTC() && lookType >= 367) {
+        lookType = 128;
+    }
+    
+    msg.add<uint16_t>(lookType);
+    if (lookType != 0) {
+        msg.addByte(outfit.lookHead);
+        msg.addByte(outfit.lookBody);
+        msg.addByte(outfit.lookLegs);
+        msg.addByte(outfit.lookFeet);
+        msg.addByte(outfit.lookAddons);
+    } else {
+        msg.addItemId(outfit.lookTypeEx);
+    }
+    
+    if (addMount) {
+        if (player->isOTC()) {
+            msg.add<uint16_t>(outfit.lookMount);
+        } else {
+            msg.add<uint16_t>(0);
+        }
+        
+        if (player->isOTCv8() && !player->isMehah()) {
+            msg.add<uint16_t>(outfit.lookWings);
+            msg.add<uint16_t>(outfit.lookAura);
+            
+            Shader* shader = g_game.shaders.getShaderByID(outfit.lookShader);
+            msg.addString(shader ? shader->name : "");
+        }
+    }
 }
 
 void ProtocolGameBase::checkCreatureAsKnown(uint32_t id, bool& known, uint32_t& removedKnown)
@@ -299,10 +307,10 @@ void ProtocolGameBase::AddCreature(NetworkMessage& msg, const Creature* creature
 	msg.addByte(creature->getDirection());
 
 	if (!creature->isInGhostMode() && !creature->isInvisible()) {
-		AddOutfit(msg, creature->getCurrentOutfit());
+		AddOutfit(msg, creature->getCurrentOutfit(), true);
 	} else {
 		static Outfit_t outfit;
-		AddOutfit(msg, outfit);
+		AddOutfit(msg, outfit, true);
 	}
 
 	LightInfo lightInfo = creature->getCreatureLight();

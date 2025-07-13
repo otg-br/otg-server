@@ -1661,6 +1661,12 @@ class Player final : public Creature, public Cylinder
 		void onEquipImbueItem(Imbuement* imbuement);
 		void onDeEquipImbueItem(Imbuement* imbuement);
 		StreakBonus_t getStreakDaysBonus()const;
+
+		bool isOTCv8() const { return client ? client->isOTCv8 : false; }
+		bool isMehah() const { return client ? client->isMehah : false; }
+		bool isOTC() const { return client ? (client->isOTCv8 || client->isMehah) : false; }
+
+
 		//Custom: Anti bug do market
 		bool isMarketExhausted() const;
 		void updateMarketExhausted() {
