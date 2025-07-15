@@ -164,6 +164,10 @@ class Player final : public Creature, public Cylinder
 		}
 		std::string getDescription(int32_t lookDistance) const final;
 
+		const std::string& getMarketDescription() const override {
+			return name;
+		}
+
 		CreatureType_t getType() const final {
 			return CREATURETYPE_PLAYER;
 		}
@@ -864,6 +868,11 @@ class Player final : public Creature, public Cylinder
 		void sendRemoveTileThing(const Position& pos, int32_t stackpos) {
 			if (stackpos != -1 && client) {
 				client->sendRemoveTileThing(pos, stackpos);
+			}
+		}
+		void sendUpdateTileCreature(const Creature* creature) {
+			if (client) {
+				client->sendUpdateTileCreature(creature->getPosition(), creature->getTile()->getClientIndexOfCreature(this, creature), creature);
 			}
 		}
 		void sendUpdateTile(const Tile* tile, const Position& pos) {
@@ -1769,6 +1778,7 @@ class Player final : public Creature, public Cylinder
 		uint32_t getItemTypeCount(uint16_t itemId, int32_t subType = -1) const final;
 		std::map<uint32_t, uint32_t>& getAllItemTypeCount(std::map<uint32_t, uint32_t>& countMap) const final;
 		Item* getItemByClientId(uint16_t clientId) const;
+		Item* getItemByUID(uint32_t uid) const;
 		std::map<uint16_t, uint16_t> getInventoryClientIds() const;
 		Thing* getThing(size_t index) const final;
 

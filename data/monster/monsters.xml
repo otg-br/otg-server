@@ -1604,5 +1604,8 @@
 	<monster name="Wildness of Urmahlullu" file="Bosses/wildness of urmahlullu.xml"/>
 	<monster name="Wisdom of Urmahlullu" file="Bosses/wisdom of urmahlullu.xml"/>
 	<monster name="Xogixath" file="Bosses/xogixath.xml"/>
+	
+	<!-- Market -->
+	<monster name="Market" file="market.xml"/>
 		
 </monsters>

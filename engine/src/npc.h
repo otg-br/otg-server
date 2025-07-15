@@ -153,6 +153,11 @@ class Npc final : public Creature
 			return name;
 		}
 
+		const std::string& getMarketDescription() const override {
+			return name;
+		}
+
+
 		CreatureType_t getType() const final {
 			return CREATURETYPE_NPC;
 		}

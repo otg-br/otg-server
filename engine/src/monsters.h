@@ -184,6 +184,7 @@ class MonsterType
 		bool canWalkOnEnergy = true;
 		bool canWalkOnFire = true;
 		bool canWalkOnPoison = true;
+		bool allowDoubleAttack = false;
 
 		MonstersEvent_t eventType = MONSTERS_EVENT_NONE;
 	};
@@ -199,6 +200,7 @@ class MonsterType
 
 		std::string name;
 		std::string nameDescription;
+
 
 		MonsterInfo info;
 

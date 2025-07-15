@@ -409,6 +409,7 @@ class ProtocolGame final : public ProtocolGameBase
 		//tiles
 		void sendAddTileItem(const Position& pos, uint32_t stackpos, const Item* item);
 		void sendUpdateTileItem(const Position& pos, uint32_t stackpos, const Item* item);
+		void sendUpdateTileCreature(const Position& pos, uint32_t stackpos, const Creature* creature);
 		void sendRemoveTileThing(const Position& pos, uint32_t stackpos);
 
 		void sendMoveCreature(const Creature* creature, const Position& newPos, int32_t newStackPos,

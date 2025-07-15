@@ -75,14 +75,19 @@ class Monster final : public Creature
 		void addList() final;
 
 		const std::string& getName() const final {
-			return mType->name;
+			return customName.empty() ? mType->name : customName;
 		}
-		const std::string& getNameDescription() const final {
-			return mType->nameDescription;
-		}
+		void setName(const std::string& newName);
+		const std::string& getNameDescription() const final;
+		void setNameDescription(const std::string& newNameDescription);
 		std::string getDescription(int32_t) const final {
 			return strDescription + '.';
 		}
+
+		const std::string& getMarketDescription() const override {
+			return marketDescription.empty() ? mType->nameDescription : marketDescription;
+		}
+		void setMarketDescription(const std::string& description);
 
 		CreatureType_t getType() const final {
 			return CREATURETYPE_MONSTER;
@@ -228,6 +233,12 @@ class Monster final : public Creature
 		CreatureList targetList;
 
 		std::string strDescription;
+		std::string customName;
+
+		std::string name;
+		std::string nameDescription;
+
+		std::string marketDescription;
 
 		MonsterType* mType;
 		Spawn* spawn = nullptr;

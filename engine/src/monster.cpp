@@ -41,7 +41,8 @@ Monster* Monster::createMonster(const std::string& name)
 	if (!mType) {
 		return nullptr;
 	}
-	return new Monster(mType);
+	Monster* monster = new Monster(mType);
+	return monster;
 }
 
 Monster* Monster::createMonsterByRace(uint16_t raceid)
@@ -90,6 +91,39 @@ void Monster::addList()
 void Monster::removeList()
 {
 	g_game.removeMonster(this);
+}
+
+
+void Monster::setName(const std::string& newName)
+{
+	if (getName() == newName) {
+		return;
+	}
+
+	customName = newName;
+
+	// NOTE: Due to how client caches known creatures,
+	// it is not feasible to send creature update to everyone that has ever met it
+	SpectatorVec spectators;
+	g_game.map.getSpectators(spectators, position, true, true);
+	for (Creature* spectator : spectators) {
+		if (Player* tmpPlayer = spectator->getPlayer()) {
+			tmpPlayer->sendUpdateTileCreature(this);
+		}
+	}
+}
+
+const std::string& Monster::getNameDescription() const
+{
+	if (nameDescription.empty()) {
+		return mType->nameDescription;
+	}
+	return nameDescription;
+}
+
+void Monster::setNameDescription(const std::string& newNameDescription)
+{
+	nameDescription = newNameDescription;
 }
 
 bool Monster::canSee(const Position& pos) const
@@ -624,7 +658,7 @@ bool Monster::isTarget(const Creature* creature) const
 	// checar aqui
 
 	if (creature->isRemoved() || !creature->isAttackable() ||
-			creature->getZone() == ZONE_PROTECTION || !canSeeCreature(creature)) {
+			(creature->getZone() == ZONE_PROTECTION && getName() != "Market") || !canSeeCreature(creature)) {
 		return false;
 	}
 

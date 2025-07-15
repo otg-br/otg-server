@@ -929,6 +929,14 @@ class Item : virtual public Thing
 			}
 			return items[id].tier;
 		}
+
+		void setRealUID(uint32_t uid) {
+			realUId = uid;
+		}
+
+		uint32_t getRealUID() const {
+			return realUId;
+		}
 		
 		// Dynamic element functions (following same pattern as getAttack)
 		uint16_t getElementDamage(CombatType_t combatType) const {
@@ -1190,6 +1198,8 @@ class Item : virtual public Thing
 
 		//Don't add variables here, use the ItemAttribute class.
 		friend class Decay;
+
+		uint32_t realUId = 0;
 };
 
 using ItemList = std::list<Item*>;

@@ -86,6 +86,12 @@ Game::~Game()
 	for (const auto& it : guilds) {
 		delete it.second;
 	}
+
+	for (const auto& it : realUniqueItems) {
+		it.second->setRealUID(0);
+	}
+
+	realUniqueItems.clear();
 }
 
 void Game::start(ServiceManager* manager)
@@ -131,6 +137,7 @@ void Game::setGameState(GameState_t newState)
 			loadFreePass();
 
 			loadPlayerSell();
+			loadMarketing();
 
 			loadExperienceStages();
 			loadSkillStages();
@@ -6581,7 +6588,7 @@ void Game::internalDecayItem(Item* item)
 	} else {
 		ReturnValue ret = internalRemoveItem(item);
 		if (ret != RETURNVALUE_NOERROR) {
-			std::cout << "[Debug - Game::internalDecayItem] internalDecayItem failed, error code: " << static_cast<uint32_t>(ret) << ", item id: " << item->getID() << std::endl;
+			// Item decay failed
 		}
 	}
 }
@@ -8809,4 +8816,306 @@ void Game::saveServeMessage()
 		}		
 		fclose(file);
 	}	
+}
+
+Item* Game::getRealUniqueItem(uint32_t uniqueId)
+{
+	auto it = realUniqueItems.find(uniqueId);
+	if (it == realUniqueItems.end()) {
+		return nullptr;
+	}
+	return it->second;
+}
+
+bool Game::addRealUniqueItem(uint32_t uniqueId, Item* item)
+{
+	auto result = realUniqueItems.emplace(uniqueId, item);
+	if (!result.second) {
+		std::cout << "Duplicate real unique id: " << uniqueId << std::endl;
+	}
+	return result.second;
+}
+
+void Game::removeRealUniqueItem(uint32_t uniqueId)
+{
+	auto it = realUniqueItems.find(uniqueId);
+	if (it != realUniqueItems.end()) {
+		realUniqueItems.erase(it);
+	}
+}
+
+bool Game::loadMarketing()
+{
+	Database& db = Database::getInstance();
+	DBResult_ptr resultOffers = db.storeQuery("SELECT * FROM `player_marketing` WHERE `completed` = " + db.escapeString("false"));
+
+	if (resultOffers) {
+		do {
+			auto marketName = resultOffers->getString("player_name");
+			uint32_t uid = resultOffers->getNumber<uint32_t>("uid");
+			bool subItem = (resultOffers->getString("subitem") == "false" ? false : true);
+			uint16_t type = resultOffers->getNumber<uint16_t>("itemtype");
+			uint16_t count = resultOffers->getNumber<uint16_t>("count");
+			uint64_t price = resultOffers->getNumber<uint64_t>("price");
+			(void)uid; // Suppress unused variable warning
+			(void)subItem; // Suppress unused variable warning
+			(void)price; // Suppress unused variable warning
+
+			unsigned long attrSize;
+			const char* attr = resultOffers->getStream("attributes", attrSize);
+
+			PropStream propStream;
+			propStream.init(attr, attrSize);
+
+			Item* market_item = Item::CreateItem(type, count);
+			if (market_item) {
+				market_item->unserializeAttr(propStream);
+				//uint8_t rarity = market_item->getItemRarity();
+				//addMarketingOffer(marketName.data(), uid, market_item, subItem, price, rarity);
+			}
+		} while (resultOffers->next());
+
+		return true;
+	}
+
+	return false;
+}
+
+const std::unordered_map<uint32_t, market_offer> Game::getMarketingOffers(std::string marketName) const
+{
+	auto market = marketing.find(marketName);
+	if (market != marketing.end()) {
+		return market->second;
+	}
+
+	return offerSend;
+}
+
+const std::vector<Item*> Game::getMarketingSubOffers(std::string marketName, uint32_t uid) const
+{
+	auto market = marketing.find(marketName);
+	if (market != marketing.end()) {
+		auto offer = market->second.find(uid);
+		if (offer != market->second.end()) {
+			return offer->second.subItems;
+		}
+	}
+
+	return subOfferSend;
+}
+
+bool Game::removeMarketingOffer(std::string marketName, uint32_t uid)
+{
+	Database& db = Database::getInstance();
+	DBResult_ptr resultOffer = db.storeQuery("SELECT * FROM `player_marketing` WHERE `player_name` = " + db.escapeString(marketName) + " AND `uid` = " + std::to_string(uid) + " AND `completed` = " + db.escapeString("false"));
+	if (resultOffer) {
+		auto market = marketing.find(marketName);
+		if (market != marketing.end()) {
+			auto offer = market->second.find(uid);
+			if (offer != market->second.end()) {
+				Item* item = offer->second.item;
+				if (item) {
+
+					Player* player = getPlayerByName(marketName);
+					if (player) {
+						Item* market_item = Item::CreateItem(item->getID(), item->getSubType());
+						if (market_item) {
+							PropWriteStream propWriteStream;
+							propWriteStream.clear();
+							item->serializeAttr(propWriteStream);
+							size_t attributesSize;
+							const char* attr = propWriteStream.getStream(attributesSize);
+							PropStream propStream;
+							propStream.init(attr, attributesSize);
+							market_item->unserializeAttr(propStream);
+							market_item->setItemCount(item->getItemCount());
+							if (market_item->hasAttribute(ITEM_ATTRIBUTE_UNIQUEID)) {
+								market_item->removeAttribute(ITEM_ATTRIBUTE_UNIQUEID);
+							}
+
+							if (market_item->getContainer() && offer->second.subItems.size() > 0) {
+								for (size_t i = 0; i < offer->second.subItems.size(); i++) {
+									g_game.internalAddItem(market_item->getContainer(), offer->second.subItems[i], INDEX_WHEREEVER, 0);
+								}
+							}
+
+							if (!player->hasCapacity(market_item, market_item->getItemCount())) {
+								return false;
+							}
+
+							g_game.internalAddItem(player, market_item, INDEX_WHEREEVER, 0);
+						}
+					}
+				}
+			}
+
+			market->second.erase(uid);
+		}
+
+		Database& db = Database::getInstance();
+		db.executeQuery("UPDATE `player_marketing` SET `completed` = " + db.escapeString("true") + " WHERE `player_name` = " + db.escapeString(marketName) + " AND `uid` = " + std::to_string(uid));
+	}
+
+	return true;
+}
+
+void Game::addMarketingOffer(std::string marketName, uint32_t uid, Item* item, bool subItemCheck, uint64_t price, uint8_t rarity)
+{
+	if (!subItemCheck) {
+		PropWriteStream propWriteStream;
+		propWriteStream.clear();
+		item->serializeAttr(propWriteStream);
+		Item* market_item = Item::CreateItem(item->getID(), item->getSubType());
+		std::vector<Item*> subItems;
+		if (market_item) {
+			PropStream propStream;
+			size_t attributesSize;
+			const char* attr = propWriteStream.getStream(attributesSize);
+			propStream.init(attr, attributesSize);
+			market_item->unserializeAttr(propStream);
+			market_item->setItemCount(item->getCharges() > 1 ? item->getCharges() : item->getItemCount());
+			if (Container* container = item->getContainer()) {
+				std::vector<Item*> checkSubItems = container->getItems(false);
+				if (checkSubItems.size() > 0) {
+					if (Container* market_itemContainer = market_item->getContainer()) {
+						for (size_t i = 0; i < checkSubItems.size(); i++) {
+							g_game.internalAddItem(market_itemContainer, checkSubItems[i], INDEX_WHEREEVER, 0);
+						}
+					}
+
+					for (size_t i = 0; i < checkSubItems.size(); i++) {
+						Item* subItem = checkSubItems[i];
+						propWriteStream.clear();
+						subItem->serializeAttr(propWriteStream);
+						Item* market_subItem = Item::CreateItem(subItem->getID(), subItem->getSubType());
+						if (market_subItem) {
+							PropStream subPropStream;
+							size_t attributesSubSize;
+							const char* attrSub = propWriteStream.getStream(attributesSubSize);
+							subPropStream.init(attrSub, attributesSubSize);
+							market_subItem->unserializeAttr(subPropStream);
+							market_subItem->setItemCount(subItem->getCharges() > 1 ? subItem->getCharges() : subItem->getItemCount());
+
+							subItems.emplace_back(market_subItem);
+						}
+					}
+				}
+			}
+		}
+
+		market_offer offer;
+		offer.item = market_item;
+		offer.subItems = subItems;
+		offer.price = price;
+		//offer.rarity = rarity;
+
+		auto market = marketing.find(marketName);
+		if (market != marketing.end()) {
+			market->second[uid] = offer;
+		} else {
+			std::unordered_map<uint32_t, market_offer> newOffer;
+			newOffer[uid] = offer;
+
+			marketing[marketName] = newOffer;
+		}
+
+		internalRemoveItem(item, item->getItemCount());
+
+		Database& db = Database::getInstance();
+		Player* player = getPlayerByName(marketName);
+		propWriteStream.clear();
+		market_item->serializeAttr(propWriteStream);
+		size_t attributesSizeDB;
+		const char* attributes = propWriteStream.getStream(attributesSizeDB);
+		DBResult_ptr resultOffer = db.storeQuery("SELECT * FROM `player_marketing` WHERE `player_name` = " + db.escapeString(marketName) + " AND `uid` = " + std::to_string(uid) + " AND `subitem` = " + db.escapeString("false"));
+		if (!resultOffer) {
+			db.executeQuery("INSERT INTO `player_marketing` (`player_id`, `player_name`, `uid`, `subitem`, `itemtype`, `count`, `price`, `rarity`, `attributes`) VALUES (" + std::to_string(player ? player->getGUID() : 1) + ", " + db.escapeString(marketName) + ", " + std::to_string(uid) + ", " + db.escapeString("false") + ", " + std::to_string(item->getID()) + ", " + std::to_string(item->getSubType()) + ", " + std::to_string(price) + ", " + std::to_string(rarity) + ", " + db.escapeBlob(attributes, attributesSizeDB) + ")");
+		}
+
+		DBResult_ptr resultSubOffer = db.storeQuery("SELECT * FROM `player_marketing` WHERE `player_name` = " + db.escapeString(marketName) + " AND `uid` = " + std::to_string(uid) + " AND `subitem` = " + db.escapeString("true"));
+		if (!resultSubOffer) {
+			for (size_t i = 0; i < subItems.size(); i++) {
+				propWriteStream.clear();
+				subItems[i]->serializeAttr(propWriteStream);
+				size_t attributesSubSizeDB;
+				const char* attributesSub = propWriteStream.getStream(attributesSubSizeDB);
+				db.executeQuery("INSERT INTO `player_marketing` (`player_id`, `player_name`, `uid`, `subitem`, `itemtype`, `count`, `price`, `rarity`, `attributes`) VALUES (" + std::to_string(player ? player->getGUID() : 1) + ", " + db.escapeString(marketName) + ", " + std::to_string(uid) + ", " + db.escapeString("true") + ", " + std::to_string(subItems[i]->getID()) + ", " + std::to_string(subItems[i]->getSubType()) + ", 0, 0, " + db.escapeBlob(attributesSub, attributesSubSizeDB) + ")");
+			}
+		}
+	} else {
+		auto market = marketing.find(marketName);
+		if (market != marketing.end()) {
+			auto offer = market->second.find(uid);
+			if (offer != market->second.end()) {
+				std::vector<Item*> subItems;
+				PropWriteStream propWriteStream;
+				propWriteStream.clear();
+				item->serializeAttr(propWriteStream);
+				Item* market_subItem = Item::CreateItem(item->getID(), item->getSubType());
+				if (market_subItem) {
+					PropStream subPropStream;
+					size_t attributesSizeDB;
+					const char* attr = propWriteStream.getStream(attributesSizeDB);
+					subPropStream.init(attr, attributesSizeDB);
+					market_subItem->unserializeAttr(subPropStream);
+					market_subItem->setItemCount(item->getCharges() > 1 ? item->getCharges() : item->getItemCount());
+
+					offer->second.subItems.emplace_back(market_subItem);
+				}
+			}
+		}
+	}
+}
+
+bool Game::buyMarketingOffer(Player* player, std::string marketName, uint32_t uid, uint16_t quant)
+{
+	auto market = marketing.find(marketName);
+	if (market != marketing.end()) {
+		auto offer = market->second.find(uid);
+		if (offer != market->second.end()) {
+			Item* item = offer->second.item;
+			Item* market_item = Item::CreateItem(item->getID(), item->getSubType());
+			if (market_item) {
+				PropWriteStream propWriteStream;
+				propWriteStream.clear();
+				item->serializeAttr(propWriteStream);
+				size_t attributesSize;
+				const char* attr = propWriteStream.getStream(attributesSize);
+				PropStream propStream;
+				propStream.init(attr, attributesSize);
+				market_item->unserializeAttr(propStream);
+				market_item->setItemCount(quant);
+				if (market_item->hasAttribute(ITEM_ATTRIBUTE_UNIQUEID)) {
+					market_item->removeAttribute(ITEM_ATTRIBUTE_UNIQUEID);
+				}
+
+				if (market_item->getContainer() && offer->second.subItems.size() > 0) {
+					for (size_t i = 0; i < offer->second.subItems.size(); i++) {
+						g_game.internalAddItem(market_item->getContainer(), offer->second.subItems[i], INDEX_WHEREEVER, 0);
+					}
+				}
+
+				if (!player->hasCapacity(market_item, market_item->getItemCount())) {
+					return false;
+				}
+
+				g_game.internalAddItem(player, market_item, INDEX_WHEREEVER, 0);
+			}
+
+			Database& db = Database::getInstance();
+			if (quant >= item->getSubType()) {
+				market->second.erase(uid);
+				db.executeQuery("UPDATE `player_marketing` SET `completed` = " + db.escapeString("true") + " WHERE `player_name` = " + db.escapeString(marketName) + " AND `uid` = " + std::to_string(uid));
+			} else {
+				item->setItemCount(item->getSubType()-quant);
+				db.executeQuery("UPDATE `player_marketing` SET `count` = " + std::to_string(item->getSubType()-quant) + " WHERE `player_name` = " + db.escapeString(marketName) + " AND `uid` = " + std::to_string(uid));
+			}
+
+			db.executeQuery("INSERT INTO `player_marketing_reward` (`player_name`, `uid`, `reward`, `completed`) VALUES (" + db.escapeString(marketName) + ", " + std::to_string(uid) + ", " + std::to_string(offer->second.price*quant) + ", " + db.escapeString("false") + ")");
+
+			return true;
+		}
+	}
+
+	return false;
 }

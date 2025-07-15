@@ -490,36 +490,57 @@ ReturnValue Tile::queryAdd(int32_t, const Thing& thing, uint32_t, uint32_t flags
 			return RETURNVALUE_NOTPOSSIBLE;
 		}
 
-		if (creature->isMoveLocked() || ground == nullptr) {
+		if (hasBitSet(FLAG_PATHFINDING, flags) && hasFlag(TILESTATE_SPECIALFIELDBLOCKPATH)) {
+			return RETURNVALUE_NOTPOSSIBLE;
+		}
+
+		if (ground == nullptr) {
 			return RETURNVALUE_NOTPOSSIBLE;
 		}
 
 		if (const Monster* monster = creature->getMonster()) {
-			if (hasFlag(TILESTATE_PROTECTIONZONE | TILESTATE_FLOORCHANGE | TILESTATE_TELEPORT) && !monster->isPet()) {
+			bool ignoreBlockCreature = monster->isPathBlockingChecking() && !monster->isFleeing() || hasBitSet(FLAG_IGNOREBLOCKCREATURE, flags);
+
+			if (hasFlag(TILESTATE_PROTECTIONZONE | TILESTATE_FLOORCHANGE | TILESTATE_TELEPORT)) {
+				return RETURNVALUE_NOTPOSSIBLE;
+			}
+			
+			if (ground->getActionId() >= 1000 && ground->getActionId() <= 2000) {
+				return RETURNVALUE_NOTPOSSIBLE;
+			}
+
+			if (!monster->isHostile() && !monster->isInSpawnRange(getPosition())) {
 				return RETURNVALUE_NOTPOSSIBLE;
 			}
 
 			const CreatureVector* creatures = getCreatures();
-			if (creatures && !creatures->empty() && monster->isPet()) {
-				return RETURNVALUE_NOTENOUGHROOM;
-			} else if (monster->canPushCreatures() && !monster->isSummon()) {
-				if (creatures) {
-					for (Creature* tileCreature : *creatures) {
-						if (tileCreature->getPlayer() && tileCreature->getPlayer()->isInGhostMode()) {
-							continue;
-						}
+			if (creatures && !creatures->empty()) {
+				for (Creature* tileCreature : *creatures) {
+					if (tileCreature->getPlayer() && tileCreature->isInGhostMode()) {
+						// Walk through ghosted players
+						continue;
+					} 
 
-						const Monster* creatureMonster = tileCreature->getMonster();
-						if (!creatureMonster || !tileCreature->isPushable() ||
-								(creatureMonster->isSummon() && creatureMonster->getMaster()->getPlayer())) {
+					if (!ignoreBlockCreature && tileCreature->getPlayer()) {
+						// Do not walk through non-ghosted players
+						return RETURNVALUE_NOTPOSSIBLE;
+					} else if (Player* player = tileCreature->getPlayer()) {
+						if (player->hasFlag(PlayerFlag_CannotBeAttacked)) {
 							return RETURNVALUE_NOTPOSSIBLE;
 						}
 					}
-				}
-			} else if (creatures && !creatures->empty()) {
-				for (const Creature* tileCreature : *creatures) {
-					if (!tileCreature->isInGhostMode()) {
-						return RETURNVALUE_NOTENOUGHROOM;
+
+					if (tileCreature->getNpc() || (!ignoreBlockCreature && !monster->isCreatureAvoidable(tileCreature))) {
+						return RETURNVALUE_NOTPOSSIBLE;
+					}
+
+					const Monster* creatureMonster = tileCreature->getMonster();
+					if (!ignoreBlockCreature && !creatureMonster || monster->getParent() == nullptr || !tileCreature->isPushable()) { // NPC or spawning summon or non-pushable creature
+						return RETURNVALUE_NOTPOSSIBLE;
+					}
+
+					if (!monster->canPushCreatures()) {
+						return RETURNVALUE_NOTPOSSIBLE;
 					}
 				}
 			}
@@ -538,21 +559,24 @@ ReturnValue Tile::queryAdd(int32_t, const Thing& thing, uint32_t, uint32_t flags
 				}
 			}
 
-			MagicField* field = getFieldItem();
-			if (field && !field->isBlocking() && field->getDamage() != 0) {
-				CombatType_t combatType = field->getCombatType();
+			if (!monster->isHostile()) {
+				if (!monster->isInSpawnRange(getPosition())) {
+					return RETURNVALUE_NOTPOSSIBLE;
+				}
+			}
 
-				//There is 3 options for a monster to enter a magic field
-				//1) Monster is immune
-				if (!monster->isImmune(combatType)) {
-					//1) Monster is able to walk over field type
-					//2) Being attacked while random stepping will make it ignore field damages
-					if (hasBitSet(FLAG_IGNOREFIELDDAMAGE, flags)) {
-						if (!(monster->canWalkOnFieldType(combatType) || monster->getIgnoreFieldDamage())) {
-							return RETURNVALUE_NOTPOSSIBLE;
+			// 7.4 allows field stacking
+			if (const TileItemVector* items = getItemList()) {
+				for (auto it = items->rbegin(), end = items->rend(); it != end; ++it) {
+					if (MagicField* field = (*it)->getMagicField()) {
+						CombatType_t combatType = field->getCombatType();
+						if (monster->isFleeing() || !monster->isIgnoringFieldDamage()) {
+							if (!monster->isImmune(combatType)) {
+								if (!monster->canWalkOnFieldType(combatType)) {
+									return RETURNVALUE_NOTPOSSIBLE;
+								}
+							}
 						}
-					} else {
-						return RETURNVALUE_NOTPOSSIBLE;
 					}
 				}
 			}
@@ -564,7 +588,7 @@ ReturnValue Tile::queryAdd(int32_t, const Thing& thing, uint32_t, uint32_t flags
 		if (const Player* player = creature->getPlayer()) {
 			if (creatures && !creatures->empty() && !hasBitSet(FLAG_IGNOREBLOCKCREATURE, flags) && !player->isAccessPlayer()) {
 				for (const Creature* tileCreature : *creatures) {
-					if (!player->canWalkthrough(tileCreature)) {
+					if (!tileCreature->isInGhostMode()) {
 						return RETURNVALUE_NOTPOSSIBLE;
 					}
 				}
@@ -572,6 +596,10 @@ ReturnValue Tile::queryAdd(int32_t, const Thing& thing, uint32_t, uint32_t flags
 
 			if (player->getParent() == nullptr && hasFlag(TILESTATE_NOLOGOUT)) {
 				//player is trying to login to a "no logout" tile
+				return RETURNVALUE_NOTPOSSIBLE;
+			}
+
+			if (hasBitSet(FLAG_PATHFINDING, flags) && hasFlag(TILESTATE_BLOCKPATH)) {
 				return RETURNVALUE_NOTPOSSIBLE;
 			}
 
@@ -593,6 +621,13 @@ ReturnValue Tile::queryAdd(int32_t, const Thing& thing, uint32_t, uint32_t flags
 					return RETURNVALUE_PLAYERISPZLOCKED;
 				}
 			}
+
+			if (playerTile && playerTile->getPosition().z == getPosition().z) {
+				if (playerTile->getHeight() - getHeight() < -1) {
+					return RETURNVALUE_NOTPOSSIBLE;
+				}
+			}
+
 		} else if (creatures && !creatures->empty() && !hasBitSet(FLAG_IGNOREBLOCKCREATURE, flags)) {
 			for (const Creature* tileCreature : *creatures) {
 				if (!tileCreature->isInGhostMode()) {
@@ -626,7 +661,7 @@ ReturnValue Tile::queryAdd(int32_t, const Thing& thing, uint32_t, uint32_t flags
 		}
 	} else if (const Item* item = thing.getItem()) {
 		const TileItemVector* items = getItemList();
-		if (items && items->size() >= 0x3E8) {
+		if (items && items->size() >= g_config.getNumber(ConfigManager::TILE_ITEM_LIMIT)) {
 			return RETURNVALUE_NOTPOSSIBLE;
 		}
 

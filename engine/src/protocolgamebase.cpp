@@ -277,6 +277,7 @@ void ProtocolGameBase::AddCreature(NetworkMessage& msg, const Creature* creature
 		}
 
 		msg.addString(creature->getName());
+		//msg.addString(creature->getMonster() ? creature->getMarketDescription() : "");
 	}
 
 	if (creature->isHealthHidden()) {

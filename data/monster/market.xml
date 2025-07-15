@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<monster name="Market" nameDescription="Market" race="undead" experience="0" speed="-40" manacost="0">
+	<health now="1500" max="1500" />
+	<look type="347" head="0" body="0" legs="0" feet="0" corpse="0" />
+	<targetchange chance="0" />
+	<targetstrategy nearest="100" weakest="0" mostdamage="0" random="0" />
+	<flags>
+		<flag hostile="0" />
+		<flag summonable="0" />
+		<flag illusionable="0" />
+		<flag pushable="0" />
+		<flag convinceable="0" />
+		<flag canpushitems="0" />
+		<flag canpushcreatures="0" />
+		<flag targetdistance="1" />
+		<flag runonhealth="0" />
+		<flag allowdoubleattack="0" />
+		<flag attackable="0" />
+	</flags>
+</monster> 

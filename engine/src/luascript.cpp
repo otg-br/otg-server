@@ -2268,6 +2268,19 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Game", "getPlayersSell", LuaScriptInterface::luaGameGetPlayersSell);
 	registerMethod("Game", "getPlayerSellById", LuaScriptInterface::luaGameGetPlayerSellById);
 
+	registerMethod("Game", "getRealUniqueItem", LuaScriptInterface::luaGameGetRealUniqueItem);
+
+	registerMethod("Game", "getItemTypeByClientId", LuaScriptInterface::luaGameGetItemTypeByClientId);
+
+	// marketing
+	registerMethod("Game", "loadMarketing", LuaScriptInterface::luaGameLoadMarketing);
+	registerMethod("Game", "getMarketingOffers", LuaScriptInterface::luaGameGetMarketingOffers);
+	registerMethod("Game", "getMarketingSubOffers", LuaScriptInterface::luaGameGetMarketingSubOffers);
+	registerMethod("Game", "removeMarketingOffer", LuaScriptInterface::luaGameRemoveMarketingOffer);
+	registerMethod("Game", "addMarketingOffer", LuaScriptInterface::luaGameAddMarketingOffer);
+	registerMethod("Game", "buyMarketingOffer", LuaScriptInterface::luaGameBuyMarketingOffer);
+
+
 	// Variant
 	registerClass("Variant", "", LuaScriptInterface::luaVariantCreate);
 
@@ -2445,6 +2458,8 @@ void LuaScriptInterface::registerFunctions()
 
 	registerMethod("Item", "hasProperty", LuaScriptInterface::luaItemHasProperty);
 
+	registerMethod("Item", "getRealUID", LuaScriptInterface::luaItemGetRealUID);
+
 	// Container
 	registerClass("Container", "Item", LuaScriptInterface::luaContainerCreate);
 	registerMetaMethod("Container", "__eq", LuaScriptInterface::luaUserdataCompare);
@@ -2453,6 +2468,7 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Container", "getCapacity", LuaScriptInterface::luaContainerGetCapacity);
 	registerMethod("Container", "getEmptySlots", LuaScriptInterface::luaContainerGetEmptySlots);
 	registerMethod("Container", "getContentDescription", LuaScriptInterface::luaContainerGetContentDescription);
+	registerMethod("Container", "getItems", LuaScriptInterface::luaContainerGetItems);
 	registerMethod("Container", "getItemHoldingCount", LuaScriptInterface::luaContainerGetItemHoldingCount);
 	registerMethod("Container", "getItemCountById", LuaScriptInterface::luaContainerGetItemCountById);
 
@@ -2833,6 +2849,8 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Monster", "getType", LuaScriptInterface::luaMonsterGetType);
 	registerMethod("Monster", "getRaceId", LuaScriptInterface::luaMonsterGetRaceId);
 
+	registerMethod("Monster", "rename", LuaScriptInterface::luaMonsterRename);
+
 	registerMethod("Monster", "getSpawnPosition", LuaScriptInterface::luaMonsterGetSpawnPosition);
 	registerMethod("Monster", "isInSpawnRange", LuaScriptInterface::luaMonsterIsInSpawnRange);
 
@@ -2860,6 +2878,10 @@ void LuaScriptInterface::registerFunctions()
 
 	registerMethod("Monster", "isRaid", LuaScriptInterface::luaMonsterIsRaid);
 	registerMethod("Monster", "getRemoveTime", LuaScriptInterface::luaMonsterGetRemoveTime);
+
+
+
+	registerMethod("Monster", "setMarketDescription", LuaScriptInterface::luaMonsterSetMarketDescription);
 
 	// Npc
 	registerClass("Npc", "Creature", LuaScriptInterface::luaNpcCreate);
@@ -4944,10 +4966,13 @@ int LuaScriptInterface::luaGameCreateMonster(lua_State* L)
 {
 	// Game.createMonster(monsterName or raceid, position[, extended = false[, force = false]])
 	Monster* monster = nullptr;
+	std::string monsterName;
+	
 	if (isNumber(L, 1)) {
 		monster = Monster::createMonsterByRace(getNumber<uint16_t>(L, 1));
 	} else {
-		monster = Monster::createMonster(getString(L, 1));
+		monsterName = getString(L, 1);
+		monster = Monster::createMonster(monsterName);
 	}
 
 	if (!monster) {
@@ -4959,6 +4984,7 @@ int LuaScriptInterface::luaGameCreateMonster(lua_State* L)
 	bool extended = getBoolean(L, 3, false);
 	bool force = getBoolean(L, 4, false);
 	Creature* master = getCreature(L, 5);
+	
 	if (g_game.placeCreature(monster, position, extended, force, master)) {
 		if (!g_events->eventMonsterOnSpawn(monster, position, false, true)) {
 			delete monster;
@@ -5325,6 +5351,135 @@ int LuaScriptInterface::luaGameGetOfflinePlayer(lua_State* L)
 		pushUserdata<Player>(L, offlinePlayer);
 		setMetatable(L, -1, "Player");
 	}
+
+	return 1;
+}
+
+int LuaScriptInterface::luaGameGetRealUniqueItem(lua_State* L)
+{
+	// Game.getRealUniqueItem(uid)
+	uint32_t uniqueId = getNumber<uint32_t>(L, 1);
+
+
+	Item* item = g_game.getRealUniqueItem(uniqueId);
+	if (item && !item->isRemoved()) {
+		pushUserdata<Item>(L, item);
+		setItemMetatable(L, -1, item);
+	}
+	else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaGameGetItemTypeByClientId(lua_State* L)
+{
+	// Game.getItemTypeByClientId(clientId)
+	uint16_t spriteId = getNumber<uint16_t>(L, 1);
+	const ItemType& itemType = Item::items.getItemIdByClientId(spriteId);
+	if (itemType.id != 0) {
+		pushUserdata<const ItemType>(L, &itemType);
+		setMetatable(L, -1, "ItemType");
+	} else {
+		lua_pushnil(L);
+	}
+
+	return 1;
+}
+
+int LuaScriptInterface::luaGameLoadMarketing(lua_State* L)
+{
+	// Game.loadMarketing()
+	lua_pushboolean(L, g_game.loadMarketing());
+
+	return 1;
+}
+
+int LuaScriptInterface::luaGameGetMarketingOffers(lua_State* L)
+{
+	// Game.getMarketingOffers(marketName)
+	std::string marketName = getString(L, 1);
+
+	auto market = g_game.getMarketingOffers(marketName);
+
+	lua_createtable(L, market.size(), 0);
+
+	int index = 0;
+	for (auto offer : market) {
+		if (offer.second.item) {
+			lua_createtable(L, 0, 6);
+			setField(L, "uid", offer.first);
+			setField(L, "name", offer.second.item->getName());
+			setField(L, "id", Item::items.getItemType(offer.second.item->getID()).clientId);
+			setField(L, "quant", offer.second.item->getCharges() > 1 ? offer.second.item->getCharges() : offer.second.item->getItemCount());
+			setField(L, "price", offer.second.price);
+			//setField(L, "rarity", offer.second.rarity);
+			setField(L, "look", "You see " + offer.second.item->getDescription(0));
+			lua_rawseti(L, -2, ++index);
+		}
+	}
+
+	return 1;
+}
+
+int LuaScriptInterface::luaGameGetMarketingSubOffers(lua_State* L)
+{
+	// Game.getMarketingSubOffers(marketName, uid)
+	std::string marketName = getString(L, 1);
+	uint32_t uid = getNumber<uint32_t>(L, 2);
+
+	auto subMarket = g_game.getMarketingSubOffers(marketName, uid);
+
+	lua_createtable(L, subMarket.size(), 0);
+
+	int index = 0;
+	for (auto subOffer : subMarket) {
+		pushUserdata<Item>(L, subOffer);
+		setItemMetatable(L, -1, subOffer);
+		lua_rawseti(L, -2, ++index);
+	}
+
+	return 1;
+}
+
+int LuaScriptInterface::luaGameRemoveMarketingOffer(lua_State* L)
+{
+	// Game.removeMarketingOffer(marketname, uid)
+	std::string marketName = getString(L, 1);
+	uint32_t uid = getNumber<uint32_t>(L, 2);
+
+	lua_pushboolean(L, g_game.removeMarketingOffer(marketName, uid));
+
+	return 1;
+}
+
+int LuaScriptInterface::luaGameAddMarketingOffer(lua_State* L)
+{
+	// Game.addMarketingOffer(marketName, uid, item, price, rarity)
+	std::string marketName = getString(L, 1);
+	uint32_t uid = getNumber<uint32_t>(L, 2);
+	Item* item = getUserdata<Item>(L, 3);
+	uint64_t price = getNumber<uint64_t>(L, 4);
+	uint8_t rarity = getNumber<uint8_t>(L, 5);
+
+	g_game.addMarketingOffer(marketName, uid, item, false, price, rarity);
+
+	return 1;
+}
+
+int LuaScriptInterface::luaGameBuyMarketingOffer(lua_State* L)
+{
+	// Game.buyMarktingOffer(player, marketName, uid, quant)
+	Player* player = getPlayer(L, 1);
+	if (!player) {
+		lua_pushnil(L);
+		return 1;
+	}
+
+	std::string marketName = getString(L, 2);
+	uint32_t uid = getNumber<uint32_t>(L, 3);
+	uint16_t quant = getNumber<uint16_t>(L, 4);
+	lua_pushboolean(L, g_game.buyMarketingOffer(player, marketName, uid, quant));
 
 	return 1;
 }
@@ -6813,16 +6968,23 @@ int LuaScriptInterface::luaModalWindowSendToPlayer(lua_State* L)
 // Item
 int LuaScriptInterface::luaItemCreate(lua_State* L)
 {
-	// Item(uid)
+		// Item(uid)
+	// Item(RealUID)
+	Item* item;
 	uint32_t id = getNumber<uint32_t>(L, 2);
+	item = getScriptEnv()->getItemByUID(id);
 
-	Item* item = getScriptEnv()->getItemByUID(id);
+	if (!item) {
+		item = g_game.getRealUniqueItem(id);
+	}
+
 	if (item) {
 		pushUserdata<Item>(L, item);
 		setItemMetatable(L, -1, item);
 	} else {
 		lua_pushnil(L);
 	}
+
 	return 1;
 }
 
@@ -7626,6 +7788,19 @@ int LuaScriptInterface::luaItemHasProperty(lua_State* L)
 	return 1;
 }
 
+int LuaScriptInterface::luaItemGetRealUID(lua_State* L)
+{
+	// item:getRealUID()
+	Item* item = getUserdata<Item>(L, 1);
+	if (item) {
+		lua_pushnumber(L, item->getRealUID());
+	}
+	else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
 // Container
 int LuaScriptInterface::luaContainerCreate(lua_State* L)
 {
@@ -7855,6 +8030,29 @@ int LuaScriptInterface::luaContainerGetContentDescription(lua_State* L)
 		pushString(L, container->getContentDescription());
 	} else {
 		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaContainerGetItems(lua_State* L)
+{
+	// container:getItems([recursive = false])
+	Container* container = getUserdata<Container>(L, 1);
+	if (!container) {
+		lua_pushnil(L);
+		return 1;
+	}
+
+	bool recursive = getBoolean(L, 2, false);
+	std::vector<Item*> items = container->getItems(recursive);
+
+	lua_createtable(L, items.size(), 0);
+
+	int index = 0;
+	for (Item* item : items) {
+		pushUserdata(L, item);
+		setItemMetatable(L, -1, item);
+		lua_rawseti(L, -2, ++index);
 	}
 	return 1;
 }
@@ -12235,6 +12433,24 @@ int LuaScriptInterface::luaMonsterGetType(lua_State* L)
 	return 1;
 }
 
+int LuaScriptInterface::luaMonsterRename(lua_State* L)
+{
+	// monster:rename(name[, nameDescription])
+	Monster* monster = getUserdata<Monster>(L, 1);
+	if (!monster) {
+		lua_pushnil(L);
+		return 1;
+	}
+
+	monster->setName(getString(L, 2));
+	if (lua_gettop(L) >= 3) {
+		monster->setNameDescription(getString(L, 3));
+	}
+
+	pushBoolean(L, true);
+	return 1;
+}
+
 int LuaScriptInterface::luaMonsterGetRaceId(lua_State* L)
 {
 	// monster:getRaceId()
@@ -12582,6 +12798,21 @@ int LuaScriptInterface::luaMonsterGetRemoveTime(lua_State* L)
 	else {
 		lua_pushnil(L);
 	}
+	return 1;
+}
+
+int LuaScriptInterface::luaMonsterSetMarketDescription(lua_State* L)
+{
+	// monster:setMarketDescription(description)
+	Monster* monster = getUserdata<Monster>(L, 1);
+	if (!monster) {
+		lua_pushnil(L);
+		return 1;
+	}
+
+	monster->setMarketDescription(getString(L, 2));
+
+	pushBoolean(L, true);
 	return 1;
 }
 

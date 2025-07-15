@@ -112,6 +112,7 @@ class ProtocolGameBase : public Protocol {
 		void sendWorldLight(const LightInfo& lightInfo);
 		void sendTibiaTime(int32_t time);
 		void sendMapDescription(const Position& pos);
+		
 
 		void sendVIP(uint32_t guid, const std::string& name, const std::string& description, uint32_t icon, bool notify, VipStatus_t status);
 		void sendCancelWalk();

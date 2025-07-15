@@ -6168,3 +6168,30 @@ void Player::sendPvpSquare(Creature* target, SquareColor_t squareColor)
 	}
 }
 
+Item* Player::getItemByUID(uint32_t uid) const {
+	if (uid == 0) {
+		return nullptr;
+	}
+
+	std::vector<Item*> itemList;
+
+	for (int32_t i = CONST_SLOT_FIRST; i <= CONST_SLOT_LAST; i++) {
+		Item* item = inventory[i];
+		if (!item) {
+			continue;
+		}
+
+		if (item->getRealUID() == uid) {
+			return item;
+		}
+		else if (Container* container = item->getContainer()) {
+			for (ContainerIterator it = container->iterator(); it.hasNext(); it.advance()) {
+				Item* containerItem = *it;
+				if (containerItem->getRealUID() == uid) {
+					return containerItem;
+				}
+			}
+		}
+	}
+	return nullptr;
+}

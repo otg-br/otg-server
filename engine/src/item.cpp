@@ -40,6 +40,8 @@ extern Imbuements g_imbuements;
 
 Items Item::items;
 
+
+
 Item* Item::CreateItem(const uint16_t type, uint16_t count /*= 0*/)
 {
 	Item* newItem = nullptr;
@@ -86,6 +88,11 @@ Item* Item::CreateItem(const uint16_t type, uint16_t count /*= 0*/)
 			newItem = new Item(18408, count);
 		} else {
 			newItem = new Item(type, count);
+		}
+
+		if (it.pickupable) {
+			newItem->setRealUID(g_game.nextItemUID());
+			g_game.addRealUniqueItem(newItem->getRealUID(), newItem);
 		}
 
 		newItem->incrementReferenceCounter();

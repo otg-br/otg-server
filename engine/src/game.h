@@ -40,6 +40,13 @@ class Monster;
 class Npc;
 class CombatInfo;
 
+struct market_offer {
+	Item* item;
+	std::vector<Item*> subItems;
+	uint64_t price;
+	//uint8_t rarity;
+};
+
 enum stackPosType_t {
 	STACKPOS_MOVE,
 	STACKPOS_LOOK,
@@ -592,6 +599,13 @@ class Game
 
 		const std::map<uint16_t, uint32_t>& getItemsPrice() const { return itemsPriceMap; }
 
+		bool loadMarketing();
+		const std::unordered_map<uint32_t, market_offer> getMarketingOffers(std::string marketName) const;
+		const std::vector<Item*> getMarketingSubOffers(std::string marketName, uint32_t uid) const;
+		bool removeMarketingOffer(std::string marketName, uint32_t uid);
+		void addMarketingOffer(std::string marketName, uint32_t uid, Item* item, bool subItemCheck, uint64_t price, uint8_t rarity);
+		bool buyMarketingOffer(Player* player, std::string marketName, uint32_t uid, uint16_t quant);
+
 		void addPlayer(Player* player);
 		void removePlayer(Player* player);
 
@@ -626,6 +640,10 @@ class Game
 		void updateSpectatorsPvp(Thing* thing);
 
 		bool reload(ReloadTypes_t reloadType);
+
+		uint32_t nextItemUID() {
+			return ++lastItemId;
+		}
 
 		bool hasEffect(uint8_t effectId);
 		bool hasDistanceEffect(uint8_t effectId);
@@ -663,6 +681,10 @@ class Game
 			return statementId;
 		}
 
+		Item* getRealUniqueItem(uint32_t uniqueId);
+		bool addRealUniqueItem(uint32_t uniqueId, Item* item);
+		void removeRealUniqueItem(uint32_t uniqueId);
+
 		Groups groups;
 		Map map;
 		Mounts mounts;
@@ -696,6 +718,10 @@ class Game
 		std::map<uint32_t, uint32_t> stagesSkill;
 		std::map<uint32_t, uint32_t> stagesMl;
 		std::map<uint16_t, uint32_t> itemsPriceMap;
+
+		std::unordered_map<uint32_t, market_offer> offerSend;
+		std::vector<Item*> subOfferSend;
+		std::unordered_map<std::string, std::unordered_map<uint32_t, market_offer>> marketing;
 
 		std::list<Item*> imbuedItems[EVENT_IMBUEMENT_BUCKETS];
 		std::list<Creature*> checkCreatureLists[EVENT_CREATURECOUNT];
@@ -761,6 +787,9 @@ class Game
 		uint32_t lastStageMl = 0;
 		bool stagesMlEnabled = false;
 		bool useLastStageMl = false;
+
+		uint32_t lastItemId = 0;
+		std::unordered_map<uint32_t, Item*> realUniqueItems;
 
 };
 

@@ -934,6 +934,8 @@ MonsterType* Monsters::loadMonster(const std::string& file, const std::string& m
 				mType->info.canWalkOnFire = attr.as_bool();
 			} else if (strcasecmp(attrName, "canwalkonpoison") == 0) {
 				mType->info.canWalkOnPoison = attr.as_bool();
+			} else if (strcasecmp(attrName, "allowdoubleattack") == 0) {
+				mType->info.allowDoubleAttack = attr.as_bool();
 			} else if (strcasecmp(attrName, "respawntype") == 0) {
 				mType->info.respawnType = getSpawnType(asLowerCaseString(attr.as_string()));
 			} else {
@@ -1459,4 +1461,22 @@ MonsterType* Monsters::getMonsterTypeByRace(uint16_t raceid)
 void Monsters::addMonsterType(const std::string& name, MonsterType* mType)
 {
 	mType = &monsters[asLowerCaseString(name)];
+}
+
+void Monster::setMarketDescription(const std::string& description)
+{
+	if (getMarketDescription() == description) {
+		return;
+	}
+
+	this->marketDescription = description;
+
+	// NOTE: Due to how client caches known creatures,
+	// it is not feasible to send creature update to everyone that has ever met it
+	SpectatorVec spectators;
+	g_game.map.getSpectators(spectators, position, true, true);
+	for (Creature* spectator : spectators) {
+		assert(dynamic_cast<Player*>(spectator) != nullptr);
+		static_cast<Player*>(spectator)->sendUpdateTileCreature(this);
+	}
 }

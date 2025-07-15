@@ -149,6 +149,8 @@ class Creature : virtual public Thing
 		virtual const std::string& getName() const = 0;
 		virtual const std::string& getNameDescription() const = 0;
 
+		virtual const std::string& getMarketDescription() const = 0;
+
 		virtual CreatureType_t getType() const = 0;
 
 		virtual void setID() = 0;
