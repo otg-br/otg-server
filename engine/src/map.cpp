@@ -129,19 +129,17 @@ void Map::setTile(uint16_t x, uint16_t y, uint8_t z, Tile* newTile)
 
 bool Map::placeCreature(const Position& centerPos, Creature* creature, bool extendedPos/* = false*/, bool forceLogin/* = false*/)
 {
-	Position targetPos = centerPos;
-
-	Tile* tile = getTile(targetPos.x, targetPos.y, targetPos.z);
-	if (!tile) {
-		return false;
-	}
-
 	bool foundTile;
+	bool placeInPZ;
 
+
+	Tile* tile = getTile(centerPos.x, centerPos.y, centerPos.z);
 	if (tile) {
-		ReturnValue ret = tile->queryAdd(0, *creature, 1, FLAG_IGNOREBLOCKITEM | FLAG_IGNOREFIELDDAMAGE | FLAG_IGNOREBLOCKCREATURE);
+		placeInPZ = tile->hasFlag(TILESTATE_PROTECTIONZONE);
+		ReturnValue ret = tile->queryAdd(0, *creature, 1, FLAG_IGNOREBLOCKITEM | FLAG_IGNOREFIELDDAMAGE);
 		foundTile = (forceLogin && tile->getGround() != nullptr) || ret == RETURNVALUE_NOERROR || ret == RETURNVALUE_PLAYERISNOTINVITED;
 	} else {
+		placeInPZ = false;
 		foundTile = false;
 	}
 
@@ -173,11 +171,11 @@ bool Map::placeCreature(const Position& centerPos, Creature* creature, bool exte
 			Position tryPos(centerPos.x + it.first, centerPos.y + it.second, centerPos.z);
 
 			tile = getTile(tryPos.x, tryPos.y, tryPos.z);
-			if (!tile) {
+			if (!tile || (placeInPZ && !tile->hasFlag(TILESTATE_PROTECTIONZONE))) {
 				continue;
 			}
 
-			if (tile->queryAdd(0, *creature, 1, FLAG_IGNOREFIELDDAMAGE | FLAG_IGNOREBLOCKCREATURE) == RETURNVALUE_NOERROR) {
+			if (tile->queryAdd(0, *creature, 1, FLAG_IGNOREFIELDDAMAGE) == RETURNVALUE_NOERROR) {
 				if (!extendedPos || isSightClear(centerPos, tryPos, false)) {
 					foundTile = true;
 					break;
