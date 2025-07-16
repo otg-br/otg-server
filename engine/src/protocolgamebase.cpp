@@ -277,7 +277,12 @@ void ProtocolGameBase::AddCreature(NetworkMessage& msg, const Creature* creature
 		}
 
 		msg.addString(creature->getName());
-		//msg.addString(creature->getMonster() ? creature->getMarketDescription() : "");
+		// Only send market description for Market monsters (identified by outfit type 347)
+		if (creature->getMonster() && creature->getMonster()->getCurrentOutfit().lookType == 347) {
+			msg.addString(creature->getMarketDescription());
+		} else {
+			msg.addString("");
+		}
 	}
 
 	if (creature->isHealthHidden()) {
