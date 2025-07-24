@@ -2429,6 +2429,11 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Item", "setAttribute", LuaScriptInterface::luaItemSetAttribute);
 	registerMethod("Item", "removeAttribute", LuaScriptInterface::luaItemRemoveAttribute);
 	registerMethod("Item", "getAbsorbPercent", LuaScriptInterface::luaItemGetAbsorbPercent);
+	registerMethod("Item", "setAbsorbPercent", LuaScriptInterface::luaItemSetAbsorbPercent);
+	registerMethod("Item", "increaseAbsorbPercent", LuaScriptInterface::luaItemIncreaseAbsorbPercent);
+	registerMethod("Item", "getElementDamage", LuaScriptInterface::luaItemGetElementDamage);
+	registerMethod("Item", "setElementDamage", LuaScriptInterface::luaItemSetElementDamage);
+	registerMethod("Item", "increaseElementDamage", LuaScriptInterface::luaItemIncreaseElementDamage);
 	registerMethod("Item", "getCustomAttribute", LuaScriptInterface::luaItemGetCustomAttribute);
 	registerMethod("Item", "setCustomAttribute", LuaScriptInterface::luaItemSetCustomAttribute);
 	registerMethod("Item", "removeCustomAttribute", LuaScriptInterface::luaItemRemoveCustomAttribute);
@@ -7334,6 +7339,88 @@ int LuaScriptInterface::luaItemGetAbsorbPercent(lua_State* L)
 	
 	CombatType_t combatType = getNumber<CombatType_t>(L, 2);
 	lua_pushnumber(L, item->getAbsorbPercent(combatType));
+	return 1;
+}
+
+int LuaScriptInterface::luaItemSetAbsorbPercent(lua_State* L)
+{
+	// item:setAbsorbPercent(combatType, value)
+	Item* item = getUserdata<Item>(L, 1);
+	if (!item) {
+		lua_pushnil(L);
+		return 1;
+	}
+	
+	CombatType_t combatType = getNumber<CombatType_t>(L, 2);
+	uint16_t value = getNumber<uint16_t>(L, 3);
+	
+	item->setAbsorbPercent(combatType, value);
+	pushBoolean(L, true);
+	return 1;
+}
+
+int LuaScriptInterface::luaItemIncreaseAbsorbPercent(lua_State* L)
+{
+	// item:increaseAbsorbPercent(combatType, value)
+	Item* item = getUserdata<Item>(L, 1);
+	if (!item) {
+		lua_pushnil(L);
+		return 1;
+	}
+	
+	CombatType_t combatType = getNumber<CombatType_t>(L, 2);
+	uint16_t value = getNumber<uint16_t>(L, 3);
+	
+	item->increaseAbsorbPercent(combatType, value);
+	pushBoolean(L, true);
+	return 1;
+}
+
+int LuaScriptInterface::luaItemGetElementDamage(lua_State* L)
+{
+	// item:getElementDamage(combatType)
+	Item* item = getUserdata<Item>(L, 1);
+	if (!item) {
+		lua_pushnil(L);
+		return 1;
+	}
+	
+	CombatType_t combatType = getNumber<CombatType_t>(L, 2);
+	lua_pushnumber(L, item->getElementDamage(combatType));
+	return 1;
+}
+
+int LuaScriptInterface::luaItemSetElementDamage(lua_State* L)
+{
+	// item:setElementDamage(combatType, value)
+	Item* item = getUserdata<Item>(L, 1);
+	if (!item) {
+		lua_pushnil(L);
+		return 1;
+	}
+	
+	CombatType_t combatType = getNumber<CombatType_t>(L, 2);
+	uint16_t value = getNumber<uint16_t>(L, 3);
+	
+	item->setElementDamage(combatType, value);
+	pushBoolean(L, true);
+	return 1;
+}
+
+int LuaScriptInterface::luaItemIncreaseElementDamage(lua_State* L)
+{
+	// item:increaseElementDamage(combatType, value)
+	Item* item = getUserdata<Item>(L, 1);
+	if (!item) {
+		lua_pushnil(L);
+		return 1;
+	}
+	
+	CombatType_t combatType = getNumber<CombatType_t>(L, 2);
+	uint16_t value = getNumber<uint16_t>(L, 3);
+	
+	item->increaseElementDamage(combatType, value);
+	pushBoolean(L, true);
 	return 1;
 }
 
