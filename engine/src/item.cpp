@@ -1304,7 +1304,14 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 					bool tmp = true;
 
 					for (size_t i = 0; i < COMBAT_COUNT; ++i) {
-						if (it.abilities->absorbPercent[i] == 0) {
+						uint16_t absorbPercent = it.abilities->absorbPercent[i];
+						
+						// If item is available, get the total absorb (static + dynamic)
+						if (item) {
+							absorbPercent = item->getAbsorbPercent(indexToCombatType(i));
+						}
+						
+						if (absorbPercent == 0) {
 							continue;
 						}
 
@@ -1323,7 +1330,7 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 							s << ", ";
 						}
 
-						s << getCombatName(indexToCombatType(i)) << ' ' << std::showpos << it.abilities->absorbPercent[i] << std::noshowpos << '%';
+						s << getCombatName(indexToCombatType(i)) << ' ' << std::showpos << absorbPercent << std::noshowpos << '%';
 					}
 				} else {
 					if (begin) {
@@ -1618,7 +1625,14 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 					bool tmp = true;
 
 					for (size_t i = 0; i < COMBAT_COUNT; ++i) {
-						if (it.abilities->absorbPercent[i] == 0) {
+						uint16_t absorbPercent = it.abilities->absorbPercent[i];
+						
+						// If item is available, get the total absorb (static + dynamic)
+						if (item) {
+							absorbPercent = item->getAbsorbPercent(indexToCombatType(i));
+						}
+						
+						if (absorbPercent == 0) {
 							continue;
 						}
 
@@ -1637,7 +1651,7 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 							s << ", ";
 						}
 
-						s << getCombatName(indexToCombatType(i)) << ' ' << std::showpos << it.abilities->absorbPercent[i] << std::noshowpos << '%';
+						s << getCombatName(indexToCombatType(i)) << ' ' << std::showpos << absorbPercent << std::noshowpos << '%';
 					}
 				} else {
 					if (begin) {
@@ -2476,6 +2490,14 @@ bool Item::hasMarketAttributes() const
 			if (duration != getDefaultDuration()) {
 				return false;
 			}
+		} else if (attr.type == ITEM_ATTRIBUTE_ABSORBICE || 
+				   attr.type == ITEM_ATTRIBUTE_ABSORBEARTH || 
+				   attr.type == ITEM_ATTRIBUTE_ABSORBFIRE || 
+				   attr.type == ITEM_ATTRIBUTE_ABSORBENERGY || 
+				   attr.type == ITEM_ATTRIBUTE_ABSORBDEATH || 
+				   attr.type == ITEM_ATTRIBUTE_ABSORBHOLY) {
+			// Allow absorb attributes for refinement system
+			continue;
 		} else {
 			return false;
 		}
