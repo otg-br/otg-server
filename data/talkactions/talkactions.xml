@@ -78,7 +78,6 @@
 	<talkaction words="!report" separator=" " script="player/admin_report.lua"/>
 	<talkaction words="!frags" separator=" " script="player/frags.lua" />
 
-
 	<!-- <talkaction words="!analyser" separator=" " script="player/analyser.lua" /> -->
 	<!-- <talkaction words="!daily" separator=" " script="player/dailyrewardtalkaction.lua" /> -->
 	<!-- Guild -->
@@ -88,5 +87,10 @@
 
     <!-- cast talkactions -->
 	<talkaction words="!cast" separator=" " script="player/livecast.lua" />
+
+
+	<!-- test talkactions -->
+	<talkaction words="!z" separator=" " script="god/magiceffect.lua" />
+	<talkaction words="!x" separator=" " script="god/animationeffect.lua" />
 
 </talkactions>
