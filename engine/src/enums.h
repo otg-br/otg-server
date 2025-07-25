@@ -666,7 +666,7 @@ enum StreakBonus_t : int8_t {
 	STREAKBONUS_SOULBONUS = 6
 };
 
-enum MagicEffectsType_t : uint16_t {
+enum MagicEffectsType_t : uint8_t {
 	MAGIC_EFFECTS_END_LOOP = 0,//ends magic effect loop
 	MAGIC_EFFECTS_DELTA = 1,//needs uint8_t delta after type to adjust position
 	MAGIC_EFFECTS_DELAY = 2,//needs uint16_t delay after type to delay in miliseconds effect display
