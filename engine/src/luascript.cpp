@@ -1608,6 +1608,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(ITEM_ATTRIBUTE_ABSORBENERGY)
 	registerEnum(ITEM_ATTRIBUTE_ABSORBDEATH)
 	registerEnum(ITEM_ATTRIBUTE_ABSORBHOLY)
+	registerEnum(ITEM_ATTRIBUTE_ABSORB_PHYSICAL)
 	
 	registerEnum(ITEM_ATTRIBUTE_CLASSIFICATION)
 	registerEnum(ITEM_ATTRIBUTE_TIER)
@@ -7274,6 +7275,7 @@ int LuaScriptInterface::luaItemSetAttribute(lua_State* L)
 			case ITEM_ATTRIBUTE_ABSORBENERGY:
 			case ITEM_ATTRIBUTE_ABSORBDEATH:
 			case ITEM_ATTRIBUTE_ABSORBHOLY:
+			case ITEM_ATTRIBUTE_ABSORB_PHYSICAL:
 			{
 				// Add to existing value instead of overwriting
 				int32_t currentValue = item->getIntAttr(attribute);
