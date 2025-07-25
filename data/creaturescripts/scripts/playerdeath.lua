@@ -67,6 +67,21 @@ function onDeath(player, corpse, killer, mostDamageKiller, lastHitUnjustified, m
 	end
 
 	if byPlayer == 1 then
+		if killer and killer:isPlayer() then
+			local killerPlayer = killer:getPlayer()
+			if killerPlayer then
+				local killerGuid = killerPlayer:getGuid()
+				local kills = killerPlayer:getKills()
+				if kills then
+					for _, kill in pairs(kills) do
+						if kill.target and kill.time and kill.unavenged ~= nil then
+							db.asyncQuery("INSERT INTO `player_kills` (`player_id`, `target`, `time`, `unavenged`) VALUES (" .. killerGuid .. ", " .. kill.target .. ", " .. kill.time .. ", " .. (kill.unavenged and 1 or 0) .. ")")
+						end
+					end
+				end
+			end
+		end
+		
 		local targetGuild = player:getGuild()
 		targetGuild = targetGuild and targetGuild:getId() or 0
 		if targetGuild ~= 0 then
