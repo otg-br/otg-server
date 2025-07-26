@@ -8,10 +8,13 @@ function onSay(player, word, param)
 	local now = os.time()
 	local dayFrags, weekFrags, monthFrags = 0, 0, 0
 	local allFrags = 0
+	local dbKills = {}
+	
 	if resultId then
 		repeat
 			local killTime = result.getNumber(resultId, "time")
 			allFrags = allFrags + 1
+			table.insert(dbKills, killTime)
 			if now - killTime <= 24*60*60 then
 				dayFrags = dayFrags + 1
 			end
@@ -28,17 +31,28 @@ function onSay(player, word, param)
 	local kills = player:getKills()
 	if kills then
 		for _, kill in pairs(kills) do
-			allFrags = allFrags + 1
 			local killTime = kill.time
 			if killTime then
-				if now - killTime <= 24*60*60 then
-					dayFrags = dayFrags + 1
+				-- Verifica se este kill já não foi contado do banco de dados
+				local alreadyCounted = false
+				for _, dbTime in ipairs(dbKills) do
+					if dbTime == killTime then
+						alreadyCounted = true
+						break
+					end
 				end
-				if now - killTime <= 7*24*60*60 then
-					weekFrags = weekFrags + 1
-				end
-				if now - killTime <= 30*24*60*60 then
-					monthFrags = monthFrags + 1
+				
+				if not alreadyCounted then
+					allFrags = allFrags + 1
+					if now - killTime <= 24*60*60 then
+						dayFrags = dayFrags + 1
+					end
+					if now - killTime <= 7*24*60*60 then
+						weekFrags = weekFrags + 1
+					end
+					if now - killTime <= 30*24*60*60 then
+						monthFrags = monthFrags + 1
+					end
 				end
 			end
 		end

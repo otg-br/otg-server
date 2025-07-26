@@ -4472,7 +4472,7 @@ void Player::addUnjustifiedDead(const Player* attacked)
 		return;
 	}
 
-	if (attacked && attacked->getLevel() <= 50) {
+	if (attacked && attacked->getLevel() <= static_cast<uint32_t>(g_config.getNumber(ConfigManager::PVP_PROTECTION_LEVEL))) {
 		return;
 	}
 

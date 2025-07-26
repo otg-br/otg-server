@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Tempo de geração: 07-Jul-2025 às 20:12
+-- Tempo de geração: 25/07/2025 às 21:56
 -- Versão do servidor: 10.6.22-MariaDB-0ubuntu0.22.04.1
--- versão do PHP: 8.1.2-1ubuntu2.21
+-- Versão do PHP: 8.1.2-1ubuntu2.22
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Banco de dados: `otg_clean`
+-- Banco de dados: `otg_clean2`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `accounts`
+-- Estrutura para tabela `accounts`
 --
 
 CREATE TABLE `accounts` (
@@ -68,7 +68,7 @@ CREATE TABLE `accounts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Extraindo dados da tabela `accounts`
+-- Despejando dados para a tabela `accounts`
 --
 
 INSERT INTO `accounts` (`id`, `name`, `password`, `secret`, `type`, `premium_ends_at`, `coins`, `proxy_id`, `email`, `creation`, `vote`, `key`, `email_new`, `email_new_time`, `rlname`, `location`, `page_access`, `email_code`, `next_email`, `premium_points`, `create_date`, `create_ip`, `last_post`, `flag`, `vip_time`, `guild_points`, `guild_points_stats`, `passed`, `block`, `refresh`, `birth_date`, `gender`, `loyalty_points`, `authToken`, `player_sell_bank`, `secret_status`, `tournamentBalance`) VALUES
@@ -77,7 +77,7 @@ INSERT INTO `accounts` (`id`, `name`, `password`, `secret`, `type`, `premium_end
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `accounts_storage`
+-- Estrutura para tabela `accounts_storage`
 --
 
 CREATE TABLE `accounts_storage` (
@@ -89,7 +89,7 @@ CREATE TABLE `accounts_storage` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `account_bans`
+-- Estrutura para tabela `account_bans`
 --
 
 CREATE TABLE `account_bans` (
@@ -103,7 +103,7 @@ CREATE TABLE `account_bans` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `account_ban_history`
+-- Estrutura para tabela `account_ban_history`
 --
 
 CREATE TABLE `account_ban_history` (
@@ -118,7 +118,7 @@ CREATE TABLE `account_ban_history` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `account_character_sale`
+-- Estrutura para tabela `account_character_sale`
 --
 
 CREATE TABLE `account_character_sale` (
@@ -137,7 +137,7 @@ CREATE TABLE `account_character_sale` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `account_viplist`
+-- Estrutura para tabela `account_viplist`
 --
 
 CREATE TABLE `account_viplist` (
@@ -151,7 +151,7 @@ CREATE TABLE `account_viplist` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `announcements`
+-- Estrutura para tabela `announcements`
 --
 
 CREATE TABLE `announcements` (
@@ -165,7 +165,7 @@ CREATE TABLE `announcements` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `auto_loot_list`
+-- Estrutura para tabela `auto_loot_list`
 --
 
 CREATE TABLE `auto_loot_list` (
@@ -177,7 +177,7 @@ CREATE TABLE `auto_loot_list` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `blessings_history`
+-- Estrutura para tabela `blessings_history`
 --
 
 CREATE TABLE `blessings_history` (
@@ -191,7 +191,7 @@ CREATE TABLE `blessings_history` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `boost_creature`
+-- Estrutura para tabela `boost_creature`
 --
 
 CREATE TABLE `boost_creature` (
@@ -202,19 +202,18 @@ CREATE TABLE `boost_creature` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Extraindo dados da tabela `boost_creature`
+-- Despejando dados para a tabela `boost_creature`
 --
 
 INSERT INTO `boost_creature` (`category`, `name`, `exp`, `loot`) VALUES
-('boss', 'Leviathan', 30, 36),
-('normal', 'War wolf', 30, 42),
-('second', 'Ancient scarab', 30, 29),
-('third', 'Allukard', 30, 35);
+('normal', 'Bonelord', 30, 42),
+('second', 'Wyvern', 30, 39),
+('third', 'Squid warden', 30, 34);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `daily_reward_history`
+-- Estrutura para tabela `daily_reward_history`
 --
 
 CREATE TABLE `daily_reward_history` (
@@ -229,7 +228,7 @@ CREATE TABLE `daily_reward_history` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `free_pass`
+-- Estrutura para tabela `free_pass`
 --
 
 CREATE TABLE `free_pass` (
@@ -239,7 +238,7 @@ CREATE TABLE `free_pass` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `global_storage`
+-- Estrutura para tabela `global_storage`
 --
 
 CREATE TABLE `global_storage` (
@@ -248,7 +247,7 @@ CREATE TABLE `global_storage` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Extraindo dados da tabela `global_storage`
+-- Despejando dados para a tabela `global_storage`
 --
 
 INSERT INTO `global_storage` (`key`, `value`) VALUES
@@ -257,7 +256,7 @@ INSERT INTO `global_storage` (`key`, `value`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `guilds`
+-- Estrutura para tabela `guilds`
 --
 
 CREATE TABLE `guilds` (
@@ -280,7 +279,7 @@ CREATE TABLE `guilds` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `guildwar_kills`
+-- Estrutura para tabela `guildwar_kills`
 --
 
 CREATE TABLE `guildwar_kills` (
@@ -296,7 +295,7 @@ CREATE TABLE `guildwar_kills` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `guild_actions_h`
+-- Estrutura para tabela `guild_actions_h`
 --
 
 CREATE TABLE `guild_actions_h` (
@@ -311,7 +310,7 @@ CREATE TABLE `guild_actions_h` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `guild_invites`
+-- Estrutura para tabela `guild_invites`
 --
 
 CREATE TABLE `guild_invites` (
@@ -323,7 +322,7 @@ CREATE TABLE `guild_invites` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `guild_membership`
+-- Estrutura para tabela `guild_membership`
 --
 
 CREATE TABLE `guild_membership` (
@@ -336,7 +335,7 @@ CREATE TABLE `guild_membership` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `guild_ranks`
+-- Estrutura para tabela `guild_ranks`
 --
 
 CREATE TABLE `guild_ranks` (
@@ -349,7 +348,7 @@ CREATE TABLE `guild_ranks` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `guild_transfer_h`
+-- Estrutura para tabela `guild_transfer_h`
 --
 
 CREATE TABLE `guild_transfer_h` (
@@ -364,7 +363,7 @@ CREATE TABLE `guild_transfer_h` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `guild_wars`
+-- Estrutura para tabela `guild_wars`
 --
 
 CREATE TABLE `guild_wars` (
@@ -382,7 +381,7 @@ CREATE TABLE `guild_wars` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `houses`
+-- Estrutura para tabela `houses`
 --
 
 CREATE TABLE `houses` (
@@ -403,7 +402,7 @@ CREATE TABLE `houses` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Extraindo dados da tabela `houses`
+-- Despejando dados para a tabela `houses`
 --
 
 INSERT INTO `houses` (`id`, `owner`, `paid`, `warnings`, `name`, `rent`, `town_id`, `bid`, `bid_end`, `last_bid`, `highest_bidder`, `size`, `guildid`, `beds`) VALUES
@@ -1507,7 +1506,7 @@ INSERT INTO `houses` (`id`, `owner`, `paid`, `warnings`, `name`, `rent`, `town_i
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `house_lists`
+-- Estrutura para tabela `house_lists`
 --
 
 CREATE TABLE `house_lists` (
@@ -1519,7 +1518,7 @@ CREATE TABLE `house_lists` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `ip_bans`
+-- Estrutura para tabela `ip_bans`
 --
 
 CREATE TABLE `ip_bans` (
@@ -1533,7 +1532,7 @@ CREATE TABLE `ip_bans` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `live_casts`
+-- Estrutura para tabela `live_casts`
 --
 
 CREATE TABLE `live_casts` (
@@ -1548,7 +1547,7 @@ CREATE TABLE `live_casts` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `market_history`
+-- Estrutura para tabela `market_history`
 --
 
 CREATE TABLE `market_history` (
@@ -1566,7 +1565,7 @@ CREATE TABLE `market_history` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `market_offers`
+-- Estrutura para tabela `market_offers`
 --
 
 CREATE TABLE `market_offers` (
@@ -1583,7 +1582,7 @@ CREATE TABLE `market_offers` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `newsticker`
+-- Estrutura para tabela `newsticker`
 --
 
 CREATE TABLE `newsticker` (
@@ -1596,7 +1595,7 @@ CREATE TABLE `newsticker` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `pagseguro`
+-- Estrutura para tabela `pagseguro`
 --
 
 CREATE TABLE `pagseguro` (
@@ -1611,7 +1610,7 @@ CREATE TABLE `pagseguro` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `pagseguro_transactions`
+-- Estrutura para tabela `pagseguro_transactions`
 --
 
 CREATE TABLE `pagseguro_transactions` (
@@ -1627,7 +1626,7 @@ CREATE TABLE `pagseguro_transactions` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `paypal_transactions`
+-- Estrutura para tabela `paypal_transactions`
 --
 
 CREATE TABLE `paypal_transactions` (
@@ -1645,7 +1644,7 @@ CREATE TABLE `paypal_transactions` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `players`
+-- Estrutura para tabela `players`
 --
 
 CREATE TABLE `players` (
@@ -1782,21 +1781,21 @@ CREATE TABLE `players` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Extraindo dados da tabela `players`
+-- Despejando dados para a tabela `players`
 --
 
 INSERT INTO `players` (`id`, `name`, `group_id`, `account_id`, `level`, `vocation`, `health`, `healthmax`, `experience`, `exptoday`, `lookbody`, `lookfeet`, `lookhead`, `looklegs`, `looktype`, `lookaddons`, `maglevel`, `mana`, `manamax`, `manaspent`, `soul`, `town_id`, `posx`, `posy`, `posz`, `conditions`, `cap`, `sex`, `lastlogin`, `lastip`, `save`, `skull`, `skulltime`, `lastlogout`, `blessings`, `blessings1`, `blessings2`, `blessings3`, `blessings4`, `blessings5`, `blessings6`, `blessings7`, `blessings8`, `onlinetime`, `deletion`, `balance`, `bonusrerollcount`, `quick_loot_fallback`, `offlinetraining_time`, `offlinetraining_skill`, `stamina`, `skill_fist`, `skill_fist_tries`, `skill_club`, `skill_club_tries`, `skill_sword`, `skill_sword_tries`, `skill_axe`, `skill_axe_tries`, `skill_dist`, `skill_dist_tries`, `skill_shielding`, `skill_shielding_tries`, `skill_fishing`, `skill_fishing_tries`, `deleted`, `description`, `comment`, `create_ip`, `create_date`, `hide_char`, `skill_critical_hit_chance`, `skill_critical_hit_chance_tries`, `skill_critical_hit_damage`, `skill_critical_hit_damage_tries`, `skill_life_leech_chance`, `skill_life_leech_chance_tries`, `skill_life_leech_amount`, `skill_life_leech_amount_tries`, `skill_mana_leech_chance`, `skill_mana_leech_chance_tries`, `skill_mana_leech_amount`, `skill_mana_leech_amount_tries`, `skill_criticalhit_chance`, `skill_criticalhit_damage`, `skill_lifeleech_chance`, `skill_lifeleech_amount`, `skill_manaleech_chance`, `skill_manaleech_amount`, `prey_stamina_1`, `prey_stamina_2`, `prey_stamina_3`, `prey_column`, `xpboost_stamina`, `xpboost_value`, `marriage_status`, `hide_skills`, `hide_set`, `former`, `signature`, `marriage_spouse`, `loyalty_ranking`, `bonus_rerolls`, `critical`, `sbw_points`, `instantrewardtokens`, `charmpoints`, `direction`, `lookmount`, `version`, `lootaction`, `spells`, `storages`, `items`, `depotitems`, `inboxitems`, `rewards`, `varcap`, `charmExpansion`, `bestiarykills`, `charms`, `bestiaryTracker`, `autoloot`, `lastday`, `bonus_reroll`, `lookmountbody`, `lookmountfeet`, `lookmounthead`, `lookmountlegs`, `lookfamiliarstype`) VALUES
 (1, 'Rook Sample', 1, 1, 1, 0, 150, 150, 0, NULL, 106, 76, 78, 58, 136, 0, 0, 5, 5, 0, 0, 6, 32097, 32205, 7, '', 400, 0, 1594061826, 16777343, 1, 0, 0, 1594062801, 0, 0, 1, 1, 1, 1, 1, 0, 0, 2936, 0, 0, 0, 0, 43200, -1, 2520, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 0, '', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL, 1, 0, 0, 0, NULL, NULL, '-', '', -1, 0, 0, 0, 0, 0, 0, 0, 0, 1230, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0x0000000000000000, 0x0000000000000000, 0x0000000000000000, 0x0000000000000000, 0, 0, 0, 0, 0, 0, 0),
 (2, 'Sorcerer Sample', 1, 1, 8, 1, 185, 185, 4200, NULL, 44, 98, 15, 76, 128, 0, 0, 90, 90, 0, 100, 1, 0, 0, 0, '', 470, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 43200, -1, 2520, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 0, '', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL, 1, NULL, NULL, 0, NULL, NULL, '-', '', -1, 0, 0, 0, 0, 0, 0, 0, 0, 1000, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0),
-(3, 'Druid Sample', 1, 1, 8, 2, 185, 185, 4200, NULL, 44, 98, 15, 76, 128, 0, 0, 90, 90, 0, 100, 1, 0, 0, 0, '', 470, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 43200, -1, 2520, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 0, '', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL, 1, NULL, NULL, 0, NULL, NULL, '-', '', -1, 0, 0, 0, 0, 0, 0, 0, 0, 1000, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0),
-(4, 'Paladin Sample', 1, 1, 8, 3, 185, 185, 4200, NULL, 44, 98, 15, 76, 128, 0, 0, 90, 90, 0, 100, 1, 0, 0, 0, '', 470, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 43200, -1, 2520, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 0, '', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL, 1, NULL, NULL, 0, NULL, NULL, '-', '', -1, 0, 0, 0, 0, 0, 0, 0, 0, 1000, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0),
-(5, 'Knight Sample', 1, 1, 202, 4, 3095, 3095, 135017843, NULL, 106, 76, 78, 58, 136, 0, 1, 1060, 1060, 3196, 100, 1, 95, 117, 7, '', 5320, 0, 1751843320, 16777343, 1, 0, 0, 1751843373, 0, 0, 0, 0, 0, 0, 0, 0, 0, 312, 0, 0, 0, 0, 43200, -1, 2518, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 0, '', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL, 1, 0, 0, 0, NULL, NULL, '-', '', -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0x010000000000000015000300000000, 0x0000000000000000, 0x0000000000000000, 0x0000000000000000, 0, 0, 0, 0, 0, 0, 0),
-(6, 'God', 6, 1, 1, 0, 185, 185, 0, NULL, 106, 76, 78, 58, 136, 0, 0, 90, 90, 0, 100, 1, 97, 122, 7, '', 470, 0, 1751843220, 16777343, 1, 0, 0, 1751843238, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10665, 0, 0, 0, 0, 43200, -1, 2520, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 0, '', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL, 1, 0, 0, 0, NULL, NULL, '-', '', -1, 0, 0, 0, 0, 0, 0, 1, 0, 1100, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0x0000000000000000, 0x0000000000000000, 0x0000000000000000, 0x0000000000000000, 0, 0, 0, 0, 0, 0, 0);
+(3, 'Druid Sample', 1, 1, 491, 2, 2600, 2600, 1948877000, NULL, 106, 76, 78, 58, 136, 0, 0, 14580, 14580, 0, 100, 1, 95, 117, 7, '', 5300, 0, 1753491103, 16777343, 1, 0, 0, 1753491219, 0, 0, 0, 0, 0, 0, 0, 0, 0, 900, 0, 0, 0, 0, 43200, -1, 2520, 10, 0, 10, 20, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 0, '', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL, 1, 0, 0, 0, NULL, NULL, '-', '', -1, 0, 0, 0, 0, 0, 0, 3, 0, 1100, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0x0000000000000000, 0x0000000000000000, 0x0000000000000000, 0x0000000000000000, 0, 0, 0, 0, 0, 0, 0),
+(4, 'Paladin Sample', 1, 1, 508, 3, 5185, 5185, 2159279200, NULL, 106, 76, 78, 58, 136, 0, 0, 7590, 7590, 0, 100, 1, 93, 127, 7, 0x010004000002ffffffff03f80007001a001b00000000fe, 10470, 0, 1753491058, 16777343, 1, 0, 0, 1753491219, 0, 0, 0, 0, 0, 0, 0, 0, 0, 583, 0, 0, 0, 0, 43200, -1, 2520, 11, 0, 10, 0, 11, 50, 10, 0, 10, 0, 10, 0, 10, 0, 0, '', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL, 1, 0, 0, 0, NULL, NULL, '-', '', -1, 0, 0, 0, 0, 0, 0, 2, 0, 1100, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0x0000000000000000, 0x0000000000000000, 0x0000000000000000, 0x0000000000000000, 0, 0, 0, 0, 0, 0, 0),
+(5, 'Knight Sample', 1, 1, 202, 4, 3020, 3095, 135017843, NULL, 106, 76, 78, 58, 136, 0, 1, 1060, 1060, 3196, 100, 1, 95, 120, 7, 0x010004000002ffffffff03287607001a001b00000000fe, 5320, 0, 1753490521, 16777343, 1, 5, 2012690218, 1753490547, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1553, 0, 0, 0, 0, 43200, -1, 2520, 10, 0, 19, 44, 13, 55, 10, 0, 10, 0, 10, 0, 10, 0, 0, '', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL, 1, 0, 0, 0, NULL, NULL, '-', '', -1, 0, 0, 0, 0, 0, 0, 2, 0, 1100, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0x010000000000000015000300000000, 0x0000000000000000, 0x0000000000000000, 0x0000000000000000, 1753490096, 0, 0, 0, 0, 0, 0),
+(6, 'God', 6, 1, 1, 0, 185, 185, 0, NULL, 106, 76, 78, 58, 136, 0, 0, 90, 90, 0, 100, 1, 95, 125, 7, '', 470, 0, 1753491025, 16777343, 1, 0, 0, 1753491064, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11372, 0, 0, 0, 0, 43200, -1, 2520, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 0, '', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL, 1, 0, 0, 0, NULL, NULL, '-', '', -1, 0, 0, 0, 0, 0, 0, 0, 0, 1100, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0x0000000000000000, 0x0000000000000000, 0x0000000000000000, 0x0000000000000000, 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `players_online`
+-- Estrutura para tabela `players_online`
 --
 
 CREATE TABLE `players_online` (
@@ -1806,7 +1805,7 @@ CREATE TABLE `players_online` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `player_binary_items`
+-- Estrutura para tabela `player_binary_items`
 --
 
 CREATE TABLE `player_binary_items` (
@@ -1818,7 +1817,7 @@ CREATE TABLE `player_binary_items` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `player_deaths`
+-- Estrutura para tabela `player_deaths`
 --
 
 CREATE TABLE `player_deaths` (
@@ -1834,17 +1833,20 @@ CREATE TABLE `player_deaths` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Extraindo dados da tabela `player_deaths`
+-- Despejando dados para a tabela `player_deaths`
 --
 
 INSERT INTO `player_deaths` (`player_id`, `time`, `level`, `killed_by`, `is_player`, `mostdamage_by`, `mostdamage_is_player`, `unjustified`, `mostdamage_unjustified`) VALUES
-(5, 1751843025, 208, 'Demon', 0, 'Demon', 0, 0, 0),
-(5, 1751843287, 205, 'Dragon Lord', 0, 'Dragon Lord', 0, 0, 0);
+(3, 1753490587, 496, 'Paladin Sample', 1, 'Paladin Sample', 1, 1, 0),
+(3, 1753490735, 495, 'Paladin Sample', 1, 'Paladin Sample', 1, 1, 0),
+(3, 1753490879, 494, 'Paladin Sample', 1, 'Paladin Sample', 1, 1, 0),
+(3, 1753491010, 493, 'Paladin Sample', 1, 'Paladin Sample', 1, 1, 0),
+(3, 1753491071, 492, 'Paladin Sample', 1, 'Paladin Sample', 1, 1, 0);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `player_depotitems`
+-- Estrutura para tabela `player_depotitems`
 --
 
 CREATE TABLE `player_depotitems` (
@@ -1859,7 +1861,7 @@ CREATE TABLE `player_depotitems` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `player_former_names`
+-- Estrutura para tabela `player_former_names`
 --
 
 CREATE TABLE `player_former_names` (
@@ -1872,7 +1874,7 @@ CREATE TABLE `player_former_names` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `player_hirelings`
+-- Estrutura para tabela `player_hirelings`
 --
 
 CREATE TABLE `player_hirelings` (
@@ -1894,7 +1896,7 @@ CREATE TABLE `player_hirelings` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `player_inboxitems`
+-- Estrutura para tabela `player_inboxitems`
 --
 
 CREATE TABLE `player_inboxitems` (
@@ -1909,7 +1911,7 @@ CREATE TABLE `player_inboxitems` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `player_items`
+-- Estrutura para tabela `player_items`
 --
 
 CREATE TABLE `player_items` (
@@ -1922,10 +1924,13 @@ CREATE TABLE `player_items` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Extraindo dados da tabela `player_items`
+-- Despejando dados para a tabela `player_items`
 --
 
 INSERT INTO `player_items` (`player_id`, `pid`, `sid`, `itemtype`, `count`, `attributes`) VALUES
+(5, 3, 101, 1987, 1, 0x2601),
+(5, 4, 102, 2651, 1, ''),
+(5, 11, 103, 26052, 1, ''),
 (6, 3, 101, 1987, 1, 0x2601),
 (6, 4, 102, 2651, 1, ''),
 (6, 6, 103, 2382, 1, ''),
@@ -1940,28 +1945,33 @@ INSERT INTO `player_items` (`player_id`, `pid`, `sid`, `itemtype`, `count`, `att
 (6, 105, 112, 16101, 1, 0x04d71b0744005573696e672074686973207363726f6c6c2077696c6c206164642033302064617973206f66207669702074696d6520746f20796f7572206163636f756e74206f6e63652e),
 (6, 105, 113, 16101, 1, 0x04d71b0744005573696e672074686973207363726f6c6c2077696c6c206164642033302064617973206f66207669702074696d6520746f20796f7572206163636f756e74206f6e63652e),
 (6, 105, 114, 16101, 1, 0x04d71b0744005573696e672074686973207363726f6c6c2077696c6c206164642033302064617973206f66207669702074696d6520746f20796f7572206163636f756e74206f6e63652e),
-(5, 3, 101, 1987, 1, ''),
-(5, 4, 102, 2651, 1, ''),
-(5, 6, 103, 2382, 1, ''),
-(5, 11, 104, 26052, 1, '');
+(3, 3, 101, 1987, 1, ''),
+(3, 11, 102, 26052, 1, ''),
+(4, 3, 101, 1987, 1, ''),
+(4, 4, 102, 2651, 1, ''),
+(4, 6, 103, 2400, 1, 0x1c7f969800),
+(4, 10, 104, 2050, 1, ''),
+(4, 11, 105, 26052, 1, ''),
+(4, 101, 106, 2674, 1, 0x0f01);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `player_kills`
+-- Estrutura para tabela `player_kills`
 --
 
 CREATE TABLE `player_kills` (
   `player_id` int(11) NOT NULL,
   `time` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
   `target` int(11) NOT NULL,
-  `unavenged` tinyint(1) NOT NULL DEFAULT 0
+  `unavenged` tinyint(1) NOT NULL DEFAULT 0,
+  `id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `player_marketing`
+-- Estrutura para tabela `player_marketing`
 --
 
 CREATE TABLE `player_marketing` (
@@ -1980,7 +1990,7 @@ CREATE TABLE `player_marketing` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `player_marketing_lua`
+-- Estrutura para tabela `player_marketing_lua`
 --
 
 CREATE TABLE `player_marketing_lua` (
@@ -1992,7 +2002,7 @@ CREATE TABLE `player_marketing_lua` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `player_marketing_reward`
+-- Estrutura para tabela `player_marketing_reward`
 --
 
 CREATE TABLE `player_marketing_reward` (
@@ -2005,7 +2015,7 @@ CREATE TABLE `player_marketing_reward` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `player_marketing_reward_lua`
+-- Estrutura para tabela `player_marketing_reward_lua`
 --
 
 CREATE TABLE `player_marketing_reward_lua` (
@@ -2017,7 +2027,7 @@ CREATE TABLE `player_marketing_reward_lua` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `player_misc`
+-- Estrutura para tabela `player_misc`
 --
 
 CREATE TABLE `player_misc` (
@@ -2028,7 +2038,7 @@ CREATE TABLE `player_misc` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `player_namelocks`
+-- Estrutura para tabela `player_namelocks`
 --
 
 CREATE TABLE `player_namelocks` (
@@ -2041,7 +2051,7 @@ CREATE TABLE `player_namelocks` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `player_prey`
+-- Estrutura para tabela `player_prey`
 --
 
 CREATE TABLE `player_prey` (
@@ -2054,7 +2064,7 @@ CREATE TABLE `player_prey` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `player_preydata`
+-- Estrutura para tabela `player_preydata`
 --
 
 CREATE TABLE `player_preydata` (
@@ -2063,17 +2073,19 @@ CREATE TABLE `player_preydata` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Extraindo dados da tabela `player_preydata`
+-- Despejando dados para a tabela `player_preydata`
 --
 
 INSERT INTO `player_preydata` (`player_id`, `data`) VALUES
+(3, 0x0000000000000000000309090044657374726f7965720e0046726f7374204769616e746573730a004772696d656c65656368140049726f6e2053657276616e74205265706c6963610a0049726f6e626c696768740a00526167652053717569641a0052656e656761646520517561726120436f6e7374726963746f72160052656e65676164652051756172612050696e6368657207005370697474657201000000000000000003090d00436c69666620537472696465720e004372797374616c205370696465720e004461776e666972652041737572610600447261676f6e0b00447261676f6e204c6f72640500536c696d650d005370696472697320456c6974650e0054686f726e6669726520576f6c66080057617220576f6c660200000000000000000000),
+(4, 0x00000000000000000003090e00416e6369656e74205363617261621400426c61636b20537068696e782041636f6c79746512004465706f7765726564204d696e6f7461757212004472616b656e2041626f6d696e6174696f6e0e00456e736c617665642044776172660b004c6f7374204261736865720c004c6f7374205468726f7765720e00536861627572616b2044656d6f6e0d0054756e6e656c20547972616e74010000000000000000030910004162797373616c2043616c616d6172790f00436f72796d20436861726c6174616e1000436f72796d20536b69726d69736865720f00446565706c696e6720547972616e74050047686f737406004b6f6e6772610c004d65726375727920426c6f620b0053616e64637261776c65720b0053746f6e6520476f6c656d0200000000000000000000),
 (5, 0x00000000000000000003090e00446565706c696e672047756172640f00446565706c696e6720547972616e740a00476c6f6f6d20576f6c6616004869676820566f6c7461676520456c656d656e74616c0a0049636520447261676f6e0800496e6b20426c6f620e0052697070657220537065637472650600536962616e670b005377616e204d616964656e0100000000000000000309150042617262617269616e20426c6f6f6477616c6b6572030042617416004372617a65642053756d6d65722056616e67756172640f00446565706c696e6720576f726b6572110044776f72632056656e6f6d736e697065720600456672656574100048756d6f6e676f75732046756e6775730e004c6f7374204265727365726b65720b0053616e64637261776c65720200000000000000000000),
 (6, 0x000000000000000000030903004261740d004272696d73746f6e6520427567110044776f726320466c65736868756e7465720a004669726520446576696c0c00496e73616e6520536972656e08004f6d6e69766f7261160052656e65676164652051756172612050696e636865720b005377616e204d616964656e120054686f726e6261636b20546f72746f69736501000000000000000003090e0041726163686e6f70686f626963610400426561720a00446561746820426c6f620f00446565706c696e6720576f726b65720e00476c6f6f746820426174746572790b004772696d205265617065720d0048697665204f766572736565721100496e737461626c6520537061726b696f6e0f00576174657220456c656d656e74616c0200000000000000000000);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `player_preytimes`
+-- Estrutura para tabela `player_preytimes`
 --
 
 CREATE TABLE `player_preytimes` (
@@ -2092,7 +2104,7 @@ CREATE TABLE `player_preytimes` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `player_rewards`
+-- Estrutura para tabela `player_rewards`
 --
 
 CREATE TABLE `player_rewards` (
@@ -2107,7 +2119,7 @@ CREATE TABLE `player_rewards` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `player_spells`
+-- Estrutura para tabela `player_spells`
 --
 
 CREATE TABLE `player_spells` (
@@ -2118,7 +2130,7 @@ CREATE TABLE `player_spells` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `player_storage`
+-- Estrutura para tabela `player_storage`
 --
 
 CREATE TABLE `player_storage` (
@@ -2130,7 +2142,7 @@ CREATE TABLE `player_storage` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `prey_slots`
+-- Estrutura para tabela `prey_slots`
 --
 
 CREATE TABLE `prey_slots` (
@@ -2151,7 +2163,7 @@ CREATE TABLE `prey_slots` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `sellchar`
+-- Estrutura para tabela `sellchar`
 --
 
 CREATE TABLE `sellchar` (
@@ -2166,7 +2178,7 @@ CREATE TABLE `sellchar` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `sell_players`
+-- Estrutura para tabela `sell_players`
 --
 
 CREATE TABLE `sell_players` (
@@ -2180,7 +2192,7 @@ CREATE TABLE `sell_players` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `sell_players_history`
+-- Estrutura para tabela `sell_players_history`
 --
 
 CREATE TABLE `sell_players_history` (
@@ -2197,7 +2209,7 @@ CREATE TABLE `sell_players_history` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `server_config`
+-- Estrutura para tabela `server_config`
 --
 
 CREATE TABLE `server_config` (
@@ -2206,14 +2218,14 @@ CREATE TABLE `server_config` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Extraindo dados da tabela `server_config`
+-- Despejando dados para a tabela `server_config`
 --
 
 INSERT INTO `server_config` (`config`, `value`) VALUES
 ('boost_monster', '0'),
 ('boost_monster_name', ''),
 ('boost_monster_url', ''),
-('db_version', '38'),
+('db_version', '39'),
 ('motd_hash', '815194dfb446b52a3e94f39defd8f2cef3fb2863'),
 ('motd_num', '2'),
 ('players_record', '2');
@@ -2221,7 +2233,7 @@ INSERT INTO `server_config` (`config`, `value`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `snowballwar`
+-- Estrutura para tabela `snowballwar`
 --
 
 CREATE TABLE `snowballwar` (
@@ -2235,7 +2247,7 @@ CREATE TABLE `snowballwar` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `store_history`
+-- Estrutura para tabela `store_history`
 --
 
 CREATE TABLE `store_history` (
@@ -2249,7 +2261,7 @@ CREATE TABLE `store_history` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Extraindo dados da tabela `store_history`
+-- Despejando dados para a tabela `store_history`
 --
 
 INSERT INTO `store_history` (`accountid`, `mode`, `amount`, `coinMode`, `description`, `cust`, `time`) VALUES
@@ -2260,7 +2272,7 @@ INSERT INTO `store_history` (`accountid`, `mode`, `amount`, `coinMode`, `descrip
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `store_history_old`
+-- Estrutura para tabela `store_history_old`
 --
 
 CREATE TABLE `store_history_old` (
@@ -2277,7 +2289,7 @@ CREATE TABLE `store_history_old` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `tickets`
+-- Estrutura para tabela `tickets`
 --
 
 CREATE TABLE `tickets` (
@@ -2297,7 +2309,7 @@ CREATE TABLE `tickets` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `tickets_reply`
+-- Estrutura para tabela `tickets_reply`
 --
 
 CREATE TABLE `tickets_reply` (
@@ -2311,7 +2323,7 @@ CREATE TABLE `tickets_reply` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `tile_store`
+-- Estrutura para tabela `tile_store`
 --
 
 CREATE TABLE `tile_store` (
@@ -2320,7 +2332,7 @@ CREATE TABLE `tile_store` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 --
--- Extraindo dados da tabela `tile_store`
+-- Despejando dados para a tabela `tile_store`
 --
 
 INSERT INTO `tile_store` (`house_id`, `data`) VALUES
@@ -2880,7 +2892,7 @@ INSERT INTO `tile_store` (`house_id`, `data`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `z_forum`
+-- Estrutura para tabela `z_forum`
 --
 
 CREATE TABLE `z_forum` (
@@ -2906,7 +2918,7 @@ CREATE TABLE `z_forum` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `z_network_box`
+-- Estrutura para tabela `z_network_box`
 --
 
 CREATE TABLE `z_network_box` (
@@ -2918,7 +2930,7 @@ CREATE TABLE `z_network_box` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `z_news_tickers`
+-- Estrutura para tabela `z_news_tickers`
 --
 
 CREATE TABLE `z_news_tickers` (
@@ -2932,7 +2944,7 @@ CREATE TABLE `z_news_tickers` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `z_ots_comunication`
+-- Estrutura para tabela `z_ots_comunication`
 --
 
 CREATE TABLE `z_ots_comunication` (
@@ -2953,7 +2965,7 @@ CREATE TABLE `z_ots_comunication` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `z_ots_guildcomunication`
+-- Estrutura para tabela `z_ots_guildcomunication`
 --
 
 CREATE TABLE `z_ots_guildcomunication` (
@@ -2974,7 +2986,7 @@ CREATE TABLE `z_ots_guildcomunication` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `z_polls`
+-- Estrutura para tabela `z_polls`
 --
 
 CREATE TABLE `z_polls` (
@@ -2989,7 +3001,7 @@ CREATE TABLE `z_polls` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `z_polls_answers`
+-- Estrutura para tabela `z_polls_answers`
 --
 
 CREATE TABLE `z_polls_answers` (
@@ -3002,7 +3014,7 @@ CREATE TABLE `z_polls_answers` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `z_replay`
+-- Estrutura para tabela `z_replay`
 --
 
 CREATE TABLE `z_replay` (
@@ -3013,7 +3025,7 @@ CREATE TABLE `z_replay` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `z_shop_category`
+-- Estrutura para tabela `z_shop_category`
 --
 
 CREATE TABLE `z_shop_category` (
@@ -3027,7 +3039,7 @@ CREATE TABLE `z_shop_category` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `z_shop_donates`
+-- Estrutura para tabela `z_shop_donates`
 --
 
 CREATE TABLE `z_shop_donates` (
@@ -3044,7 +3056,7 @@ CREATE TABLE `z_shop_donates` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `z_shop_donate_confirm`
+-- Estrutura para tabela `z_shop_donate_confirm`
 --
 
 CREATE TABLE `z_shop_donate_confirm` (
@@ -3058,7 +3070,7 @@ CREATE TABLE `z_shop_donate_confirm` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `z_shop_history_item`
+-- Estrutura para tabela `z_shop_history_item`
 --
 
 CREATE TABLE `z_shop_history_item` (
@@ -3077,7 +3089,7 @@ CREATE TABLE `z_shop_history_item` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `z_shop_offer`
+-- Estrutura para tabela `z_shop_offer`
 --
 
 CREATE TABLE `z_shop_offer` (
@@ -3100,7 +3112,7 @@ CREATE TABLE `z_shop_offer` (
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `z_shop_payment`
+-- Estrutura para tabela `z_shop_payment`
 --
 
 CREATE TABLE `z_shop_payment` (
@@ -3122,7 +3134,7 @@ CREATE TABLE `z_shop_payment` (
 --
 
 --
--- Índices para tabela `accounts`
+-- Índices de tabela `accounts`
 --
 ALTER TABLE `accounts`
   ADD PRIMARY KEY (`id`),
@@ -3132,20 +3144,20 @@ ALTER TABLE `accounts`
   ADD UNIQUE KEY `name_4` (`name`);
 
 --
--- Índices para tabela `accounts_storage`
+-- Índices de tabela `accounts_storage`
 --
 ALTER TABLE `accounts_storage`
   ADD PRIMARY KEY (`account_id`,`key`);
 
 --
--- Índices para tabela `account_bans`
+-- Índices de tabela `account_bans`
 --
 ALTER TABLE `account_bans`
   ADD PRIMARY KEY (`account_id`),
   ADD KEY `banned_by` (`banned_by`);
 
 --
--- Índices para tabela `account_ban_history`
+-- Índices de tabela `account_ban_history`
 --
 ALTER TABLE `account_ban_history`
   ADD PRIMARY KEY (`id`),
@@ -3158,7 +3170,7 @@ ALTER TABLE `account_ban_history`
   ADD KEY `account_id_6` (`account_id`);
 
 --
--- Índices para tabela `account_character_sale`
+-- Índices de tabela `account_character_sale`
 --
 ALTER TABLE `account_character_sale`
   ADD PRIMARY KEY (`id`),
@@ -3166,7 +3178,7 @@ ALTER TABLE `account_character_sale`
   ADD KEY `account_character_sale_ibfk_2` (`id_account`);
 
 --
--- Índices para tabela `account_viplist`
+-- Índices de tabela `account_viplist`
 --
 ALTER TABLE `account_viplist`
   ADD UNIQUE KEY `account_player_index` (`account_id`,`player_id`),
@@ -3174,45 +3186,45 @@ ALTER TABLE `account_viplist`
   ADD KEY `player_id` (`player_id`);
 
 --
--- Índices para tabela `auto_loot_list`
+-- Índices de tabela `auto_loot_list`
 --
 ALTER TABLE `auto_loot_list`
   ADD PRIMARY KEY (`id`),
   ADD KEY `player_id` (`player_id`);
 
 --
--- Índices para tabela `blessings_history`
+-- Índices de tabela `blessings_history`
 --
 ALTER TABLE `blessings_history`
   ADD KEY `blessings_history_ibfk_1` (`player_id`);
 
 --
--- Índices para tabela `boost_creature`
+-- Índices de tabela `boost_creature`
 --
 ALTER TABLE `boost_creature`
   ADD PRIMARY KEY (`category`,`name`);
 
 --
--- Índices para tabela `daily_reward_history`
+-- Índices de tabela `daily_reward_history`
 --
 ALTER TABLE `daily_reward_history`
   ADD PRIMARY KEY (`id`),
   ADD KEY `player_id` (`player_id`);
 
 --
--- Índices para tabela `free_pass`
+-- Índices de tabela `free_pass`
 --
 ALTER TABLE `free_pass`
   ADD KEY `free_pass_ibfk_1` (`player_id`);
 
 --
--- Índices para tabela `global_storage`
+-- Índices de tabela `global_storage`
 --
 ALTER TABLE `global_storage`
   ADD UNIQUE KEY `key` (`key`);
 
 --
--- Índices para tabela `guilds`
+-- Índices de tabela `guilds`
 --
 ALTER TABLE `guilds`
   ADD PRIMARY KEY (`id`),
@@ -3220,27 +3232,27 @@ ALTER TABLE `guilds`
   ADD UNIQUE KEY `ownerid` (`ownerid`);
 
 --
--- Índices para tabela `guildwar_kills`
+-- Índices de tabela `guildwar_kills`
 --
 ALTER TABLE `guildwar_kills`
   ADD PRIMARY KEY (`id`),
   ADD KEY `warid` (`warid`);
 
 --
--- Índices para tabela `guild_actions_h`
+-- Índices de tabela `guild_actions_h`
 --
 ALTER TABLE `guild_actions_h`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices para tabela `guild_invites`
+-- Índices de tabela `guild_invites`
 --
 ALTER TABLE `guild_invites`
   ADD PRIMARY KEY (`player_id`,`guild_id`),
   ADD KEY `guild_id` (`guild_id`);
 
 --
--- Índices para tabela `guild_membership`
+-- Índices de tabela `guild_membership`
 --
 ALTER TABLE `guild_membership`
   ADD PRIMARY KEY (`player_id`),
@@ -3248,20 +3260,20 @@ ALTER TABLE `guild_membership`
   ADD KEY `rank_id` (`rank_id`);
 
 --
--- Índices para tabela `guild_ranks`
+-- Índices de tabela `guild_ranks`
 --
 ALTER TABLE `guild_ranks`
   ADD PRIMARY KEY (`id`),
   ADD KEY `guild_id` (`guild_id`);
 
 --
--- Índices para tabela `guild_transfer_h`
+-- Índices de tabela `guild_transfer_h`
 --
 ALTER TABLE `guild_transfer_h`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices para tabela `guild_wars`
+-- Índices de tabela `guild_wars`
 --
 ALTER TABLE `guild_wars`
   ADD PRIMARY KEY (`id`),
@@ -3269,7 +3281,7 @@ ALTER TABLE `guild_wars`
   ADD KEY `guild2` (`guild2`);
 
 --
--- Índices para tabela `houses`
+-- Índices de tabela `houses`
 --
 ALTER TABLE `houses`
   ADD PRIMARY KEY (`id`),
@@ -3277,33 +3289,33 @@ ALTER TABLE `houses`
   ADD KEY `town_id` (`town_id`);
 
 --
--- Índices para tabela `house_lists`
+-- Índices de tabela `house_lists`
 --
 ALTER TABLE `house_lists`
   ADD KEY `house_id` (`house_id`);
 
 --
--- Índices para tabela `ip_bans`
+-- Índices de tabela `ip_bans`
 --
 ALTER TABLE `ip_bans`
   ADD PRIMARY KEY (`ip`),
   ADD KEY `banned_by` (`banned_by`);
 
 --
--- Índices para tabela `live_casts`
+-- Índices de tabela `live_casts`
 --
 ALTER TABLE `live_casts`
   ADD UNIQUE KEY `player_id_2` (`player_id`);
 
 --
--- Índices para tabela `market_history`
+-- Índices de tabela `market_history`
 --
 ALTER TABLE `market_history`
   ADD PRIMARY KEY (`id`),
   ADD KEY `player_id` (`player_id`,`sale`);
 
 --
--- Índices para tabela `market_offers`
+-- Índices de tabela `market_offers`
 --
 ALTER TABLE `market_offers`
   ADD PRIMARY KEY (`id`),
@@ -3312,13 +3324,13 @@ ALTER TABLE `market_offers`
   ADD KEY `player_id` (`player_id`);
 
 --
--- Índices para tabela `newsticker`
+-- Índices de tabela `newsticker`
 --
 ALTER TABLE `newsticker`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices para tabela `pagseguro_transactions`
+-- Índices de tabela `pagseguro_transactions`
 --
 ALTER TABLE `pagseguro_transactions`
   ADD UNIQUE KEY `transaction_code` (`transaction_code`,`status`),
@@ -3326,7 +3338,7 @@ ALTER TABLE `pagseguro_transactions`
   ADD KEY `status` (`status`);
 
 --
--- Índices para tabela `players`
+-- Índices de tabela `players`
 --
 ALTER TABLE `players`
   ADD PRIMARY KEY (`id`),
@@ -3335,19 +3347,19 @@ ALTER TABLE `players`
   ADD KEY `vocation` (`vocation`);
 
 --
--- Índices para tabela `players_online`
+-- Índices de tabela `players_online`
 --
 ALTER TABLE `players_online`
   ADD PRIMARY KEY (`player_id`);
 
 --
--- Índices para tabela `player_binary_items`
+-- Índices de tabela `player_binary_items`
 --
 ALTER TABLE `player_binary_items`
   ADD UNIQUE KEY `player_id_2` (`player_id`,`type`);
 
 --
--- Índices para tabela `player_deaths`
+-- Índices de tabela `player_deaths`
 --
 ALTER TABLE `player_deaths`
   ADD KEY `player_id` (`player_id`),
@@ -3355,214 +3367,215 @@ ALTER TABLE `player_deaths`
   ADD KEY `mostdamage_by` (`mostdamage_by`);
 
 --
--- Índices para tabela `player_depotitems`
+-- Índices de tabela `player_depotitems`
 --
 ALTER TABLE `player_depotitems`
   ADD UNIQUE KEY `player_id_2` (`player_id`,`sid`);
 
 --
--- Índices para tabela `player_former_names`
+-- Índices de tabela `player_former_names`
 --
 ALTER TABLE `player_former_names`
   ADD PRIMARY KEY (`id`),
   ADD KEY `player_id` (`player_id`);
 
 --
--- Índices para tabela `player_hirelings`
+-- Índices de tabela `player_hirelings`
 --
 ALTER TABLE `player_hirelings`
   ADD PRIMARY KEY (`id`),
   ADD KEY `player_id` (`player_id`);
 
 --
--- Índices para tabela `player_inboxitems`
+-- Índices de tabela `player_inboxitems`
 --
 ALTER TABLE `player_inboxitems`
   ADD UNIQUE KEY `player_id_2` (`player_id`,`sid`);
 
 --
--- Índices para tabela `player_items`
+-- Índices de tabela `player_items`
 --
 ALTER TABLE `player_items`
   ADD KEY `player_id` (`player_id`),
   ADD KEY `sid` (`sid`);
 
 --
--- Índices para tabela `player_kills`
+-- Índices de tabela `player_kills`
 --
 ALTER TABLE `player_kills`
+  ADD PRIMARY KEY (`id`),
   ADD KEY `player_kills_ibfk_1` (`player_id`),
   ADD KEY `player_kills_ibfk_2` (`target`);
 
 --
--- Índices para tabela `player_marketing`
+-- Índices de tabela `player_marketing`
 --
 ALTER TABLE `player_marketing`
   ADD KEY `player_id` (`player_id`);
 
 --
--- Índices para tabela `player_marketing_lua`
+-- Índices de tabela `player_marketing_lua`
 --
 ALTER TABLE `player_marketing_lua`
   ADD PRIMARY KEY (`player_name`,`uid`);
 
 --
--- Índices para tabela `player_marketing_reward_lua`
+-- Índices de tabela `player_marketing_reward_lua`
 --
 ALTER TABLE `player_marketing_reward_lua`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices para tabela `player_namelocks`
+-- Índices de tabela `player_namelocks`
 --
 ALTER TABLE `player_namelocks`
   ADD PRIMARY KEY (`player_id`),
   ADD KEY `namelocked_by` (`namelocked_by`);
 
 --
--- Índices para tabela `player_preydata`
+-- Índices de tabela `player_preydata`
 --
 ALTER TABLE `player_preydata`
   ADD PRIMARY KEY (`player_id`);
 
 --
--- Índices para tabela `player_rewards`
+-- Índices de tabela `player_rewards`
 --
 ALTER TABLE `player_rewards`
   ADD UNIQUE KEY `player_id_2` (`player_id`,`sid`);
 
 --
--- Índices para tabela `player_spells`
+-- Índices de tabela `player_spells`
 --
 ALTER TABLE `player_spells`
   ADD KEY `player_id` (`player_id`);
 
 --
--- Índices para tabela `player_storage`
+-- Índices de tabela `player_storage`
 --
 ALTER TABLE `player_storage`
   ADD PRIMARY KEY (`player_id`,`key`);
 
 --
--- Índices para tabela `prey_slots`
+-- Índices de tabela `prey_slots`
 --
 ALTER TABLE `prey_slots`
   ADD KEY `player_id` (`player_id`);
 
 --
--- Índices para tabela `sellchar`
+-- Índices de tabela `sellchar`
 --
 ALTER TABLE `sellchar`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices para tabela `sell_players`
+-- Índices de tabela `sell_players`
 --
 ALTER TABLE `sell_players`
   ADD PRIMARY KEY (`player_id`);
 
 --
--- Índices para tabela `sell_players_history`
+-- Índices de tabela `sell_players_history`
 --
 ALTER TABLE `sell_players_history`
   ADD PRIMARY KEY (`player_id`,`buytime`) USING BTREE;
 
 --
--- Índices para tabela `server_config`
+-- Índices de tabela `server_config`
 --
 ALTER TABLE `server_config`
   ADD PRIMARY KEY (`config`);
 
 --
--- Índices para tabela `snowballwar`
+-- Índices de tabela `snowballwar`
 --
 ALTER TABLE `snowballwar`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id` (`id`);
 
 --
--- Índices para tabela `store_history`
+-- Índices de tabela `store_history`
 --
 ALTER TABLE `store_history`
   ADD KEY `store_history_ibfk_1` (`accountid`);
 
 --
--- Índices para tabela `store_history_old`
+-- Índices de tabela `store_history_old`
 --
 ALTER TABLE `store_history_old`
   ADD KEY `account_id` (`account_id`);
 
 --
--- Índices para tabela `tickets`
+-- Índices de tabela `tickets`
 --
 ALTER TABLE `tickets`
   ADD PRIMARY KEY (`ticket_id`),
   ADD KEY `tickets_ibfk_1` (`ticket_author_acc_id`);
 
 --
--- Índices para tabela `tickets_reply`
+-- Índices de tabela `tickets_reply`
 --
 ALTER TABLE `tickets_reply`
   ADD PRIMARY KEY (`reply_id`),
   ADD KEY `tickets_reply_ibfk_1` (`ticket_id`);
 
 --
--- Índices para tabela `tile_store`
+-- Índices de tabela `tile_store`
 --
 ALTER TABLE `tile_store`
   ADD KEY `house_id` (`house_id`);
 
 --
--- Índices para tabela `z_forum`
+-- Índices de tabela `z_forum`
 --
 ALTER TABLE `z_forum`
   ADD PRIMARY KEY (`id`),
   ADD KEY `section` (`section`);
 
 --
--- Índices para tabela `z_ots_comunication`
+-- Índices de tabela `z_ots_comunication`
 --
 ALTER TABLE `z_ots_comunication`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices para tabela `z_ots_guildcomunication`
+-- Índices de tabela `z_ots_guildcomunication`
 --
 ALTER TABLE `z_ots_guildcomunication`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices para tabela `z_shop_category`
+-- Índices de tabela `z_shop_category`
 --
 ALTER TABLE `z_shop_category`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices para tabela `z_shop_donates`
+-- Índices de tabela `z_shop_donates`
 --
 ALTER TABLE `z_shop_donates`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices para tabela `z_shop_donate_confirm`
+-- Índices de tabela `z_shop_donate_confirm`
 --
 ALTER TABLE `z_shop_donate_confirm`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices para tabela `z_shop_offer`
+-- Índices de tabela `z_shop_offer`
 --
 ALTER TABLE `z_shop_offer`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices para tabela `z_shop_payment`
+-- Índices de tabela `z_shop_payment`
 --
 ALTER TABLE `z_shop_payment`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT de tabelas despejadas
+-- AUTO_INCREMENT para tabelas despejadas
 --
 
 --
@@ -3674,6 +3687,12 @@ ALTER TABLE `player_hirelings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de tabela `player_kills`
+--
+ALTER TABLE `player_kills`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de tabela `player_marketing_reward_lua`
 --
 ALTER TABLE `player_marketing_reward_lua`
@@ -3752,24 +3771,24 @@ ALTER TABLE `z_shop_payment`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- Restrições para despejos de tabelas
+-- Restrições para tabelas despejadas
 --
 
 --
--- Limitadores para a tabela `accounts_storage`
+-- Restrições para tabelas `accounts_storage`
 --
 ALTER TABLE `accounts_storage`
   ADD CONSTRAINT `accounts_storage_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `account_bans`
+-- Restrições para tabelas `account_bans`
 --
 ALTER TABLE `account_bans`
   ADD CONSTRAINT `account_bans_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `account_bans_ibfk_2` FOREIGN KEY (`banned_by`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limitadores para a tabela `account_ban_history`
+-- Restrições para tabelas `account_ban_history`
 --
 ALTER TABLE `account_ban_history`
   ADD CONSTRAINT `account_ban_history_ibfk_2` FOREIGN KEY (`banned_by`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -3780,58 +3799,58 @@ ALTER TABLE `account_ban_history`
   ADD CONSTRAINT `account_ban_history_ibfk_7` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limitadores para a tabela `account_character_sale`
+-- Restrições para tabelas `account_character_sale`
 --
 ALTER TABLE `account_character_sale`
   ADD CONSTRAINT `account_character_sale_ibfk_1` FOREIGN KEY (`id_player`) REFERENCES `players` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `account_character_sale_ibfk_2` FOREIGN KEY (`id_account`) REFERENCES `accounts` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `account_viplist`
+-- Restrições para tabelas `account_viplist`
 --
 ALTER TABLE `account_viplist`
   ADD CONSTRAINT `account_viplist_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `account_viplist_ibfk_2` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `auto_loot_list`
+-- Restrições para tabelas `auto_loot_list`
 --
 ALTER TABLE `auto_loot_list`
   ADD CONSTRAINT `auto_loot_list_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limitadores para a tabela `blessings_history`
+-- Restrições para tabelas `blessings_history`
 --
 ALTER TABLE `blessings_history`
   ADD CONSTRAINT `blessings_history_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `free_pass`
+-- Restrições para tabelas `free_pass`
 --
 ALTER TABLE `free_pass`
   ADD CONSTRAINT `free_pass_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `guilds`
+-- Restrições para tabelas `guilds`
 --
 ALTER TABLE `guilds`
   ADD CONSTRAINT `guilds_ibfk_1` FOREIGN KEY (`ownerid`) REFERENCES `players` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `guildwar_kills`
+-- Restrições para tabelas `guildwar_kills`
 --
 ALTER TABLE `guildwar_kills`
   ADD CONSTRAINT `guildwar_kills_ibfk_1` FOREIGN KEY (`warid`) REFERENCES `guild_wars` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `guild_invites`
+-- Restrições para tabelas `guild_invites`
 --
 ALTER TABLE `guild_invites`
   ADD CONSTRAINT `guild_invites_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `guild_invites_ibfk_2` FOREIGN KEY (`guild_id`) REFERENCES `guilds` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `guild_membership`
+-- Restrições para tabelas `guild_membership`
 --
 ALTER TABLE `guild_membership`
   ADD CONSTRAINT `guild_membership_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -3839,177 +3858,177 @@ ALTER TABLE `guild_membership`
   ADD CONSTRAINT `guild_membership_ibfk_3` FOREIGN KEY (`rank_id`) REFERENCES `guild_ranks` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limitadores para a tabela `guild_ranks`
+-- Restrições para tabelas `guild_ranks`
 --
 ALTER TABLE `guild_ranks`
   ADD CONSTRAINT `guild_ranks_ibfk_1` FOREIGN KEY (`guild_id`) REFERENCES `guilds` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `house_lists`
+-- Restrições para tabelas `house_lists`
 --
 ALTER TABLE `house_lists`
   ADD CONSTRAINT `house_lists_ibfk_1` FOREIGN KEY (`house_id`) REFERENCES `houses` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `ip_bans`
+-- Restrições para tabelas `ip_bans`
 --
 ALTER TABLE `ip_bans`
   ADD CONSTRAINT `ip_bans_ibfk_1` FOREIGN KEY (`banned_by`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limitadores para a tabela `live_casts`
+-- Restrições para tabelas `live_casts`
 --
 ALTER TABLE `live_casts`
   ADD CONSTRAINT `live_casts_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `market_history`
+-- Restrições para tabelas `market_history`
 --
 ALTER TABLE `market_history`
   ADD CONSTRAINT `market_history_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `market_offers`
+-- Restrições para tabelas `market_offers`
 --
 ALTER TABLE `market_offers`
   ADD CONSTRAINT `market_offers_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `players`
+-- Restrições para tabelas `players`
 --
 ALTER TABLE `players`
   ADD CONSTRAINT `players_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `player_binary_items`
+-- Restrições para tabelas `player_binary_items`
 --
 ALTER TABLE `player_binary_items`
   ADD CONSTRAINT `player_binary_items_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `player_deaths`
+-- Restrições para tabelas `player_deaths`
 --
 ALTER TABLE `player_deaths`
   ADD CONSTRAINT `player_deaths_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `player_depotitems`
+-- Restrições para tabelas `player_depotitems`
 --
 ALTER TABLE `player_depotitems`
   ADD CONSTRAINT `player_depotitems_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `player_hirelings`
+-- Restrições para tabelas `player_hirelings`
 --
 ALTER TABLE `player_hirelings`
   ADD CONSTRAINT `player_hirelings_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `player_inboxitems`
+-- Restrições para tabelas `player_inboxitems`
 --
 ALTER TABLE `player_inboxitems`
   ADD CONSTRAINT `player_inboxitems_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `player_items`
+-- Restrições para tabelas `player_items`
 --
 ALTER TABLE `player_items`
   ADD CONSTRAINT `player_items_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `player_kills`
+-- Restrições para tabelas `player_kills`
 --
 ALTER TABLE `player_kills`
   ADD CONSTRAINT `player_kills_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `player_kills_ibfk_2` FOREIGN KEY (`target`) REFERENCES `players` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `player_marketing`
+-- Restrições para tabelas `player_marketing`
 --
 ALTER TABLE `player_marketing`
   ADD CONSTRAINT `player_marketing_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `player_namelocks`
+-- Restrições para tabelas `player_namelocks`
 --
 ALTER TABLE `player_namelocks`
   ADD CONSTRAINT `player_namelocks_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `player_namelocks_ibfk_2` FOREIGN KEY (`namelocked_by`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limitadores para a tabela `player_preydata`
+-- Restrições para tabelas `player_preydata`
 --
 ALTER TABLE `player_preydata`
   ADD CONSTRAINT `player_preydata_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limitadores para a tabela `player_rewards`
+-- Restrições para tabelas `player_rewards`
 --
 ALTER TABLE `player_rewards`
   ADD CONSTRAINT `player_rewards_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `player_spells`
+-- Restrições para tabelas `player_spells`
 --
 ALTER TABLE `player_spells`
   ADD CONSTRAINT `player_spells_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `player_storage`
+-- Restrições para tabelas `player_storage`
 --
 ALTER TABLE `player_storage`
   ADD CONSTRAINT `player_storage_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `prey_slots`
+-- Restrições para tabelas `prey_slots`
 --
 ALTER TABLE `prey_slots`
   ADD CONSTRAINT `prey_slots_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `sellchar`
+-- Restrições para tabelas `sellchar`
 --
 ALTER TABLE `sellchar`
   ADD CONSTRAINT `sellchar_ibfk_1` FOREIGN KEY (`id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `sell_players`
+-- Restrições para tabelas `sell_players`
 --
 ALTER TABLE `sell_players`
   ADD CONSTRAINT `sell_players_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `sell_players_history`
+-- Restrições para tabelas `sell_players_history`
 --
 ALTER TABLE `sell_players_history`
   ADD CONSTRAINT `sell_players_history_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `store_history`
+-- Restrições para tabelas `store_history`
 --
 ALTER TABLE `store_history`
   ADD CONSTRAINT `store_history_ibfk_1` FOREIGN KEY (`accountid`) REFERENCES `accounts` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `store_history_old`
+-- Restrições para tabelas `store_history_old`
 --
 ALTER TABLE `store_history_old`
   ADD CONSTRAINT `store_history_old_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE;
 
 --
--- Limitadores para a tabela `tickets`
+-- Restrições para tabelas `tickets`
 --
 ALTER TABLE `tickets`
   ADD CONSTRAINT `tickets_ibfk_1` FOREIGN KEY (`ticket_author_acc_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limitadores para a tabela `tickets_reply`
+-- Restrições para tabelas `tickets_reply`
 --
 ALTER TABLE `tickets_reply`
   ADD CONSTRAINT `tickets_reply_ibfk_1` FOREIGN KEY (`ticket_id`) REFERENCES `tickets` (`ticket_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limitadores para a tabela `tile_store`
+-- Restrições para tabelas `tile_store`
 --
 ALTER TABLE `tile_store`
   ADD CONSTRAINT `tile_store_ibfk_1` FOREIGN KEY (`house_id`) REFERENCES `houses` (`id`) ON DELETE CASCADE;
