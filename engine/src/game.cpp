@@ -8810,3 +8810,30 @@ void Game::saveServeMessage()
 		fclose(file);
 	}	
 }
+
+void Game::playerRequestInventoryImbuements(uint32_t playerId, bool isTrackerOpen) {
+	Player* player = getPlayerByID(playerId);
+	if (!player || player->isRemoved()) {
+		return;
+	}
+
+	player->imbuementTrackerWindowOpen = isTrackerOpen;
+	if (!player->imbuementTrackerWindowOpen) {
+		return;
+	}
+
+	std::map<slots_t, Item*> itemsWithImbueSlotMap;
+	for (uint8_t inventorySlot = CONST_SLOT_FIRST; inventorySlot <= CONST_SLOT_LAST; ++inventorySlot) {
+		auto item = player->getInventoryItem(static_cast<slots_t>(inventorySlot));
+		if (!item) {
+			continue;
+		}
+
+		uint8_t imbuementSlot = item->getImbuingSlots();
+		if (imbuementSlot > 0) {
+			itemsWithImbueSlotMap[static_cast<slots_t>(inventorySlot)] = item;
+		}
+	}
+
+	player->sendInventoryImbuements(itemsWithImbueSlotMap);
+}
