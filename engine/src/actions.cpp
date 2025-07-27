@@ -378,9 +378,7 @@ ReturnValue Actions::internalUseItem(Player* player, const Position& pos, uint8_
 			openContainer = container;
 		}
 		
-		if (item->getID() == ITEM_SUPPLY_STASH) {
-			return RETURNVALUE_THISISIMPOSSIBLE;	
-		}
+
 
 		//reward chest
 		if (container->getRewardChest()) {

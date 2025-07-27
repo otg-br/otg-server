@@ -2463,6 +2463,7 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Container", "getItemCountById", LuaScriptInterface::luaContainerGetItemCountById);
 
 	registerMethod("Container", "getItem", LuaScriptInterface::luaContainerGetItem);
+	registerMethod("Container", "getItems", LuaScriptInterface::luaContainerGetItems);
 	registerMethod("Container", "hasItem", LuaScriptInterface::luaContainerHasItem);
 	registerMethod("Container", "addItem", LuaScriptInterface::luaContainerAddItem);
 	registerMethod("Container", "addItemEx", LuaScriptInterface::luaContainerAddItemEx);
@@ -2829,6 +2830,12 @@ void LuaScriptInterface::registerFunctions()
 
 	registerMethod("Player", "getPet", LuaScriptInterface::luaPlayerGetPet);
 	registerMethod("Player", "setPet", LuaScriptInterface::luaPlayerSetPet);
+
+	registerMethod("Player", "getStashItemCount", LuaScriptInterface::luaPlayerGetStashItemCount);
+	registerMethod("Player", "getStashCount", LuaScriptInterface::luaPlayerGetStashCounter);
+	registerMethod("Player", "openStash", LuaScriptInterface::luaPlayerOpenStash);
+	registerMethod("Player", "addItemStash", LuaScriptInterface::luaPlayerAddItemStash);
+	registerMethod("Player", "removeStashItem", LuaScriptInterface::luaPlayerRemoveStashItem);
 
 	// Monster
 	registerClass("Monster", "Creature", LuaScriptInterface::luaMonsterCreate);
@@ -7809,6 +7816,30 @@ int LuaScriptInterface::luaContainerGetItem(lua_State* L)
 	return 1;
 }
 
+int LuaScriptInterface::luaContainerGetItems(lua_State* L)
+{
+	// container:getItems([recursive = false])
+	const Container* container = getUserdata<Container>(L, 1);
+	if (!container) {
+		lua_pushnil(L);
+		return 1;
+	}
+
+	bool recursive = getBoolean(L, 2, false);
+	std::vector<Item*> items = container->getItems(recursive);
+
+	lua_createtable(L, static_cast<int>(items.size()), 0);
+
+	int index = 0;
+	for (Item* item : items) {
+		index++;
+		pushUserdata(L, item);
+		setItemMetatable(L, -1, item);
+		lua_rawseti(L, -2, index);
+	}
+	return 1;
+}
+
 int LuaScriptInterface::luaContainerHasItem(lua_State* L)
 {
 	// container:hasItem(item)
@@ -12275,6 +12306,100 @@ int LuaScriptInterface::luaPlayerIsOffline(lua_State* L)
 		pushBoolean(L, true);
 	}
 
+	return 1;
+}
+
+int LuaScriptInterface::luaPlayerGetStashItemCount(lua_State* L) {
+	// player:getStashItemCount(itemId)
+	Player* player = getUserdata<Player>(L, 1);
+	if (!player) {
+		lua_pushnil(L);
+		return 1;
+	}
+	uint16_t itemId;
+	if (isNumber(L, 2)) {
+		itemId = getNumber<uint16_t>(L, 2);
+	} else {
+		itemId = Item::items.getItemIdByName(getString(L, 2));
+		if (itemId == 0) {
+			lua_pushnil(L);
+			return 1;
+		}
+	}
+	const ItemType &itemType = Item::items[itemId];
+	if (itemType.id == 0) {
+		lua_pushnil(L);
+		return 1;
+	}
+	lua_pushnumber(L, player->getStashItemCount(itemType.id));
+	return 1;
+}
+
+int LuaScriptInterface::luaPlayerGetStashCounter(lua_State* L) {
+	// player:getStashCount()
+	Player* player = getUserdata<Player>(L, 1);
+	if (player) {
+		uint16_t sizeStash = getStashSize(player->getStashItems());
+		lua_pushnumber(L, sizeStash);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPlayerOpenStash(lua_State* L) {
+	// player:openStash(isNpc)
+	Player* player = getUserdata<Player>(L, 1);
+	bool isNpc = getBoolean(L, 2, false);
+	if (player) {
+		player->sendOpenStash(isNpc);
+		pushBoolean(L, true);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPlayerAddItemStash(lua_State* L) {
+	// player:addItemStash(itemId, count = 1)
+	Player* player = getUserdata<Player>(L, 1);
+	if (!player) {
+		lua_pushnil(L);
+		return 1;
+	}
+
+	auto itemId = getNumber<uint16_t>(L, 2);
+	auto count = getNumber<uint32_t>(L, 3, 1); // Default count to 1 if not provided
+	// Add itemId and count to the player's stash
+	player->addItemOnStash(itemId, count);
+	pushBoolean(L, true);
+	return 1;
+}
+
+int LuaScriptInterface::luaPlayerRemoveStashItem(lua_State* L) {
+	// player:removeStashItem(itemId, count)
+	Player* player = getUserdata<Player>(L, 1);
+	if (!player) {
+		lua_pushnil(L);
+		return 1;
+	}
+	uint16_t itemId;
+	if (isNumber(L, 2)) {
+		itemId = getNumber<uint16_t>(L, 2);
+	} else {
+		itemId = Item::items.getItemIdByName(getString(L, 2));
+		if (itemId == 0) {
+			lua_pushnil(L);
+			return 1;
+		}
+	}
+	const ItemType& itemType = Item::items[itemId];
+	if (itemType.id == 0) {
+		lua_pushnil(L);
+		return 1;
+	}
+	uint32_t count = getNumber<uint32_t>(L, 3);
+	pushBoolean(L, player->withdrawItem(itemType.id, count));
 	return 1;
 }
 

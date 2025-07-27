@@ -2209,6 +2209,20 @@ CREATE TABLE `sell_players_history` (
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `player_stash`
+--
+
+CREATE TABLE `player_stash` (
+  `player_id` int(11) NOT NULL,
+  `item_id` int(11) NOT NULL,
+  `item_count` int(11) NOT NULL DEFAULT 1,
+  `client_id` int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`player_id`, `item_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `server_config`
 --
 

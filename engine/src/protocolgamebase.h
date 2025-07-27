@@ -91,6 +91,8 @@ class ProtocolGameBase : public Protocol {
 		//inventory
 		void sendInventoryItem(slots_t slot, const Item* item);
 		void sendInventoryClientIds();
+		void sendOpenStash();
+		void parseStashWithdraw(NetworkMessage &msg);
 
 		void sendSkills();
 		void sendItemsPrice();

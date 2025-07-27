@@ -564,7 +564,7 @@ enum item_t : uint16_t {
 	ITEM_INBOX = 14404,
 	ITEM_MARKET = 14405,
 	ITEM_STORE_INBOX = 26052,
-	ITEM_SUPPLY_STASH = 33248,
+	ITEM_SUPPLY_STASH = 33248, //read-only
 
 	ITEM_MALE_CORPSE = 3058,
 	ITEM_FEMALE_CORPSE = 3065,
@@ -799,6 +799,13 @@ enum GameFeature {
 	GamePacketCompression = 111,
 
 	LastGameFeature = 120
+};
+
+enum Supply_Stash_Actions_t : uint8_t {
+	SUPPLY_STASH_ACTION_STOW_ITEM = 0,
+	SUPPLY_STASH_ACTION_STOW_CONTAINER = 1,
+	SUPPLY_STASH_ACTION_STOW_STACK = 2,
+	SUPPLY_STASH_ACTION_WITHDRAW = 3
 };
 
 static constexpr int32_t CHANNEL_GUILD = 0x00;

@@ -8,7 +8,7 @@ local blockTeleportTrashing = true
 local STONE_SKIN_AMULET       = 2197   -- ID for Stone Skin Amulet
 local ENERGY_RING             = 2167   -- ID for Energy Ring
 local GOLD_POUCH              = 26377  -- ID for Gold Pouch
-local ITEM_SUPPLY_STASH       = 26386
+local ITEM_SUPPLY_STASH       = 33248
 local ITEM_STORE_INBOX        = 26052  -- ID for Store Inbox
 local CONTAINER_POSITION      = 65535  -- Macro for container position
 local CONST_SLOT_STORE_INBOX  = 11     -- Slot index for the Store Inbox
@@ -17,6 +17,27 @@ local CONST_SLOT_LEFT         = 5      -- Slot index for left hand
 local CONST_SLOT_RIGHT        = 6      -- Slot index for right hand
 local ITEM_REWARD_CONTAINER   = 26379  -- Adjust according to your server
 local ITEM_REWARD_CHEST       = 26382  -- Adjust according to your server
+
+-- Depot IDs
+local ITEM_DEPOT_NULL     = 2594
+local ITEM_DEPOT_I        = 2589
+local ITEM_DEPOT_II       = 2590
+local ITEM_DEPOT_III      = 2591
+local ITEM_DEPOT_IV       = 2592
+local ITEM_DEPOT_V        = 2593
+local ITEM_DEPOT_VI       = 2595
+local ITEM_DEPOT_VII      = 2596
+local ITEM_DEPOT_VIII     = 2597
+local ITEM_DEPOT_IX       = 2598
+local ITEM_DEPOT_X        = 2599
+local ITEM_DEPOT_XI       = 2600
+local ITEM_DEPOT_XII      = 2601
+local ITEM_DEPOT_XIII     = 2602
+local ITEM_DEPOT_XIV      = 2603
+local ITEM_DEPOT_XV       = 2604
+local ITEM_DEPOT_XVI      = 2605
+local ITEM_DEPOT_XVII     = 2606
+local ITEM_DEPOT_XVIII    = 2607
 
 local exercise_ids            = {32384, 32385, 32386, 32387, 32388, 32389}
 local dummies                 = {32147, 32148, 32143, 32144, 32145, 32146}
@@ -213,8 +234,19 @@ event.onMoveItem = function(self, item, count, fromPosition, toPosition, fromCyl
         -- Check if the target container is inside the Store Inbox
         local parentContainer = getContainerParent(containerTo)
         if parentContainer and parentContainer:getId() == ITEM_STORE_INBOX then
-            self:sendCancelMessage(RETURNVALUE_CONTAINERNOTENOUGHROOM)
-            return false
+            -- Allow depots to move items to stash
+            local ignoreArray = {ITEM_DEPOT_NULL, ITEM_DEPOT_I, ITEM_DEPOT_II, ITEM_DEPOT_III, ITEM_DEPOT_IV, ITEM_DEPOT_V, ITEM_DEPOT_VI, ITEM_DEPOT_VII, ITEM_DEPOT_VIII, ITEM_DEPOT_IX, ITEM_DEPOT_X, ITEM_DEPOT_XI, ITEM_DEPOT_XII, ITEM_DEPOT_XIII, ITEM_DEPOT_XIV, ITEM_DEPOT_XV, ITEM_DEPOT_XVI, ITEM_DEPOT_XVII, ITEM_DEPOT_XVIII}
+            
+            -- Check if the source container is a depot
+            local containerIdFrom = fromPosition.y - 64
+            local containerFrom = self:getContainerById(containerIdFrom)
+            local isFromDepot = containerFrom and isInArray(ignoreArray, containerFrom:getId())
+            
+            -- If not from depot, block the move
+            if not isFromDepot then
+                self:sendCancelMessage(RETURNVALUE_CONTAINERNOTENOUGHROOM)
+                return false
+            end
         end
 
         -- Prevent moving items into corpses

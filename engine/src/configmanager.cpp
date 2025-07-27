@@ -206,6 +206,9 @@ bool ConfigManager::load()
 	boolean[BLESS_RUNE] = getGlobalBoolean(L, "blessRune", true);
 	boolean[ANTI_MULTI_CLIENT_ENABLED] = getGlobalBoolean(L, "antiMultiClientEnabled", true);
 	boolean[ALLOW_MOUNT_IN_PZ] = getGlobalBoolean(L, "allowMountInPz", false);
+	boolean[STASH_MOVING] = getGlobalBoolean(L, "stashMoving", false);
+
+	integer[STASH_ITEMS] = getGlobalNumber(L, "stashItems", 2000);
 
 	string[DEFAULT_PRIORITY] = getGlobalString(L, "defaultPriority", "high");
 	string[SERVER_NAME] = getGlobalString(L, "serverName", "");

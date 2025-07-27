@@ -24,6 +24,7 @@
 
 #include "cylinder.h"
 #include "item.h"
+#include "tile.h"
 
 class Container;
 class DepotChest;
@@ -110,6 +111,8 @@ class Container : public Item, public Cylinder
 			return itemlist;
 		}
 
+		ItemVector getItems(bool recursive = false) const;
+
 		ItemDeque::const_reverse_iterator getReversedItems() const {
 			return itemlist.rbegin();
 		}
@@ -123,8 +126,11 @@ class Container : public Item, public Cylinder
 		bool isHoldingItem(const Item* item) const;
 
 		uint32_t getItemHoldingCount() const;
+		uint16_t getFreeSlots();
 		uint32_t getContainerHoldingCount() const;
 		uint16_t getFreeSlots() const;
+		StashContainerList getStowableItems() const;
+		bool isItemStowable(const Item* item) const;
 		uint32_t getWeight() const final;
 
 		bool isUnlocked() const {
@@ -161,6 +167,8 @@ class Container : public Item, public Cylinder
 		uint32_t getItemTypeCount(uint16_t itemId, int32_t subType = -1) const final;
 		std::map<uint32_t, uint32_t>& getAllItemTypeCount(std::map<uint32_t, uint32_t>& countMap) const final;
 		Thing* getThing(size_t index) const final;
+
+
 
 		void postAddNotification(Thing* thing, const Cylinder* oldParent, int32_t index, cylinderlink_t link = LINK_OWNER) override;
 		void postRemoveNotification(Thing* thing, const Cylinder* newParent, int32_t index, cylinderlink_t link = LINK_OWNER) override;

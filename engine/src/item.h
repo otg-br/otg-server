@@ -30,6 +30,8 @@
 #include <boost/variant.hpp>
 #include <boost/lexical_cast.hpp>
 #include <deque>
+#include <unordered_map>
+#include <forward_list>
 
 class Creature;
 class Player;
@@ -471,6 +473,15 @@ class ItemAttributes
 			return getAttr(ITEM_ATTRIBUTE_CUSTOM).value.custom;
 		}
 
+		const CustomAttributeMap* getCustomAttributeMap() const {
+			if (!hasAttribute(ITEM_ATTRIBUTE_CUSTOM)) {
+				return nullptr;
+			}
+
+			const Attribute* attr = getExistingAttr(ITEM_ATTRIBUTE_CUSTOM);
+			return attr ? attr->value.custom : nullptr;
+		}
+
 		template<typename R>
 		void setCustomAttribute(int64_t key, R value) {
 			std::string tmp = boost::lexical_cast<std::string>(key);
@@ -503,20 +514,8 @@ class ItemAttributes
 			getAttr(ITEM_ATTRIBUTE_CUSTOM).value.custom->insert(std::make_pair(std::move(key), std::move(value)));
 		}
 
-		const CustomAttribute* getCustomAttribute(int64_t key) {
-			std::string tmp = boost::lexical_cast<std::string>(key);
-			return getCustomAttribute(tmp);
-		}
-
-		const CustomAttribute* getCustomAttribute(const std::string& key) {
-			if (const CustomAttributeMap* customAttrMap = getCustomAttributeMap()) {
-				auto it = customAttrMap->find(asLowerCaseString(key));
-				if (it != customAttrMap->end()) {
-					return &(it->second);
-				}
-			}
-			return nullptr;
-		}
+		const CustomAttribute* getCustomAttribute(int64_t key) const;
+		const CustomAttribute* getCustomAttribute(const std::string& key) const;
 
 		bool removeCustomAttribute(int64_t key) {
 			std::string tmp = boost::lexical_cast<std::string>(key);
@@ -673,11 +672,11 @@ class Item : virtual public Thing
 			getAttributes()->setCustomAttribute(key, value);
 		}
 
-		const ItemAttributes::CustomAttribute* getCustomAttribute(int64_t key) {
+		const ItemAttributes::CustomAttribute* getCustomAttribute(int64_t key) const {
 			return getAttributes()->getCustomAttribute(key);
 		}
 
-		const ItemAttributes::CustomAttribute* getCustomAttribute(const std::string& key) {
+		const ItemAttributes::CustomAttribute* getCustomAttribute(const std::string& key) const {
 			return getAttributes()->getCustomAttribute(key);
 		}
 
@@ -1224,6 +1223,10 @@ class Item : virtual public Thing
 			return attributes;
 		}
 
+		const std::unique_ptr<ItemAttributes>& getAttributes() const {
+			return attributes;
+		}
+
 		void incrementReferenceCounter() {
 			++referenceCounter;
 		}
@@ -1247,7 +1250,7 @@ class Item : virtual public Thing
 			return !parent || parent->isRemoved();
 		}
 
-		uint32_t getImbuement(uint8_t slot);
+		uint32_t getImbuement(uint8_t slot) const;
 		void setImbuement(uint8_t slot, int64_t info);
 
 	protected:
@@ -1269,5 +1272,6 @@ class Item : virtual public Thing
 
 using ItemList = std::list<Item*>;
 using ItemDeque = std::deque<Item*>;
+using StashContainerList = std::vector<std::pair<Item*, uint32_t>>;
 
 #endif

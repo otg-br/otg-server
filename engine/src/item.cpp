@@ -94,7 +94,7 @@ Item* Item::CreateItem(const uint16_t type, uint16_t count /*= 0*/)
 	return newItem;
 }
 
-uint32_t Item::getImbuement(uint8_t slot) {
+uint32_t Item::getImbuement(uint8_t slot) const {
 	int64_t slotid = IMBUEMENT_SLOT + slot;
 	const ItemAttributes::CustomAttribute* attr = getCustomAttribute(slotid);
 	if (attr) {
@@ -2550,4 +2550,19 @@ const bool& ItemAttributes::CustomAttribute::get<bool>() {
 void Item::stopDecaying()
 {
 	g_game.stopDecay(this);
+}
+
+const ItemAttributes::CustomAttribute* ItemAttributes::getCustomAttribute(int64_t key) const {
+    std::string tmp = boost::lexical_cast<std::string>(key);
+    return getCustomAttribute(tmp);
+}
+
+const ItemAttributes::CustomAttribute* ItemAttributes::getCustomAttribute(const std::string& key) const {
+    if (const CustomAttributeMap* customAttrMap = getCustomAttributeMap()) {
+        auto it = customAttrMap->find(asLowerCaseString(key));
+        if (it != customAttrMap->end()) {
+            return &(it->second);
+        }
+    }
+    return nullptr;
 }

@@ -30,6 +30,11 @@ blackSkullDuration = 3
 orangeSkullDuration = 3
 blessRune = false
 
+-- stashMoving = true, stow an container inside your stash
+-- the non-stackable items will be moved to the selected depot chest(I - XVIII).
+stashMoving = false
+depotChest = 4
+
 -- PvP Protection Level
 -- NOTE: Players with level 50 or below are protected from unjustified PvP
 pvpProtectionLevel = 50

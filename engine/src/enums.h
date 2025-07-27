@@ -848,6 +848,8 @@ using MarketOfferList = std::list<MarketOffer>;
 using HistoryMarketOfferList = std::list<HistoryMarketOffer>;
 using ShopInfoList = std::list<ShopInfo>;
 
+using StashItemList = std::map<uint16_t, uint32_t>;  // itemId, count
+
 enum MonstersEvent_t : uint8_t {
 	MONSTERS_EVENT_NONE = 0,
 	MONSTERS_EVENT_THINK = 1,

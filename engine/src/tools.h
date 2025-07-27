@@ -31,6 +31,7 @@ void printXMLError(const std::string& where, const std::string& fileName, const 
 
 std::string transformToSHA1(const std::string& input);
 std::string generateToken(const std::string& secret, uint32_t ticks);
+uint16_t getStashSize(const StashItemList& itemList);
 
 void replaceString(std::string& str, const std::string& sought, const std::string& replacement);
 void trim_right(std::string& source, char t);

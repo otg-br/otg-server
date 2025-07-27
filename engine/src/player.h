@@ -571,6 +571,42 @@ class Player final : public Creature, public Cylinder
 
 		bool removeItemOfType(uint16_t itemId, uint32_t amount, int32_t subType, bool ignoreEquipped = false) const;
 
+		void addItemOnStash(uint16_t itemId, uint32_t amount) {
+			auto it = stashItems.find(itemId);
+			if (it != stashItems.end()) {
+				it->second += amount;
+			} else {
+				stashItems[itemId] = amount;
+			}
+		}
+	
+		uint32_t getStashItemCount(uint16_t itemId) const {
+			const auto it = stashItems.find(itemId);
+			if (it != stashItems.end()) {
+				return it->second;
+			}
+			return 0;
+		}
+	
+		bool withdrawItem(uint16_t itemId, uint32_t amount) {
+			const auto it = stashItems.find(itemId);
+			if (it != stashItems.end()) {
+				if (it->second > amount) {
+					stashItems[itemId] -= amount;
+				} else if (it->second == amount) {
+					stashItems.erase(itemId);
+				} else {
+					return false;
+				}
+				return true;
+			}
+			return false;
+		}
+	
+		StashItemList getStashItems() const {
+			return stashItems;
+		}
+
 		uint32_t getCapacity() const {
 			if (hasFlag(PlayerFlag_CannotPickupItem)) {
 				return 0;
@@ -733,6 +769,11 @@ class Player final : public Creature, public Cylinder
 		static bool lastHitIsPlayer(Creature* lastHitCreature);
 
 		void changeHealth(int32_t healthChange, bool sendHealthChange = true) final;
+
+		// stash functions
+		bool addItemFromStash(uint16_t itemId, uint32_t itemCount);
+		void stowItem(Item* item, uint32_t count, bool allItems);
+
 		void changeMana(int32_t manaChange) final;
 		void changeSoul(int32_t soulChange);
 
@@ -842,6 +883,8 @@ class Player final : public Creature, public Cylinder
 
 		size_t getMaxVIPEntries() const;
 		size_t getMaxDepotItems() const;
+
+		uint16_t getFreeBackpackSlots() const;
 
 		//tile
 		//send methods
@@ -1163,6 +1206,14 @@ class Player final : public Creature, public Cylinder
 				client->sendItemsPrice();
 			}
 		}
+
+		void sendOpenStash(bool isNpc = false) {
+			if (client) {
+				client->sendOpenStash();
+			}
+		}
+
+		void stashContainer(const StashContainerList &itemDict);
 		void sendTextMessage(MessageClasses mclass, const std::string& message) const {
 			if (client) {
 				client->sendTextMessage(TextMessage(mclass, message));
@@ -1817,6 +1868,7 @@ class Player final : public Creature, public Cylinder
 
 		std::vector<PreyData> preyData;
 
+
 		std::string name;
 		std::string guildNick;
 
@@ -1933,6 +1985,8 @@ class Player final : public Creature, public Cylinder
 		uint16_t staminaXpBoost = 100;
 		uint16_t lastBestiaryMonster = 0;
 		int16_t lastDepotId = -1;
+		StashItemList stashItems; // [ItemID] amount
+		uint32_t movedItems = 0;
 
 		uint8_t soul = 0;
 		uint8_t levelPercent = 0;
@@ -1962,6 +2016,8 @@ class Player final : public Creature, public Cylinder
 		bool logged = false;
 		bool inventoryAbilities[CONST_SLOT_LAST + 1] = {};
 		bool imbuementTrackerWindowOpen = false;
+		bool supplyStash = false; // Menu option 'stow, stow container ...'
+		bool moved = false;
 
 		static uint32_t playerCombatAutoID;
 		static uint32_t playerAutoID;

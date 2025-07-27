@@ -21,6 +21,7 @@
 
 #include "tools.h"
 #include "configmanager.h"
+#include "item.h"
 
 extern ConfigManager g_config;
 
@@ -229,6 +230,19 @@ std::string generateToken(const std::string& key, uint32_t ticks)
 	message.assign(message.substr(hashLen - std::min(hashLen, AUTHENTICATOR_DIGITS)));
 	message.insert(0, AUTHENTICATOR_DIGITS - std::min(hashLen, AUTHENTICATOR_DIGITS), '0');
 	return message;
+}
+
+uint16_t getStashSize(const StashItemList& itemList) {
+	uint16_t size = 0;
+	for (const auto& item : itemList) {
+		// Assume a default stack size of 1 for non-stackable items
+		uint32_t stackSize = Item::items[item.first].stackable ? 100 : 1; // Replace 100 with actual default stack size
+		// Access the item count directly (item.second)
+		uint32_t itemCount = item.second;
+		// Calculate the number of stacks needed and accumulate the total size
+		size += (itemCount + stackSize - 1) / stackSize; // Rounds up to the nearest stack
+	}
+	return size;
 }
 
 void replaceString(std::string& str, const std::string& sought, const std::string& replacement)

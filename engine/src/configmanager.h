@@ -67,6 +67,7 @@ class ConfigManager
 			BLESS_RUNE,
 			ANTI_MULTI_CLIENT_ENABLED,
 			ALLOW_MOUNT_IN_PZ,
+			STASH_MOVING,
 
 			LAST_BOOLEAN_CONFIG /* this must be the last one */
 		};
@@ -153,6 +154,7 @@ class ConfigManager
 			TIME_GMT,
 			ANTI_MULTI_CLIENT_LIMIT,
 			PVP_PROTECTION_LEVEL,
+			STASH_ITEMS,
 
 			LAST_INTEGER_CONFIG /* this must be the last one */
 		};

@@ -795,6 +795,7 @@ class LuaScriptInterface
 		static int luaContainerGetItemCountById(lua_State* L);
 
 		static int luaContainerGetItem(lua_State* L);
+		static int luaContainerGetItems(lua_State* L);
 		static int luaContainerHasItem(lua_State* L);
 		static int luaContainerAddItem(lua_State* L);
 		static int luaContainerAddItemEx(lua_State* L);
@@ -1135,6 +1136,12 @@ class LuaScriptInterface
 
 
 		static int luaPlayerGetIdleTime(lua_State* L);
+
+		static int luaPlayerGetStashItemCount(lua_State* L);
+		static int luaPlayerGetStashCounter(lua_State* L);
+		static int luaPlayerOpenStash(lua_State* L);
+		static int luaPlayerAddItemStash(lua_State* L);
+		static int luaPlayerRemoveStashItem(lua_State* L);
 
 		// Monster
 		static int luaMonsterCreate(lua_State* L);

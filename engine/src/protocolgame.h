@@ -390,6 +390,7 @@ class ProtocolGame final : public ProtocolGameBase
 		void sendCloseTrade();
 
 		void sendLockerItems(std::map<uint16_t, uint16_t> itemMap, uint16_t count);
+		void sendOpenStash();
 
 		void updateCoinBalance();
 		void sendCoinBalance();
@@ -446,6 +447,7 @@ class ProtocolGame final : public ProtocolGameBase
 		void sendFeatures();
 
 		void parseBestiaryTracker(NetworkMessage& msg);
+		void parseStashWithdraw(NetworkMessage& msg);
 
 		friend class Player;
 		

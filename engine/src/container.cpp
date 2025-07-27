@@ -124,6 +124,108 @@ void Container::addItem(Item* item)
 	item->setParent(this);
 }
 
+StashContainerList Container::getStowableItems() const {
+    StashContainerList toReturnList;
+    
+    // List of items that cannot be stowed (coin types)
+    const std::set<uint16_t> excludedItemIds = {
+        ITEM_GOLD_COIN,
+        ITEM_PLATINUM_COIN,
+        ITEM_CRYSTAL_COIN
+    };
+    
+    // Iterate through items in the container
+    for (auto item : itemlist) {
+        if (item->getContainer() != nullptr) {
+            // Recursively get stowable items from sub-containers
+            auto subContainer = item->getContainer()->getStowableItems();
+            for (auto subContItem : subContainer) {
+                Item* containerItem = subContItem.first;
+                if (isItemStowable(containerItem)) {
+                    toReturnList.push_back(std::pair<Item*, uint32_t>(containerItem, static_cast<uint32_t>(containerItem->getItemCount())));
+                }
+            }
+        } else if (isItemStowable(item)) {
+            toReturnList.push_back(std::pair<Item*, uint32_t>(item, static_cast<uint32_t>(item->getItemCount())));
+        }
+    }
+    return toReturnList;
+}
+
+bool Container::isItemStowable(const Item* item) const {
+    if (!item) {
+        return false;
+    }
+    
+    const ItemType& it = Item::items[item->getID()];
+    
+    // Exclude coins
+    const std::set<uint16_t> excludedItemIds = {
+        ITEM_GOLD_COIN,
+        ITEM_PLATINUM_COIN,
+        ITEM_CRYSTAL_COIN
+    };
+    
+    if (excludedItemIds.find(item->getID()) != excludedItemIds.end()) {
+        return false;
+    }
+    
+    // Only stackable items can be stowed
+    if (!it.stackable) {
+        return false;
+    }
+    
+    // Check if item has imbuements
+    uint8_t imbuingSlots = it.imbuingSlots;
+    for (uint8_t slot = 0; slot < imbuingSlots; slot++) {
+        if (item->getImbuement(slot) != 0) {
+            return false; // Item has imbuements, cannot be stowed
+        }
+    }
+    
+    // Check if item is a container (containers cannot be stowed)
+    if (item->getContainer()) {
+        return false;
+    }
+    
+    // Check if item is a depot
+    if (it.isDepot()) {
+        return false;
+    }
+    
+    // Check if item is a mailbox
+    if (it.isMailbox()) {
+        return false;
+    }
+    
+    // Check if item is a market
+    if (item->getID() == ITEM_MARKET) {
+        return false;
+    }
+    
+    // Check if item is a reward chest
+    if (it.isRewardChest()) {
+        return false;
+    }
+    
+    // Check if item is a locker
+    if (item->getID() == ITEM_LOCKER1) {
+        return false;
+    }
+    
+    // Check if item is a supply stash
+    if (item->getID() == ITEM_SUPPLY_STASH) {
+        return false;
+    }
+    
+    // Check if item is a store inbox
+    if (item->getID() == ITEM_STORE_INBOX) {
+        return false;
+    }
+    
+    return true;
+}
+
 Attr_ReadValue Container::readAttr(AttrTypes_t attr, PropStream& propStream)
 {
 	if (attr == ATTR_CONTAINER_ITEMS) {
@@ -176,6 +278,16 @@ void Container::updateItemWeight(int32_t diff)
 	while ((parentContainer = parentContainer->getParentContainer()) != nullptr) {
 		parentContainer->totalWeight += diff;
 	}
+}
+
+uint16_t Container::getFreeSlots() {
+	uint16_t counter = std::max<uint16_t>(0, capacity() - size());
+	for (auto item : itemlist) {
+		if (Container* container = item->getContainer()) {
+			counter += std::max<uint16_t>(0, container->getFreeSlots());
+		}
+	}
+	return counter;
 }
 
 uint32_t Container::getWeight() const
@@ -693,6 +805,21 @@ std::map<uint32_t, uint32_t>& Container::getAllItemTypeCount(std::map<uint32_t, 
 Thing* Container::getThing(size_t index) const
 {
 	return getItemByIndex(index);
+}
+
+ItemVector Container::getItems(bool recursive /*= false*/) const
+{
+	ItemVector containerItems;
+	if (recursive) {
+		for (ContainerIterator it = iterator(); it.hasNext(); it.advance()) {
+			containerItems.push_back(*it);
+		}
+	} else {
+		for (Item* item: itemlist) {
+			containerItems.push_back(item);
+		}
+	}
+	return containerItems;
 }
 
 void Container::postAddNotification(Thing* thing, const Cylinder* oldParent, int32_t index, cylinderlink_t)
