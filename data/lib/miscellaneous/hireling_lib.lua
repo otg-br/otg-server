@@ -103,7 +103,7 @@ local function checkHouseAccess(hireling)
   if house:getOwnerGuid() == hireling:getOwnerId() then return true end
   
   -- player is not invited anymore, return to lamp
-  print('>> Returning Hireling:' .. hireling:getName() .. ' to owner Inbox')
+  Game.sendConsoleMessage('>> Returning Hireling:' .. hireling:getName() .. ' to owner Inbox', CONSOLEMESSAGE_TYPE_INFO)
   local inbox = player:getSlotItem(CONST_SLOT_STORE_INBOX)
   local lamp = inbox:addItem(HIRELING_LAMP_ID, 1)
   lamp:setAttribute(ITEM_ATTRIBUTE_DESCRIPTION, "This mysterious lamp summons your very own personal hireling.\nThis item cannot be traded.\nThis magic lamp is the home of " .. hireling:getName() .. ".")
@@ -116,7 +116,7 @@ local function checkHouseAccess(hireling)
 end
 
 local function spawnNPCs()
-  print('>> Spawning Hirelings')
+  Game.sendConsoleMessage('>> Spawning Hirelings', CONSOLEMESSAGE_TYPE_STARTUP)
   local hireling
   for i=1,#HIRELINGS do
     hireling = HIRELINGS[i]

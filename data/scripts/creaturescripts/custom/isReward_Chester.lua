@@ -300,7 +300,7 @@ function startupEvent.onStartup()
         player:registerEvent("BossHealthChange")
     end
     
-    print(">> Boss Reward System loaded successfully!")
+    Game.sendConsoleMessage(">> Boss Reward System loaded successfully!", CONSOLEMESSAGE_TYPE_STARTUP)
     return true
 end
 startupEvent:register()

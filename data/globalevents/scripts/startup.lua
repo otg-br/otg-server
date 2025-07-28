@@ -52,7 +52,7 @@ end
 
 function onStartup()
     math.randomseed(os.mtime())
-    print(string.format('>> Loaded %d npcs and spawned %d monsters.\n>> Loaded %d towns with %d houses in total.', Game.getNpcCount(), Game.getMonsterCount(), #Game.getTowns(), #Game.getHouses()))
+    -- Messages moved to C++ console system
 
     -- Removida a lógica de reset dos storages
     -- for i = 1, #startupGlobalStorages do
@@ -120,14 +120,14 @@ function onStartup()
     local dailytime = os.time()
     local lastServerSave = math.max(tonumber(getGlobalStorageValueDB(GlobalStorageKeys.LastServerSave)),0)
     if lastServerSave == 0 then
-        print('[daily reward WARNING] LastServerSave is 0, reseting to now')
+        Game.sendConsoleMessage('[daily reward WARNING] LastServerSave is 0, reseting to now', CONSOLEMESSAGE_TYPE_WARNING)
         lastServerSave = dailytime
     elseif lastServerSave < (dailytime - 24*60*60) then
-        print('[daily reward WARNING]: LastServerSave is more than 24 hours old, falling back to the last eligible time...')
+        Game.sendConsoleMessage('[daily reward WARNING]: LastServerSave is more than 24 hours old, falling back to the last eligible time...', CONSOLEMESSAGE_TYPE_WARNING)
         while(lastServerSave<(dailytime - 24*60*60)) do
             lastServerSave = lastServerSave + 23*60*60
         end
-        print('[daily reward INFO] done falling back.')
+        Game.sendConsoleMessage('[daily reward INFO] done falling back.', CONSOLEMESSAGE_TYPE_INFO)
     end
 
     -- Client XP Display Mode
@@ -135,5 +135,5 @@ function onStartup()
     -- 1 = include exp rate / stage
     Game.setStorageValue(GlobalStorageKeys.XpDisplayMode, 1)
 
-    print(">> Start time: ".. os.sdate("%d.%m.%Y - %X"))
+    -- Start time message moved to C++ console system
 end

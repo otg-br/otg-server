@@ -1,5 +1,5 @@
 function onShutdown()
-    print('>> Saving Hirelings')
+    Game.sendConsoleMessage('>> Saving Hirelings', CONSOLEMESSAGE_TYPE_INFO)
     SaveHirelings()
     return true
 end
