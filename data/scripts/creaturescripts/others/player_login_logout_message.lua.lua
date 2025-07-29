@@ -37,9 +37,6 @@ local function confirmAddItem(playerid)
 end
 
 function loginMessage.onLogin(player)
-    -- Log to console
-    print(string.format("[LOGIN] Player %s has logged in.", player:getName()))
-
     -- Check training storage
     if player:getStorageValue(isTrainingStorage) >= 1 then
         player:setStorageValue(isTrainingStorage, -1)
@@ -209,9 +206,6 @@ loginMessage:register()
 
 local logoutMessage = CreatureEvent("logoutMessage")
 function logoutMessage.onLogout(player)
-    -- Log to console
-    print(string.format("[LOGOUT] Player %s has logged out.", player:getName()))
-
     -- Clear stamina cooldown entry if it exists
     if nextUseStaminaTime and nextUseStaminaTime[player:getId()] then
         nextUseStaminaTime[player:getId()] = nil
