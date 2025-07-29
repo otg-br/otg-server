@@ -18,6 +18,14 @@ if (CMAKE_COMPILER_IS_GNUCXX)
     add_compile_options(-fno-strict-aliasing)
 endif()
 
+# Add UTF-8 support for MSVC
+if(MSVC)
+    add_compile_options(/utf-8)
+    # Add Boost compatibility definitions for MSVC
+    add_definitions(-DBOOST_CONFIG_SUPPRESS_DEPRECATED)
+    add_definitions(-DBOOST_PREDEF_DISABLED)
+endif()
+
 include(FindCXX11)
 include(FindLTO)
 

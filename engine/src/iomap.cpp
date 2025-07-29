@@ -23,6 +23,8 @@
 
 #include "bed.h"
 #include "teleport.h"
+#include "game.h"
+#include "protocolgame.h"
 
 /*
 	OTBM_ROOTV1
