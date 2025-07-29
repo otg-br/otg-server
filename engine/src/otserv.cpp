@@ -336,10 +336,15 @@ void mainLoader(int argc, char* argv[], ServiceManager* services)
 		return;
 	}
 
-	// dando prioridade
 	console::print(CONSOLEMESSAGE_TYPE_STARTUP, "Loading bestiary ...", false);
 	if (!g_bestiaries.loadFromXml()) {
 		startupErrorMessage("Unable to load Bestiaries!");
+		return;
+	}
+
+	console::print(CONSOLEMESSAGE_TYPE_STARTUP, "Loading lua scripts ...", false);
+	if (!g_scripts->loadScripts("scripts", false, false)) {
+		startupErrorMessage("Failed to load lua scripts");
 		return;
 	}
 
