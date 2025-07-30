@@ -3935,11 +3935,13 @@
 		<attribute key="armor" value="16" />
 		<attribute key="slotType" value="body" />
 		<attribute key="imbuingSlots" value="2" />
+		<attribute key="classification" value="2"/>
 	</item>
 	<item id="2495" name="demon legs">
 		<attribute key="weight" value="7000" />
 		<attribute key="armor" value="9" />
 		<attribute key="slotType" value="legs" />
+		<attribute key="classification" value="2"/>
 	</item>
 	<item id="2496" article="a" name="horned helmet">
 		<attribute key="weight" value="5100" />

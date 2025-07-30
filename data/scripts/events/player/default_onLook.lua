@@ -21,17 +21,6 @@ event.onLook = function(self, thing, position, distance, description)
 			description = description .. thing:getDescription(distance)
 		end
 		
-		-- Classification and Tier
-		local itemClassification = thing:getType():getClassification()
-		local itemTier = thing:getType():getTier()
-		if itemClassification > 0 then
-			local classificationText = "Classification: " .. itemClassification .. " | Tier: " .. itemTier
-			if description:find("Imbuements:") then
-				description = description:gsub("(Imbuements:[^\n]*)", "%1\n" .. classificationText)
-			else
-				description = description .. "\n" .. classificationText
-			end
-		end
 	else
 		description = description .. thing:getDescription(distance)
 		if thing:isMonster() then
