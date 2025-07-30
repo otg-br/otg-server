@@ -1,11 +1,11 @@
 --[[
     ========================================
-    TIER UPGRADE SYSTEM + ABILITIES
+    TIER UPGRADE SYSTEM + ABILITIES + NECKLACE DROP BOOST
     ========================================
     
     Developed by: Mateus Roberto (mateuskl)
     Date: 30/07/2025
-    Version: v1.0
+    Version: v1.1
     
     ========================================
     HOW IT WORKS:
@@ -19,8 +19,9 @@
       * HAND: Onslaught (critical damage +60%)
       * ARMOR: Ruse (dodge system)
       * LEGS: Transcendence (automatic Avatar)
-      * HEAD: Momentum (cooldown reduction) - In brief implementation
-      * FEET: Amplification (amplifies other abilities) - In brief implementation
+      * HEAD: Momentum (cooldown reduction)
+      * FEET: Amplification (amplifies other abilities)
+      * NECKLACE: Lucky Drop (increases drop rate)
     
     UPGRADE ITEMS:
     - 8302: Reset (removes tier and classification)
@@ -28,6 +29,13 @@
     - 8304: Classification Upgrade (Base → Improved → Exalted)
     - 8305: Dodge Boost (+50 dodge)
     - 8306: Speed Boost (+10 speed)
+    
+    TRANSCENDENCE SYSTEM (LEGS):
+    - Requires Tier 3+ AND Classification 1+
+    - Accumulates 30% progress per attack (any type)
+    - Activates avatar when reaching 100%+ progress
+    - Progress resets after successful activation
+    - Avatar duration: 5-14 seconds (based on tier)
     
     REQUIREMENTS:
     - Item must have 'classification' in items.xml
@@ -78,6 +86,14 @@ local abilityConfig = {
             [1] = 2.50, [2] = 5.40, [3] = 9.10, [4] = 13.60, [5] = 18.90,
             [6] = 25.00, [7] = 31.90, [8] = 39.60, [9] = 48.10, [10] = 57.40
         }
+    },
+    ["necklace"] = {
+        name = "Lucky Drop",
+        description = "Increases drop rate from monsters",
+        dropBoost = {
+            [1] = 5, [2] = 10, [3] = 15, [4] = 20, [5] = 25,
+            [6] = 30, [7] = 35, [8] = 40, [9] = 45, [10] = 50
+        }
     }
 }
 
@@ -86,7 +102,8 @@ local slotToAbility = {
     ["armor"] = "ruse", 
     ["head"] = "momentum",
     ["legs"] = "transcendence",
-    ["feet"] = "amplification"
+    ["feet"] = "amplification",
+    ["necklace"] = "lucky_drop"
 }
 
 local function getActivationChance(abilityType, tier)
@@ -103,6 +120,10 @@ local function getActivationChance(abilityType, tier)
     end
     
     return abilityConfig[slot].activationChances[tier] or 0
+end
+
+local function getDropBoost(tier)
+    return abilityConfig["necklace"].dropBoost[tier] or 0
 end
 
 local function isWeapon(item)
@@ -135,6 +156,7 @@ end
 local dodgeStorage = 45001
 local dodgeCooldownStorage = 45002
 local conditionSubId = 45083
+local storageTranscendenceProgress = 45007
 
 local tierConfig = {
         maxTier = 10,
@@ -168,9 +190,21 @@ local tierableItems = {
     [2168] = {maxTier = 10, maxClassification = 2, slot = "feet"},
     
     [2169] = {maxTier = 10, maxClassification = 1, slot = "necklace"},
-    [2170] = {maxTier = 10, maxClassification = 1, slot = "ring"},
-    [2171] = {maxTier = 10, maxClassification = 1, slot = "backpack"},
-    [2172] = {maxTier = 10, maxClassification = 1, slot = "ammo"}
+    [2170] = {maxTier = 10, maxClassification = 1, slot = "necklace"},
+    [2171] = {maxTier = 10, maxClassification = 1, slot = "necklace"},
+    [2172] = {maxTier = 10, maxClassification = 1, slot = "necklace"},
+    [2173] = {maxTier = 10, maxClassification = 1, slot = "necklace"},
+    [2174] = {maxTier = 10, maxClassification = 1, slot = "necklace"},
+    [2175] = {maxTier = 10, maxClassification = 1, slot = "necklace"},
+    [2176] = {maxTier = 10, maxClassification = 1, slot = "necklace"},
+    [2177] = {maxTier = 10, maxClassification = 1, slot = "necklace"},
+    [2178] = {maxTier = 10, maxClassification = 1, slot = "necklace"},
+    [2179] = {maxTier = 10, maxClassification = 1, slot = "necklace"},
+    [2180] = {maxTier = 10, maxClassification = 1, slot = "necklace"},
+    
+    [2181] = {maxTier = 10, maxClassification = 1, slot = "ring"},
+    [2182] = {maxTier = 10, maxClassification = 1, slot = "backpack"},
+    [2183] = {maxTier = 10, maxClassification = 1, slot = "ammo"}
 }
 
 local upgradeItems = {
@@ -282,7 +316,7 @@ local function updateDodgeStorage(playerId)
         local tier = slotItem:getAttribute(ITEM_ATTRIBUTE_TIER) or 0
         if tier > 0 then
             local activationChance = abilityConfig["armor"].activationChances[tier] or 0
-            storageValue = activationChance * 100
+            storageValue = math.floor(activationChance * 100)
         end
     end
     
@@ -329,8 +363,8 @@ function equipEvent.onEquip(player, item, slot, isCheck)
             local slotName = getItemSlot(item:getId())
             if slotName == "armor" then
                 local activationChance = abilityConfig["armor"].activationChances[tier] or 0
-                local currentValue = player:getStorageValue(dodgeStorage)
-                local newValue = currentValue + (activationChance * 100)
+                local currentValue = player:getStorageValue(dodgeStorage) or 0
+                local newValue = currentValue + math.floor(activationChance * 100)
                 player:setStorageValue(dodgeStorage, newValue)
             end
         end
@@ -347,8 +381,8 @@ function deEquipEvent.onDeEquip(player, item, slot, isCheck)
         if slotName == "armor" then
             local tier = item:getAttribute(ITEM_ATTRIBUTE_TIER) or 0
             local activationChance = abilityConfig["armor"].activationChances[tier] or 0
-            local currentValue = player:getStorageValue(dodgeStorage)
-            local newValue = currentValue - (activationChance * 100)
+            local currentValue = player:getStorageValue(dodgeStorage) or 0
+            local newValue = currentValue - math.floor(activationChance * 100)
             player:setStorageValue(dodgeStorage, newValue)
         end
         addEvent(updateStatBonus, 100, player:getId())
@@ -364,9 +398,9 @@ function dodgeHealthChange.onHealthChange(creature, attacker, primaryDamage, pri
         return primaryDamage, primaryType, secondaryDamage, secondaryType
     end
     
-    local storageValue = creature:getStorageValue(dodgeStorage)
+    local storageValue = creature:getStorageValue(dodgeStorage) or 0
     local rand = math.random(10000)
-    if rand <= storageValue then
+    if storageValue > 0 and rand <= storageValue then
         primaryDamage = 0
         secondaryDamage = 0
         creature:getPosition():sendMagicEffect(CONST_ME_DODGE)
@@ -382,9 +416,9 @@ function dodgeManaChange.onManaChange(creature, attacker, primaryDamage, primary
         return primaryDamage, primaryType, secondaryDamage, secondaryType
     end
     
-    local storageValue = creature:getStorageValue(dodgeStorage)
+    local storageValue = creature:getStorageValue(dodgeStorage) or 0
     local rand = math.random(10000)
-    if rand <= storageValue then
+    if storageValue > 0 and rand <= storageValue then
         primaryDamage = 0
         secondaryDamage = 0
         creature:getPosition():sendMagicEffect(CONST_ME_DODGE)
@@ -599,6 +633,37 @@ local function handleTranscendence(player)
     return false
 end
 
+local function accumulateTranscendenceProgress(player)
+    local legs = player:getSlotItem(CONST_SLOT_LEGS)
+    if not legs then
+        return false
+    end
+    
+    local tier = legs:getAttribute(ITEM_ATTRIBUTE_TIER) or 0
+    local classification = legs:getAttribute(ITEM_ATTRIBUTE_CLASSIFICATION) or 0
+    
+    if tier < 3 or classification < 1 then
+        return false
+    end
+    
+    local currentProgress = player:getStorageValue(storageTranscendenceProgress) or 0
+    
+    local newProgress = currentProgress + 30
+    
+    if newProgress >= 100 then
+        if handleTranscendence(player) then
+            player:setStorageValue(storageTranscendenceProgress, 0)
+            return true
+        else
+            player:setStorageValue(storageTranscendenceProgress, newProgress)
+        end
+    else
+        player:setStorageValue(storageTranscendenceProgress, newProgress)
+    end
+    
+    return false
+end
+
 local function handleAmplification(player)
     local boots = player:getSlotItem(CONST_SLOT_FEET)
     if not boots then
@@ -669,6 +734,38 @@ function transcendenceManaChange.onManaChange(creature, attacker, primaryDamage,
 end
 transcendenceManaChange:register()
 
+local transcendenceAttackEvent = CreatureEvent("onHealthChange_transcendence_attack")
+function transcendenceAttackEvent.onHealthChange(creature, attacker, primaryDamage, primaryType, secondaryDamage, secondaryType, origin)
+    if not attacker or not attacker:isPlayer() then
+        return primaryDamage, primaryType, secondaryDamage, secondaryType
+    end
+    
+    if not creature then
+        return primaryDamage, primaryType, secondaryDamage, secondaryType
+    end
+    
+    accumulateTranscendenceProgress(attacker)
+    
+    return primaryDamage, primaryType, secondaryDamage, secondaryType
+end
+transcendenceAttackEvent:register()
+
+local transcendenceManaAttackEvent = CreatureEvent("onManaChange_transcendence_attack")
+function transcendenceManaAttackEvent.onManaChange(creature, attacker, primaryDamage, primaryType, secondaryDamage, secondaryType, origin)
+    if not attacker or not attacker:isPlayer() then
+        return primaryDamage, primaryType, secondaryDamage, secondaryType
+    end
+    
+    if not creature then
+        return primaryDamage, primaryType, secondaryDamage, secondaryType
+    end
+    
+    accumulateTranscendenceProgress(attacker)
+    
+    return primaryDamage, primaryType, secondaryDamage, secondaryType
+end
+transcendenceManaAttackEvent:register()
+
 local amplificationHealthChange = CreatureEvent("onHealthChange_amplification")
 function amplificationHealthChange.onHealthChange(creature, attacker, primaryDamage, primaryType, secondaryDamage, secondaryType, origin)
     if not creature:isPlayer() then
@@ -713,6 +810,50 @@ function amplificationManaChange.onManaChange(creature, attacker, primaryDamage,
 end
 amplificationManaChange:register()
 
+local NecklaceDropBoost = Event()
+NecklaceDropBoost.onDropLoot = function(self, corpse)
+    local mType = self:getType()
+    if configManager.getNumber(configKeys.RATE_LOOT) == 0 then
+        return
+    end
+    
+    local player = Player(corpse:getCorpseOwner())
+    if not player then
+        return false
+    end
+    
+    if player:getStamina() > 840 then
+        local necklace = player:getSlotItem(CONST_SLOT_NECKLACE)
+        if necklace then
+            local tier = necklace:getAttribute(ITEM_ATTRIBUTE_TIER) or 0
+            if tier > 0 then
+                local dropBoost = getDropBoost(tier)
+                if dropBoost > 0 then
+                    player:sendTextMessage(MESSAGE_STATUS_DEFAULT, 
+                        string.format("[Lucky Necklace] You have a tier %d necklace with +%d%% Drop Boost!", 
+                        tier, dropBoost))
+                    
+                    corpse:getPosition():sendMagicEffect(CONST_ME_TUTORIALARROW)
+                    corpse:getPosition():sendMagicEffect(CONST_ME_TUTORIALSQUARE)
+                    
+                    local rate = dropBoost / 10 * configManager.getNumber(configKeys.RATE_LOOT)
+                    local monsterLoot = mType:getLoot()
+                    
+                    for i = 1, #monsterLoot do
+                        local item = monsterLoot[i]
+                        if math.random(100) <= rate then
+                            local count = item.maxCount > 1 and math.random(item.maxCount) or 1
+                            corpse:addItem(item.itemId, count)
+                        end
+                    end
+                end
+            end
+        end
+    end
+    
+    return true
+end
+NecklaceDropBoost:register(-1)
 
 local action = Action()
 function action.onUse(player, item, fromPosition, target, toPosition, isHotkey)
@@ -840,10 +981,10 @@ function loginEvent.onLogin(player)
     player:registerEvent("Onslaught2")
     player:registerEvent("onHealthChange_momentum")
     player:registerEvent("onManaChange_momentum")
-    player:registerEvent("onHealthChange_transcendence")
-    player:registerEvent("onManaChange_transcendence")
     player:registerEvent("onHealthChange_amplification")
     player:registerEvent("onManaChange_amplification")
+    player:registerEvent("onHealthChange_transcendence_attack")
+    player:registerEvent("onManaChange_transcendence_attack")
     
     for slot = 1, 10 do
         local slotItem = player:getSlotItem(slot)
@@ -875,11 +1016,12 @@ ec.onMoveItem = function(self, item, count, fromPosition, toPosition, fromCylind
 end
 ec:register()
 
-local eventCallback = EventCallback
-function eventCallback.onSpawn(creature, position, startup, artificial)
+local onSpawn = Event()
+function onSpawn.onSpawn(creature, position, startup, artificial)
     if creature:isMonster() then
         creature:registerEvent("Onslaught1")
+        creature:registerEvent("onHealthChange_transcendence_attack")
     end
     return true
 end
-eventCallback:register(-666)
+onSpawn:register(-666)
