@@ -105,6 +105,14 @@ local function getActivationChance(abilityType, tier)
     return abilityConfig[slot].activationChances[tier] or 0
 end
 
+local function isWeapon(item)
+    if not item then
+        return false
+    end
+    local attack = item:getAttack()
+    return attack > 0
+end
+
 local function calculateTotalChance(player, baseChance, abilityType)
     if abilityType == "amplification" then
         return baseChance
@@ -317,21 +325,13 @@ local equipEvent = MoveEvent()
 function equipEvent.onEquip(player, item, slot, isCheck)
     if not isCheck then
         local tier = item:getAttribute(ITEM_ATTRIBUTE_TIER) or 0
-                if tier > 0 then
+        if tier > 0 then
             local slotName = getItemSlot(item:getId())
             if slotName == "armor" then
                 local activationChance = abilityConfig["armor"].activationChances[tier] or 0
                 local currentValue = player:getStorageValue(dodgeStorage)
                 local newValue = currentValue + (activationChance * 100)
                 player:setStorageValue(dodgeStorage, newValue)
-            elseif slotName == "hand" then
-                item:setCustomAttribute("Onslaught", 1)
-            elseif slotName == "head" then
-                item:setCustomAttribute("Momentum", 1)
-            elseif slotName == "legs" then
-                item:setCustomAttribute("Transcendence", 1)
-            elseif slotName == "feet" then
-                item:setCustomAttribute("Amplification", 1)
             end
         end
         addEvent(updateStatBonus, 100, player:getId())
@@ -350,14 +350,6 @@ function deEquipEvent.onDeEquip(player, item, slot, isCheck)
             local currentValue = player:getStorageValue(dodgeStorage)
             local newValue = currentValue - (activationChance * 100)
             player:setStorageValue(dodgeStorage, newValue)
-        elseif slotName == "hand" then
-            item:removeCustomAttribute("Onslaught")
-        elseif slotName == "head" then
-            item:removeCustomAttribute("Momentum")
-        elseif slotName == "legs" then
-            item:removeCustomAttribute("Transcendence")
-        elseif slotName == "feet" then
-            item:removeCustomAttribute("Amplification")
         end
         addEvent(updateStatBonus, 100, player:getId())
     end
@@ -403,31 +395,133 @@ end
 dodgeManaChange:register()
 
 
-local function handleOnslaught(creature, attacker, primaryDamage, primaryType)
+local Onslaught1 = CreatureEvent("Onslaught1")
+function Onslaught1.onHealthChange(creature, attacker, primaryDamage, primaryType, secondaryDamage, secondaryType, origin)
     if not creature or not attacker or not attacker:isPlayer() then
-        return primaryDamage
+        return primaryDamage, primaryType, secondaryDamage, secondaryType
     end
 
     local player = attacker:getPlayer()
-    local weapon = player:getSlotItem(CONST_SLOT_LEFT)
-
-    if not weapon or not weapon:getType():isWeapon() then
-        return primaryDamage
+    local leftWeapon = player:getSlotItem(CONST_SLOT_LEFT)
+    local rightWeapon = player:getSlotItem(CONST_SLOT_RIGHT)
+    
+    local weapon = leftWeapon or rightWeapon
+    if not weapon then
+        return primaryDamage, primaryType, secondaryDamage, secondaryType
     end
 
-    local attributeName = "Onslaught"
-    local attributeValue = weapon:getCustomAttribute(attributeName)
-    local tier = weapon:getAttribute(ITEM_ATTRIBUTE_TIER) or 0
-    local activationChance = abilityConfig["hand"].activationChances[tier] or 0
+    if not isWeapon(weapon) then
+        return primaryDamage, primaryType, secondaryDamage, secondaryType
+    end
 
-    if attributeValue and math.random() < activationChance then
+    local tier = weapon:getAttribute(ITEM_ATTRIBUTE_TIER) or 0
+    if tier == 0 then
+        return primaryDamage, primaryType, secondaryDamage, secondaryType
+    end
+
+    local activationChance = abilityConfig["hand"].activationChances[tier] or 0
+    if activationChance > 0 and math.random(100) <= (activationChance * 100) then
         local damageBoost = math.floor(primaryDamage * 0.60)
         primaryDamage = primaryDamage + damageBoost
         creature:getPosition():sendMagicEffect(CONST_ME_FATAL)
+        player:say("Onslaught!", TALKTYPE_MONSTER_SAY)
     end
 
-    return primaryDamage
+    return primaryDamage, primaryType, secondaryDamage, secondaryType
 end
+Onslaught1:register()
+
+local Onslaught2 = CreatureEvent("Onslaught2")
+function Onslaught2.onManaChange(creature, attacker, primaryDamage, primaryType, secondaryDamage, secondaryType, origin)
+    if not creature or not attacker or not attacker:isPlayer() then
+        return primaryDamage, primaryType, secondaryDamage, secondaryType
+    end
+
+    local player = attacker:getPlayer()
+    local leftWeapon = player:getSlotItem(CONST_SLOT_LEFT)
+    local rightWeapon = player:getSlotItem(CONST_SLOT_RIGHT)
+    
+    local weapon = leftWeapon or rightWeapon
+    if not weapon then
+        return primaryDamage, primaryType, secondaryDamage, secondaryType
+    end
+
+    if not isWeapon(weapon) then
+        return primaryDamage, primaryType, secondaryDamage, secondaryType
+    end
+
+    local tier = weapon:getAttribute(ITEM_ATTRIBUTE_TIER) or 0
+    if tier == 0 then
+        return primaryDamage, primaryType, secondaryDamage, secondaryType
+    end
+
+    local activationChance = abilityConfig["hand"].activationChances[tier] or 0
+    if activationChance > 0 and math.random(100) <= (activationChance * 100) then
+        local damageBoost = math.floor(primaryDamage * 0.60)
+        primaryDamage = primaryDamage + damageBoost
+        creature:getPosition():sendMagicEffect(CONST_ME_FATAL)
+        player:say("Onslaught!", TALKTYPE_MONSTER_SAY)
+    end
+
+    return primaryDamage, primaryType, secondaryDamage, secondaryType
+end
+Onslaught2:register()
+
+local momentumHealthChange = CreatureEvent("onHealthChange_momentum")
+function momentumHealthChange.onHealthChange(creature, attacker, primaryDamage, primaryType, secondaryDamage, secondaryType, origin)
+    if not creature:isPlayer() then
+        return primaryDamage, primaryType, secondaryDamage, secondaryType
+    end
+    
+    if primaryDamage > 0 then
+        return primaryDamage, primaryType, secondaryDamage, secondaryType
+    end
+    
+    local helmet = creature:getSlotItem(CONST_SLOT_HEAD)
+    if helmet then
+        local tier = helmet:getAttribute(ITEM_ATTRIBUTE_TIER) or 0
+        if tier > 0 then
+            handleMomentum(creature)
+        end
+    end
+    
+    return primaryDamage, primaryType, secondaryDamage, secondaryType
+end
+momentumHealthChange:register()
+
+local momentumManaChange = CreatureEvent("onManaChange_momentum")
+function momentumManaChange.onManaChange(creature, attacker, primaryDamage, primaryType, secondaryDamage, secondaryType, origin)
+    if not creature:isPlayer() then
+        return primaryDamage, primaryType, secondaryDamage, secondaryType
+    end
+    
+    if primaryDamage > 0 then
+        return primaryDamage, primaryType, secondaryDamage, secondaryType
+    end
+    
+    local helmet = creature:getSlotItem(CONST_SLOT_HEAD)
+    if helmet then
+        local tier = helmet:getAttribute(ITEM_ATTRIBUTE_TIER) or 0
+        if tier > 0 then
+            handleMomentum(creature)
+        end
+    end
+    
+    return primaryDamage, primaryType, secondaryDamage, secondaryType
+end
+momentumManaChange:register()
+
+local avatarOutfits = {
+    ["knight"] = { lookType = 1823 },
+    ["paladin"] = { lookType = 1824 },
+    ["sorcerer"] = { lookType = 1825 },
+    ["druid"] = { lookType = 1826 }
+}
+
+local avatarDurations = {
+    [1] = 5000, [2] = 6000, [3] = 7000, [4] = 8000, [5] = 9000,
+    [6] = 10000, [7] = 11000, [8] = 12000, [9] = 13000, [10] = 14000
+}
 
 local function handleMomentum(player)
     local helmet = player:getSlotItem(CONST_SLOT_HEAD)
@@ -453,62 +547,6 @@ local function handleMomentum(player)
 
     return false
 end
-
-local Onslaught1 = CreatureEvent("Onslaught1")
-function Onslaught1.onHealthChange(creature, attacker, primaryDamage, primaryType, secondaryDamage, secondaryType, origin)
-    primaryDamage = handleOnslaught(creature, attacker, primaryDamage, primaryType)
-    return primaryDamage, primaryType, secondaryDamage, secondaryType
-end
-Onslaught1:register()
-
-local Onslaught2 = CreatureEvent("Onslaught2")
-function Onslaught2.onManaChange(creature, attacker, primaryDamage, primaryType, secondaryDamage, secondaryType, origin)
-    primaryDamage = handleOnslaught(creature, attacker, primaryDamage, primaryType)
-    return primaryDamage, primaryType, secondaryDamage, secondaryType
-end
-Onslaught2:register()
-
-local momentumHealthChange = CreatureEvent("onHealthChange_momentum")
-function momentumHealthChange.onHealthChange(creature, attacker, primaryDamage, primaryType, secondaryDamage, secondaryType, origin)
-    if not creature:isPlayer() then
-        return primaryDamage, primaryType, secondaryDamage, secondaryType
-    end
-    
-    if primaryDamage > 0 then
-        return primaryDamage, primaryType, secondaryDamage, secondaryType
-    end
-    
-    handleMomentum(creature)
-    return primaryDamage, primaryType, secondaryDamage, secondaryType
-end
-momentumHealthChange:register()
-
-local momentumManaChange = CreatureEvent("onManaChange_momentum")
-function momentumManaChange.onManaChange(creature, attacker, primaryDamage, primaryType, secondaryDamage, secondaryType, origin)
-    if not creature:isPlayer() then
-        return primaryDamage, primaryType, secondaryDamage, secondaryType
-    end
-    
-    if primaryDamage > 0 then
-        return primaryDamage, primaryType, secondaryDamage, secondaryType
-    end
-    
-    handleMomentum(creature)
-    return primaryDamage, primaryType, secondaryDamage, secondaryType
-end
-momentumManaChange:register()
-
-local avatarOutfits = {
-    ["knight"] = { lookType = 1823 },
-    ["paladin"] = { lookType = 1824 },
-    ["sorcerer"] = { lookType = 1825 },
-    ["druid"] = { lookType = 1826 }
-}
-
-local avatarDurations = {
-    [1] = 5000, [2] = 6000, [3] = 7000, [4] = 8000, [5] = 9000,
-    [6] = 10000, [7] = 11000, [8] = 12000, [9] = 13000, [10] = 14000
-}
 
 local function handleTranscendence(player)
     local legs = player:getSlotItem(CONST_SLOT_LEGS)
@@ -597,7 +635,14 @@ function transcendenceHealthChange.onHealthChange(creature, attacker, primaryDam
         return primaryDamage, primaryType, secondaryDamage, secondaryType
     end
     
-    handleTranscendence(creature)
+    local legs = creature:getSlotItem(CONST_SLOT_LEGS)
+    if legs then
+        local tier = legs:getAttribute(ITEM_ATTRIBUTE_TIER) or 0
+        if tier > 0 then
+            handleTranscendence(creature)
+        end
+    end
+    
     return primaryDamage, primaryType, secondaryDamage, secondaryType
 end
 transcendenceHealthChange:register()
@@ -612,7 +657,14 @@ function transcendenceManaChange.onManaChange(creature, attacker, primaryDamage,
         return primaryDamage, primaryType, secondaryDamage, secondaryType
     end
     
-    handleTranscendence(creature)
+    local legs = creature:getSlotItem(CONST_SLOT_LEGS)
+    if legs then
+        local tier = legs:getAttribute(ITEM_ATTRIBUTE_TIER) or 0
+        if tier > 0 then
+            handleTranscendence(creature)
+        end
+    end
+    
     return primaryDamage, primaryType, secondaryDamage, secondaryType
 end
 transcendenceManaChange:register()
@@ -627,7 +679,14 @@ function amplificationHealthChange.onHealthChange(creature, attacker, primaryDam
         return primaryDamage, primaryType, secondaryDamage, secondaryType
     end
     
-    handleAmplification(creature)
+    local boots = creature:getSlotItem(CONST_SLOT_FEET)
+    if boots then
+        local tier = boots:getAttribute(ITEM_ATTRIBUTE_TIER) or 0
+        if tier > 0 then
+            handleAmplification(creature)
+        end
+    end
+    
     return primaryDamage, primaryType, secondaryDamage, secondaryType
 end
 amplificationHealthChange:register()
@@ -642,7 +701,14 @@ function amplificationManaChange.onManaChange(creature, attacker, primaryDamage,
         return primaryDamage, primaryType, secondaryDamage, secondaryType
     end
     
-    handleAmplification(creature)
+    local boots = creature:getSlotItem(CONST_SLOT_FEET)
+    if boots then
+        local tier = boots:getAttribute(ITEM_ATTRIBUTE_TIER) or 0
+        if tier > 0 then
+            handleAmplification(creature)
+        end
+    end
+    
     return primaryDamage, primaryType, secondaryDamage, secondaryType
 end
 amplificationManaChange:register()
@@ -786,15 +852,7 @@ function loginEvent.onLogin(player)
             if tier > 0 then
                 local slotName = getItemSlot(slotItem:getId())
                 if slotName == "armor" then
-                    slotItem:setCustomAttribute("Ruse", 1)
-                elseif slotName == "hand" then
-                    slotItem:setCustomAttribute("Onslaught", 1)
-                elseif slotName == "head" then
-                    slotItem:setCustomAttribute("Momentum", 1)
-                elseif slotName == "legs" then
-                    slotItem:setCustomAttribute("Transcendence", 1)
-                elseif slotName == "feet" then
-                    slotItem:setCustomAttribute("Amplification", 1)
+                    -- Armor is handled by updateDodgeStorage
                 end
             end
         end
@@ -816,3 +874,12 @@ ec.onMoveItem = function(self, item, count, fromPosition, toPosition, fromCylind
     return RETURNVALUE_NOERROR
 end
 ec:register()
+
+local eventCallback = EventCallback
+function eventCallback.onSpawn(creature, position, startup, artificial)
+    if creature:isMonster() then
+        creature:registerEvent("Onslaught1")
+    end
+    return true
+end
+eventCallback:register(-666)
