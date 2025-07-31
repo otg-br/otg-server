@@ -31,11 +31,11 @@
     - 8306: Speed Boost (+10 speed)
     
     TRANSCENDENCE SYSTEM (LEGS):
-    - Requires Tier 3+ AND Classification 1+
-    - Accumulates 30% progress per attack (any type)
-    - Activates avatar when reaching 100%+ progress
-    - Progress resets after successful activation
-    - Avatar duration: 5-14 seconds (based on tier)
+    - Requires Tier 3+ (no classification requirement)
+    - Automatic chance per attack (any type: melee, rune, spell)
+    - Tier 3: 5% chance per attack
+    - Avatar duration: 7 seconds fixed
+    - Activates automatically when chance triggers
     
     REQUIREMENTS:
     - Item must have 'classification' in items.xml
@@ -156,7 +156,6 @@ end
 local dodgeStorage = 45001
 local dodgeCooldownStorage = 45002
 local conditionSubId = 45083
-local storageTranscendenceProgress = 45007
 
 local tierConfig = {
         maxTier = 10,
@@ -589,13 +588,9 @@ local function handleTranscendence(player)
     end
     
     local tier = legs:getAttribute(ITEM_ATTRIBUTE_TIER) or 0
-    local classification = legs:getAttribute(ITEM_ATTRIBUTE_CLASSIFICATION) or 0
     
-    if tier == 0 then
-        return false
-    end
-    
-    if classification < 1 then
+    -- Só funciona se tier for 3 ou mais
+    if tier < 3 then
         return false
     end
     
@@ -603,14 +598,30 @@ local function handleTranscendence(player)
         return false
     end
     
-    local baseChance = abilityConfig["legs"].activationChances[tier] or 0
-    local classificationBonus = (classification - 1) * 0.5
-    local totalChance = baseChance * (1 + classificationBonus)
+    -- Chance baseada no tier (Tier 3 = 5%)
+    local chance = 0
+    if tier == 3 then
+        chance = 5.0
+    elseif tier == 4 then
+        chance = 8.0
+    elseif tier == 5 then
+        chance = 12.0
+    elseif tier == 6 then
+        chance = 16.0
+    elseif tier == 7 then
+        chance = 20.0
+    elseif tier == 8 then
+        chance = 25.0
+    elseif tier == 9 then
+        chance = 30.0
+    elseif tier == 10 then
+        chance = 35.0
+    end
     
-    if math.random(100) <= totalChance then
+    if math.random(100) <= chance then
         local vocation = player:getVocation():getName():lower()
         local outfit = avatarOutfits[vocation] or avatarOutfits["knight"]
-        local duration = avatarDurations[tier] or 7000
+        local duration = 7000 -- 7 segundos fixo
         
         local conditionOutfit = Condition(CONDITION_OUTFIT)
         conditionOutfit:setOutfit(outfit)
@@ -633,35 +644,19 @@ local function handleTranscendence(player)
     return false
 end
 
-local function accumulateTranscendenceProgress(player)
+local function tryActivateTranscendence(player)
     local legs = player:getSlotItem(CONST_SLOT_LEGS)
     if not legs then
         return false
     end
     
     local tier = legs:getAttribute(ITEM_ATTRIBUTE_TIER) or 0
-    local classification = legs:getAttribute(ITEM_ATTRIBUTE_CLASSIFICATION) or 0
     
-    if tier < 3 or classification < 1 then
+    if tier < 3 then
         return false
     end
     
-    local currentProgress = player:getStorageValue(storageTranscendenceProgress) or 0
-    
-    local newProgress = currentProgress + 30
-    
-    if newProgress >= 100 then
-        if handleTranscendence(player) then
-            player:setStorageValue(storageTranscendenceProgress, 0)
-            return true
-        else
-            player:setStorageValue(storageTranscendenceProgress, newProgress)
-        end
-    else
-        player:setStorageValue(storageTranscendenceProgress, newProgress)
-    end
-    
-    return false
+    return handleTranscendence(player)
 end
 
 local function handleAmplification(player)
@@ -740,11 +735,7 @@ function transcendenceAttackEvent.onHealthChange(creature, attacker, primaryDama
         return primaryDamage, primaryType, secondaryDamage, secondaryType
     end
     
-    if not creature then
-        return primaryDamage, primaryType, secondaryDamage, secondaryType
-    end
-    
-    accumulateTranscendenceProgress(attacker)
+    tryActivateTranscendence(attacker)
     
     return primaryDamage, primaryType, secondaryDamage, secondaryType
 end
@@ -756,15 +747,13 @@ function transcendenceManaAttackEvent.onManaChange(creature, attacker, primaryDa
         return primaryDamage, primaryType, secondaryDamage, secondaryType
     end
     
-    if not creature then
-        return primaryDamage, primaryType, secondaryDamage, secondaryType
-    end
-    
-    accumulateTranscendenceProgress(attacker)
+    tryActivateTranscendence(attacker)
     
     return primaryDamage, primaryType, secondaryDamage, secondaryType
 end
 transcendenceManaAttackEvent:register()
+
+
 
 local amplificationHealthChange = CreatureEvent("onHealthChange_amplification")
 function amplificationHealthChange.onHealthChange(creature, attacker, primaryDamage, primaryType, secondaryDamage, secondaryType, origin)
