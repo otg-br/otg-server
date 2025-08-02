@@ -617,13 +617,9 @@ TierSystem.tierableItems = {
     [2183] = {slot = "ammo", tierMax = 10}
 }
 
--- Upgrade items configuration
+-- Upgrade items configuration (only reset item, others removed)
 TierSystem.upgradeItems = {
-    [8302] = {type = "reset"},
-    [8303] = {type = "tier_upgrade"},
-    [8304] = {type = "classification_upgrade"},
-    [8305] = {type = "stat_boost", stat = "dodge_bonus", value = 50},
-    [8306] = {type = "stat_boost", stat = "speed", value = 10}
+    [8302] = {type = "reset", name = "Reset Item"}
 }
 
 -- Tier configuration
@@ -641,10 +637,21 @@ TierSystem.tierConfig = {
     statsPerTier = {}
 }
 
--- Tier upgrade chances
+-- Tier upgrade chances (mais difíceis para Avalanche)
 TierSystem.tierUpgradeChances = {
-    [0] = 80, [1] = 70, [2] = 65, [3] = 60, [4] = 50,
-    [5] = 40, [6] = 35, [7] = 25, [8] = 15, [9] = 7, [10] = 5
+    [0] = 50, [1] = 40, [2] = 35, [3] = 30, [4] = 25,
+    [5] = 20, [6] = 15, [7] = 10, [8] = 8, [9] = 5, [10] = 3
+}
+
+-- Avalanche Fusion System Configuration
+TierSystem.avalancheFusion = {
+    actionId = 7755,
+    positions = {
+        item1 = Position(94, 111, 7),
+        item2 = Position(96, 111, 7),
+        result = Position(95, 111, 7)
+    },
+    tier0ToTier1 = true -- Only allows tier 0 to tier 1 fusion
 }
 
 -- Avatar outfits for transcendence
@@ -721,7 +728,7 @@ TierSystem.calculateUpgradeChance = function(currentTier)
 end
 
 TierSystem.isItemTierable = function(item)
-    if not item:isItem() then
+    if not item or not item:isItem() then
         return false
     end
     local itemId = item:getId()

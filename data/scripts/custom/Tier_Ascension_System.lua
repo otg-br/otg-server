@@ -392,28 +392,88 @@ NecklaceDropBoost:register(-1)
 
 local action = Action()
 function action.onUse(player, item, fromPosition, target, toPosition, isHotkey)
+    if item:getActionId() == TierSystem.avalancheFusion.actionId then
+        local item1 = Tile(TierSystem.avalancheFusion.positions.item1):getTopDownItem()
+        local item2 = Tile(TierSystem.avalancheFusion.positions.item2):getTopDownItem()
+        
+        if not item1 or not item2 then
+            player:sendTextMessage(MESSAGE_EVENT_ORANGE, "Place two items in the fusion positions.")
+            Position(94, 112, 7):sendMagicEffect(285)
+            return true
+        end
+        
+        local tier1 = item1:getAttribute(ITEM_ATTRIBUTE_TIER) or 0
+        local tier2 = item2:getAttribute(ITEM_ATTRIBUTE_TIER) or 0
+        
+        if tier1 ~= tier2 then
+            player:sendTextMessage(MESSAGE_EVENT_ORANGE, "Both items must be of the same tier for fusion.")
+            player:getPosition():sendMagicEffect(285)
+            return true
+        end
+        
+        if item1:getId() ~= item2:getId() then
+            player:sendTextMessage(MESSAGE_EVENT_ORANGE, "Both items must be of the same type.")
+            player:getPosition():sendMagicEffect(285)
+            return true
+        end
+        
+        local maxTier = TierSystem.getMaxTierForItem(item1:getId())
+        if tier1 >= maxTier then
+            player:sendTextMessage(MESSAGE_EVENT_ORANGE, "This item has already reached the maximum tier (" .. maxTier .. ").")
+            player:getPosition():sendMagicEffect(285)
+            return true
+        end
+        
+        local successChance = TierSystem.calculateUpgradeChance(tier1)
+        local rand = math.random(100)
+        
+        if rand <= successChance then
+            local newItem = Game.createItem(item1:getId(), 1, TierSystem.avalancheFusion.positions.result)
+            if newItem then
+                newItem:setAttribute(ITEM_ATTRIBUTE_TIER, tier1 + 1)
+                newItem:getPosition():sendMagicEffect(252) -- Success effect
+                player:sendTextMessage(MESSAGE_EVENT_ORANGE, "Fusion successful! Created tier " .. (tier1 + 1) .. " item with " .. successChance .. "% chance!")
+                
+                item1:remove(1)
+                item2:remove(1)
+            end
+        else
+            -- Failure
+            Position(94, 112, 7):sendMagicEffect(285) -- Failure effect at Avalanche position
+            player:sendTextMessage(MESSAGE_EVENT_ORANGE, "Fusion failed! Chance was " .. successChance .. "%")
+            
+            item2:remove(1)
+        end
+        
+        return true
+    end
+    
+    if not target then
+        player:sendTextMessage(MESSAGE_EVENT_ORANGE, "No target item selected.")
+        player:getPosition():sendMagicEffect(285)
+        return true
+    end
+    
     if not TierSystem.isItemTierable(target) then
         player:sendTextMessage(MESSAGE_EVENT_ORANGE, "This item cannot receive tier upgrades.")
-        player:getPosition():sendMagicEffect(285) -- Efeito falha
+        player:getPosition():sendMagicEffect(285)
         return true
     end
     
     local upgradeItem = TierSystem.upgradeItems[item:getId()]
     if not upgradeItem then
         player:sendTextMessage(MESSAGE_EVENT_ORANGE, "Invalid upgrade item.")
-        player:getPosition():sendMagicEffect(285) -- Efeito falha
+        player:getPosition():sendMagicEffect(285)
         return true
     end
-  
-    local itemId = target:getId()
-    local maxTier = TierSystem.getMaxTierForItem(itemId)
+    
     local currentTier = target:getAttribute(ITEM_ATTRIBUTE_TIER) or 0
     local currentClassification = target:getAttribute(ITEM_ATTRIBUTE_CLASSIFICATION) or 0
     
     if upgradeItem.type == "reset" then
         if currentTier == 0 and currentClassification == 0 then
             player:sendTextMessage(MESSAGE_EVENT_ORANGE, "This item does not have a tier or classification to reset.")
-            target:getPosition():sendMagicEffect(285) -- Efeito falha
+            target:getPosition():sendMagicEffect(285)
             return true
         end
         
@@ -424,129 +484,29 @@ function action.onUse(player, item, fromPosition, target, toPosition, isHotkey)
         target:removeAttribute(ITEM_ATTRIBUTE_CLASSIFICATION)
         target:removeCustomAttribute("dodge_bonus")
         
-        target:getPosition():sendMagicEffect(252) -- Efeito sucesso
+        target:getPosition():sendMagicEffect(252)
         player:sendTextMessage(MESSAGE_EVENT_ORANGE, "Tier and classification reset successfully!")
         item:remove(1)
-        
-        if toPosition.x == CONTAINER_POSITION and toPosition.y <= 10 then
-            addEvent(updateDodgeStorage, 100, player:getId())
-            addEvent(updateStatBonus, 100, player:getId())
-        end
-        return true
-    end
-  
-    if upgradeItem.type == "tier_upgrade" then
-        local itemType = target:getType()
-        local xmlClassification = itemType.classification or 0
-        
-        local ammoSlotItem = player:getSlotItem(CONST_SLOT_AMMO)
-        if not ammoSlotItem or ammoSlotItem:getId() ~= target:getId() then
-            player:sendTextMessage(MESSAGE_EVENT_ORANGE, "Place the item you want to upgrade in the ammo slot first.")
-            target:getPosition():sendMagicEffect(285) -- Efeito falha
-            return true
-        end
-        
-        if currentTier >= maxTier then
-            player:sendTextMessage(MESSAGE_EVENT_ORANGE, "This item has already reached the maximum tier (" .. maxTier .. ").")
-            target:getPosition():sendMagicEffect(285) -- Efeito falha
-            return true
-        end
-        
-        local requiredItemId = target:getId()
-        local requiredTier = currentTier
-        local foundRequiredItem = false
-        
-        local function searchInContainer(container)
-            if not container then return false end
-            for j = 0, container:getSize() - 1 do
-                local containerItem = container:getItem(j)
-                if containerItem and containerItem:getId() == requiredItemId then
-                    local itemTier = containerItem:getAttribute(ITEM_ATTRIBUTE_TIER) or 0
-                    if itemTier == requiredTier then
-                        containerItem:remove(1)
-                        return true
-                    end
-                end
-            end
-            return false
-        end
-        
-        for slot = 1, 10 do
-            local container = player:getSlotItem(slot)
-            if container and container:isContainer() then
-                if searchInContainer(container) then
-                    foundRequiredItem = true
-                    break
-                end
-            end
-        end
-        
-        if not foundRequiredItem then
-            player:sendTextMessage(MESSAGE_EVENT_ORANGE, "You need an item of the same material and tier " .. requiredTier .. " in your backpack to perform this upgrade.")
-            target:getPosition():sendMagicEffect(285) -- Efeito falha
-            return true
-        end
-        
-        local successChance = TierSystem.calculateUpgradeChance(currentTier)
-        
-        local rand = math.random(100)
-        
-        if rand <= successChance then
-            target:setAttribute(ITEM_ATTRIBUTE_TIER, currentTier + 1)
-            target:getPosition():sendMagicEffect(252) -- Efeito sucesso
-            player:sendTextMessage(MESSAGE_EVENT_ORANGE, "Upgrade successful! Tier increased to " .. (currentTier + 1) .. "!")
-        else
-            target:getPosition():sendMagicEffect(285) -- Efeito falha
-            player:sendTextMessage(MESSAGE_EVENT_ORANGE, "Upgrade failed! Chance was " .. successChance .. "%")
-        end
-        
-        item:remove(1)
-        
-        if toPosition.x == CONTAINER_POSITION and toPosition.y <= 10 then
-            addEvent(updateDodgeStorage, 100, player:getId())
-            addEvent(updateStatBonus, 100, player:getId())
-        end
-        return true
-    end
-  
-    if upgradeItem.type == "classification_upgrade" then
-        local itemType = target:getType()
-        local xmlClassification = itemType.classification or 0
-        
-        if currentClassification >= 2 then
-            player:sendTextMessage(MESSAGE_EVENT_ORANGE, "This item is already at the maximum classification (Exalted).")
-            target:getPosition():sendMagicEffect(285) -- Efeito falha
-            return true
-        end
-        
-        target:setAttribute(ITEM_ATTRIBUTE_CLASSIFICATION, currentClassification + 1)
-        target:getPosition():sendMagicEffect(252) -- Efeito sucesso
-        player:sendTextMessage(MESSAGE_EVENT_ORANGE, "Classification upgrade successful! New classification: " .. TierSystem.getClassificationName(currentClassification + 1))
-        
-        item:remove(1)
         return true
     end
     
-    if upgradeItem.type == "stat_boost" then
-        local currentStat = target:getCustomAttribute(upgradeItem.stat) or 0
-        target:setCustomAttribute(upgradeItem.stat, currentStat + upgradeItem.value)
-  
-        target:getPosition():sendMagicEffect(252) -- Efeito sucesso
-        player:sendTextMessage(MESSAGE_EVENT_ORANGE, "Stat " .. upgradeItem.stat .. " increased!")
-        item:remove(1)
-  
-        if toPosition.x == CONTAINER_POSITION and toPosition.y <= 10 then
-            addEvent(updateStatBonus, 100, player:getId())
-        end
-        return true
-    end
-    
+    player:sendTextMessage(MESSAGE_EVENT_ORANGE, "Invalid upgrade type.")
+    player:getPosition():sendMagicEffect(285)
     return true
 end
 
-for itemId, _ in pairs(TierSystem.upgradeItems) do
-    action:id(itemId)
+if TierSystem.upgradeItems then
+    for itemId, _ in pairs(TierSystem.upgradeItems) do
+        action:aid(itemId)
+    end
+else
+    print(">> ERROR: TierSystem.upgradeItems is nil!")
 end
+
+if TierSystem.avalancheFusion then
+    action:aid(TierSystem.avalancheFusion.actionId)
+end
+
 action:register()
 
 local loginEvent = CreatureEvent("onLogin_updateTierSystem")
