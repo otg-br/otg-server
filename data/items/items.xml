@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+﻿<?xml version="1.0" encoding="iso-8859-1"?>
 <items>
 	<!-- A Piece of Cake Quest -->
     <item id="13128" article="a" name="slain cake golem">
@@ -450,6 +450,7 @@
 		<attribute key="shootType" value="smallstone" />
 		<attribute key="maxHitChance" value="76" />
 		<attribute key="range" value="4" />
+			<attribute key="classification" value="0" />
 	</item>
 	<item id="1295" article="a" name="stone">
 		<attribute key="weight" value="3000" />
@@ -1951,6 +1952,7 @@
 	<item id="2109" article="a" name="football" />
 	<item id="2110" article="a" name="doll">
 		<attribute key="weight" value="650" />
+			<attribute key="classification" value="0" />
 	</item>
 	<item id="2111" article="a" name="snowball">
 		<attribute key="weight" value="80" />
@@ -2274,6 +2276,7 @@
 		<attribute key="weaponType" value="wand" />
 		<attribute key="shootType" value="smallearth" />
 		<attribute key="range" value="3" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2183" article="a" name="hailstorm rod">
 		<attribute key="description" value="It grants you the power of striking your foes with furious hailstorms." />
@@ -2281,10 +2284,12 @@
 		<attribute key="weaponType" value="wand" />
 		<attribute key="shootType" value="smallice" />
 		<attribute key="range" value="3" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2184" article="a" name="crystal wand">
 		<attribute key="weight" value="2800" />
 		<attribute key="loottype" value="valuables" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2185" article="a" name="necrotic rod">
 		<attribute key="description" value="It was brought up from hell to deliver death." />
@@ -2292,6 +2297,7 @@
 		<attribute key="weaponType" value="wand" />
 		<attribute key="shootType" value="death" />
 		<attribute key="range" value="3" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2186" article="a" name="moonlight rod">
 		<attribute key="description" value="Icecold rays of moonlight shimmer on its tip." />
@@ -2299,6 +2305,7 @@
 		<attribute key="weaponType" value="wand" />
 		<attribute key="shootType" value="smallice" />
 		<attribute key="range" value="3" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2187" article="a" name="wand of inferno">
 		<attribute key="description" value="It unleashes the very fires of hell." />
@@ -2306,6 +2313,7 @@
 		<attribute key="weaponType" value="wand" />
 		<attribute key="shootType" value="fire" />
 		<attribute key="range" value="3" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2188" article="a" name="wand of decay">
 		<attribute key="description" value="It is half-rotten itself and reeks terribly." />
@@ -2313,6 +2321,7 @@
 		<attribute key="weaponType" value="wand" />
 		<attribute key="shootType" value="death" />
 		<attribute key="range" value="3" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2189" article="a" name="wand of cosmic energy">
 		<attribute key="description" value="The energy of a radiant star is trapped inside its globe." />
@@ -2320,6 +2329,7 @@
 		<attribute key="weaponType" value="wand" />
 		<attribute key="shootType" value="energy" />
 		<attribute key="range" value="3" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2190" article="a" name="wand of vortex">
 		<attribute key="description" value="Surges of energy rush through the tip of this wand." />
@@ -2327,6 +2337,7 @@
 		<attribute key="weaponType" value="wand" />
 		<attribute key="shootType" value="energy" />
 		<attribute key="range" value="3" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2191" article="a" name="wand of dragonbreath">
 		<attribute key="description" value="Legends say that this wand holds the soul of a young dragon." />
@@ -2335,26 +2346,32 @@
 		<attribute key="shootType" value="fire" />
 		<attribute key="range" value="3" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2192" article="a" name="crystal ball">
 		<attribute key="weight" value="3400" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2193" article="an" name="ankh">
 		<attribute key="weight" value="420" />
 		<attribute key="loottype" value="decoration" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2194" article="a" name="mysterious fetish">
 		<attribute key="weight" value="490" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2195" name="boots of haste">
 		<attribute key="weight" value="750" />
 		<attribute key="slotType" value="feet" />
 		<attribute key="speed" value="40" />
 		<attribute key="showattributes" value="1" />
+	                <attribute key="classification" value="2" />
 	</item>
 	<item id="2196" article="a" name="broken amulet">
 		<attribute key="weight" value="420" />
 		<attribute key="slotType" value="necklace" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2197" article="a" name="stone skin amulet">
 		<attribute key="weight" value="700" />
@@ -2364,6 +2381,7 @@
 		<attribute key="absorbPercentPhysical" value="80" />
 		<attribute key="absorbPercentDeath" value="80" />
 		<attribute key="showattributes" value="1" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2198" article="an" name="elven amulet">
 		<attribute key="weight" value="270" />
@@ -3139,6 +3157,7 @@
 		<attribute key="weaponType" value="sword" />
 		<attribute key="extradef" value="1" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2377" article="a" name="two handed sword">
 		<attribute key="weight" value="7000" />
@@ -3146,6 +3165,7 @@
 		<attribute key="attack" value="30" />
 		<attribute key="weaponType" value="sword" />
 		<attribute key="slotType" value="two-handed" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2378" article="a" name="battle axe">
 		<attribute key="weight" value="5000" />
@@ -3153,7 +3173,7 @@
 		<attribute key="attack" value="25" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
-	</item>
+			<attribute key="classification" value="1" /></item>
 	<item id="2379" article="a" name="dagger">
 		<attribute key="weight" value="950" />
 		<attribute key="defense" value="6" />
@@ -3165,7 +3185,7 @@
 		<attribute key="defense" value="5" />
 		<attribute key="attack" value="10" />
 		<attribute key="weaponType" value="axe" />
-	</item>
+			<attribute key="classification" value="1" /></item>
 	<item id="2381" article="a" name="halberd">
 		<attribute key="weight" value="9000" />
 		<attribute key="defense" value="14" />
@@ -3207,14 +3227,14 @@
 		<attribute key="defense" value="6" />
 		<attribute key="attack" value="12" />
 		<attribute key="weaponType" value="axe" />
-	</item>
+			<attribute key="classification" value="1" /></item>
 	<item id="2387" article="a" name="double axe">
 		<attribute key="weight" value="7000" />
 		<attribute key="defense" value="12" />
 		<attribute key="attack" value="35" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
-	</item>
+			<attribute key="classification" value="1" /></item>
 	<item id="2388" article="a" name="hatchet">
 		<attribute key="weight" value="3500" />
 		<attribute key="defense" value="8" />
@@ -3228,6 +3248,7 @@
 		<attribute key="shootType" value="spear" />
 		<attribute key="maxHitChance" value="76" />
 		<attribute key="range" value="3" />
+			<attribute key="classification" value="0" />
 	</item>
 	<item id="2390" article="a" name="magic longsword">
 		<attribute key="description" value="It's the magic Cyclopmania Sword." />
@@ -3236,6 +3257,7 @@
 		<attribute key="attack" value="55" />
 		<attribute key="weaponType" value="sword" />
 		<attribute key="slotType" value="two-handed" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2391" article="a" name="war hammer">
 		<attribute key="weight" value="8500" />
@@ -3244,6 +3266,7 @@
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
 		<attribute key="imbuingSlots" value="3" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2392" article="a" name="fire sword">
 		<attribute key="description" value="The blade is a magic flame." />
@@ -3253,6 +3276,7 @@
 		<attribute key="elementFire" value="11" />
 		<attribute key="weaponType" value="sword" />
 		<attribute key="extradef" value="1" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2393" article="a" name="giant sword">
 		<attribute key="description" value="This sword has been forged by ancient giants." />
@@ -3262,12 +3286,14 @@
 		<attribute key="weaponType" value="sword" />
 		<attribute key="slotType" value="two-handed" />
 		<attribute key="imbuingSlots" value="3" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2394" article="a" name="morning star">
 		<attribute key="weight" value="5400" />
 		<attribute key="defense" value="11" />
 		<attribute key="attack" value="25" />
 		<attribute key="weaponType" value="club" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2395" article="a" name="carlin sword">
 		<attribute key="weight" value="4000" />
@@ -3275,6 +3301,7 @@
 		<attribute key="attack" value="15" />
 		<attribute key="weaponType" value="sword" />
 		<attribute key="extradef" value="1" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2396" article="an" name="ice rapier">
 		<attribute key="description" value="A deadly but fragile weapon." />
@@ -3284,18 +3311,21 @@
 		<attribute key="weaponType" value="sword" />
 		<attribute key="elementIce" value="18" />
 		<attribute key="charges" value="1" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2397" article="a" name="longsword">
 		<attribute key="weight" value="4200" />
 		<attribute key="defense" value="14" />
 		<attribute key="attack" value="17" />
 		<attribute key="weaponType" value="sword" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2398" article="a" name="mace">
 		<attribute key="weight" value="3800" />
 		<attribute key="defense" value="11" />
 		<attribute key="attack" value="16" />
 		<attribute key="weaponType" value="club" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2399" article="a" name="throwing star">
 		<attribute key="weight" value="200" />
@@ -3304,6 +3334,7 @@
 		<attribute key="shootType" value="throwingstar" />
 		<attribute key="maxHitChance" value="76" />
 		<attribute key="range" value="4" />
+			<attribute key="classification" value="0" />
 	</item>
 	<item id="2400" article="a" name="magic sword">
 		<attribute key="description" value="It's the Sword of Valor." />
@@ -3360,6 +3391,7 @@
 		<attribute key="weaponType" value="sword" />
 		<attribute key="extradef" value="1" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2408" article="a" name="warlord sword">
 		<attribute key="description" value="Strong powers flow in this magic sword." />
@@ -3368,6 +3400,7 @@
 		<attribute key="attack" value="53" />
 		<attribute key="weaponType" value="sword" />
 		<attribute key="slotType" value="two-handed" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2409" article="a" name="serpent sword">
 		<attribute key="weight" value="4100" />
@@ -3376,6 +3409,7 @@
 		<attribute key="weaponType" value="sword" />
 		<attribute key="extradef" value="1" />
 		<attribute key="elementEarth" value="8" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2410" article="a" name="throwing knife" plural="throwing knives">
 		<attribute key="weight" value="500" />
@@ -3384,6 +3418,7 @@
 		<attribute key="shootType" value="throwingknife" />
 		<attribute key="maxHitChance" value="76" />
 		<attribute key="range" value="4" />
+			<attribute key="classification" value="0" />
 	</item>
 	<item id="2411" article="a" name="poison dagger">
 		<attribute key="weight" value="880" />
@@ -3391,6 +3426,7 @@
 		<attribute key="attack" value="18" />
 		<attribute key="elementEarth" value="2" />
 		<attribute key="weaponType" value="sword" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2412" article="a" name="katana">
 		<attribute key="weight" value="3100" />
@@ -3398,6 +3434,7 @@
 		<attribute key="attack" value="16" />
 		<attribute key="weaponType" value="sword" />
 		<attribute key="extradef" value="1" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2413" article="a" name="broadsword">
 		<attribute key="weight" value="5250" />
@@ -3405,6 +3442,7 @@
 		<attribute key="attack" value="26" />
 		<attribute key="weaponType" value="sword" />
 		<attribute key="slotType" value="two-handed" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2414" article="a" name="dragon lance">
 		<attribute key="description" value="The extraordinary sharp blade penetrates every armor." />
@@ -3414,6 +3452,7 @@
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
 		<attribute key="imbuingSlots" value="3" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2415" article="a" name="great axe">
 		<attribute key="description" value="A masterpiece of a dwarven smith." />
@@ -3423,6 +3462,7 @@
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2416" article="a" name="crowbar">
 		<attribute key="description" value="It may come in handy sometime." />
@@ -3430,18 +3470,21 @@
 		<attribute key="defense" value="6" />
 		<attribute key="attack" value="5" />
 		<attribute key="weaponType" value="club" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2417" article="a" name="battle hammer">
 		<attribute key="weight" value="6800" />
 		<attribute key="defense" value="14" />
 		<attribute key="attack" value="24" />
 		<attribute key="weaponType" value="club" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2418" article="a" name="golden sickle">
 		<attribute key="weight" value="1950" />
 		<attribute key="defense" value="6" />
 		<attribute key="attack" value="13" />
 		<attribute key="weaponType" value="axe" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2419" article="a" name="scimitar">
 		<attribute key="weight" value="2900" />
@@ -3455,6 +3498,7 @@
 		<attribute key="defense" value="9" />
 		<attribute key="attack" value="12" />
 		<attribute key="weaponType" value="sword" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2421" article="a" name="thunder hammer">
 		<attribute key="description" value="It is blessed by the gods of Tibia." />
@@ -3464,12 +3508,14 @@
 		<attribute key="weaponType" value="club" />
 		<attribute key="extradef" value="1" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2422" article="an" name="iron hammer">
 		<attribute key="weight" value="6600" />
 		<attribute key="defense" value="10" />
 		<attribute key="attack" value="18" />
 		<attribute key="weaponType" value="club" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2423" article="a" name="clerical mace">
 		<attribute key="weight" value="5800" />
@@ -3478,6 +3524,7 @@
 		<attribute key="weaponType" value="club" />
 		<attribute key="extradef" value="1" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2424" article="a" name="silver mace">
 		<attribute key="description" value="You feel an aura of protection." />
@@ -3487,6 +3534,7 @@
 		<attribute key="weaponType" value="club" />
 		<attribute key="extradef" value="2" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2425" article="an" name="obsidian lance">
 		<attribute key="weight" value="8000" />
@@ -3494,6 +3542,7 @@
 		<attribute key="attack" value="34" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2426" article="a" name="naginata">
 		<attribute key="weight" value="7800" />
@@ -3501,6 +3550,7 @@
 		<attribute key="attack" value="39" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2427" article="a" name="guardian halberd">
 		<attribute key="weight" value="11000" />
@@ -3509,13 +3559,14 @@
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
 		<attribute key="imbuingSlots" value="3" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2428" article="an" name="orcish axe">
 		<attribute key="weight" value="4500" />
 		<attribute key="defense" value="12" />
 		<attribute key="attack" value="23" />
 		<attribute key="weaponType" value="axe" />
-	</item>
+			<attribute key="classification" value="1" /></item>
 	<item id="2429" article="a" name="barbarian axe">
 		<attribute key="weight" value="5100" />
 		<attribute key="defense" value="18" />
@@ -3523,7 +3574,7 @@
 		<attribute key="weaponType" value="axe" />
 		<attribute key="extradef" value="1" />
 		<attribute key="imbuingSlots" value="2" />
-	</item>
+			<attribute key="classification" value="1" /></item>
 	<item id="2430" article="a" name="knight axe">
 		<attribute key="weight" value="5900" />
 		<attribute key="defense" value="21" />
@@ -3531,7 +3582,7 @@
 		<attribute key="weaponType" value="axe" />
 		<attribute key="extradef" value="1" />
 		<attribute key="imbuingSlots" value="2" />
-	</item>
+			<attribute key="classification" value="2" /></item>
 	<item id="2431" article="a" name="stonecutter axe">
 		<attribute key="description" value="You feel the power of this mighty axe." />
 		<attribute key="weight" value="9900" />
@@ -3540,7 +3591,7 @@
 		<attribute key="weaponType" value="axe" />
 		<attribute key="extradef" value="3" />
 		<attribute key="imbuingSlots" value="1" />
-	</item>
+			<attribute key="classification" value="2" /></item>
 	<item id="2432" article="a" name="fire axe">
 		<attribute key="description" value="The blade is a magic flame." />
 		<attribute key="weight" value="4000" />
@@ -3549,7 +3600,7 @@
 		<attribute key="elementFire" value="11" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="extradef" value="1" />
-	</item>
+			<attribute key="classification" value="2" /></item>
 	<item id="2433" article="an" name="enchanted staff">
 		<attribute key="description" value="Temporary magic powers enchant this staff." />
 		<attribute key="weight" value="3800" />
@@ -3559,12 +3610,14 @@
 		<attribute key="slotType" value="two-handed" />
 		<attribute key="decayTo" value="2401" />
 		<attribute key="duration" value="60" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2434" article="a" name="dragon hammer">
 		<attribute key="weight" value="9700" />
 		<attribute key="defense" value="20" />
 		<attribute key="attack" value="32" />
 		<attribute key="weaponType" value="club" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2435" article="a" name="dwarven axe">
 		<attribute key="weight" value="8200" />
@@ -3573,6 +3626,7 @@
 		<attribute key="weaponType" value="axe" />
 		<attribute key="extradef" value="2" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2436" article="a" name="skull staff">
 		<attribute key="description" value="The staff longs for death." />
@@ -3582,12 +3636,14 @@
 		<attribute key="weaponType" value="club" />
 		<attribute key="extradef" value="1" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2437" article="a" name="light mace">
 		<attribute key="weight" value="4100" />
 		<attribute key="defense" value="9" />
 		<attribute key="attack" value="14" />
 		<attribute key="weaponType" value="club" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2438" article="an" name="epee">
 		<attribute key="weight" value="1450" />
@@ -3595,12 +3651,14 @@
 		<attribute key="attack" value="37" />
 		<attribute key="weaponType" value="sword" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2439" article="a" name="daramian mace">
 		<attribute key="weight" value="6800" />
 		<attribute key="defense" value="12" />
 		<attribute key="attack" value="21" />
 		<attribute key="weaponType" value="club" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2440" article="a" name="daramian waraxe">
 		<attribute key="weight" value="5250" />
@@ -3608,18 +3666,19 @@
 		<attribute key="attack" value="39" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
-	</item>
+			<attribute key="classification" value="2" /></item>
 	<item id="2441" article="a" name="daramian axe">
 		<attribute key="weight" value="4100" />
 		<attribute key="defense" value="8" />
 		<attribute key="attack" value="17" />
 		<attribute key="weaponType" value="axe" />
-	</item>
+			<attribute key="classification" value="4" /></item>
 	<item id="2442" article="a" name="heavy machete">
 		<attribute key="weight" value="1840" />
 		<attribute key="defense" value="10" />
 		<attribute key="attack" value="16" />
 		<attribute key="weaponType" value="sword" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2443" article="a" name="ravager's axe">
 		<attribute key="weight" value="5250" />
@@ -3628,6 +3687,7 @@
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
 		<attribute key="imbuingSlots" value="3" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2444" article="a" name="hammer of wrath">
 		<attribute key="description" value="A giant is said to have forged this hammer to take revenge for the death of his brother." />
@@ -3637,6 +3697,7 @@
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
 		<attribute key="imbuingSlots" value="3" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2445" article="a" name="crystal mace">
 		<attribute key="weight" value="8000" />
@@ -3645,6 +3706,7 @@
 		<attribute key="extradef" value="1" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2446" article="a" name="pharaoh sword">
 		<attribute key="weight" value="5200" />
@@ -3660,7 +3722,7 @@
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
 		<attribute key="imbuingSlots" value="3" />
-	</item>
+			<attribute key="classification" value="3" /></item>
 	<item id="2448" article="a" name="studded club">
 		<attribute key="description" value="It has been reinforced with iron." />
 		<attribute key="weight" value="3500" />
@@ -3674,6 +3736,7 @@
 		<attribute key="defense" value="8" />
 		<attribute key="attack" value="12" />
 		<attribute key="weaponType" value="club" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2450" article="a" name="bone sword">
 		<attribute key="weight" value="1900" />
@@ -3714,7 +3777,7 @@
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
 		<attribute key="imbuingSlots" value="3" />
-	</item>
+			<attribute key="classification" value="2" /></item>
 	<item id="2455" article="a" name="crossbow">
 		<attribute key="weight" value="4000" />
 		<attribute key="weaponType" value="distance" />
@@ -3722,6 +3785,7 @@
 		<attribute key="ammoType" value="bolt" />
 		<attribute key="range" value="5" />
 		<attribute key="imbuingSlots" value="3" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2456" article="a" name="bow">
 		<attribute key="weight" value="3100" />
@@ -3740,16 +3804,19 @@
 		<attribute key="armor" value="2" />
 		<attribute key="slotType" value="head" />
 		<attribute key="imbuingSlots" value="1" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2459" article="an" name="iron helmet">
 		<attribute key="weight" value="3000" />
 		<attribute key="armor" value="5" />
 		<attribute key="slotType" value="head" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2460" article="a" name="brass helmet">
 		<attribute key="weight" value="2700" />
 		<attribute key="armor" value="3" />
 		<attribute key="slotType" value="head" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2461" article="a" name="leather helmet">
 		<attribute key="weight" value="2200" />
@@ -3765,43 +3832,51 @@
 		<attribute key="weight" value="12000" />
 		<attribute key="armor" value="10" />
 		<attribute key="slotType" value="body" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2464" article="a" name="chain armor">
 		<attribute key="weight" value="10000" />
 		<attribute key="armor" value="6" />
 		<attribute key="slotType" value="body" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2465" article="a" name="brass armor">
 		<attribute key="weight" value="8000" />
 		<attribute key="armor" value="8" />
 		<attribute key="slotType" value="body" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2466" article="a" name="golden armor">
 		<attribute key="weight" value="8000" />
 		<attribute key="armor" value="14" />
 		<attribute key="slotType" value="body" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="2467" article="a" name="leather armor">
 		<attribute key="weight" value="6000" />
 		<attribute key="armor" value="4" />
 		<attribute key="slotType" value="body" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2468" name="studded legs">
 		<attribute key="weight" value="2600" />
 		<attribute key="armor" value="2" />
 		<attribute key="slotType" value="legs" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2469" name="dragon scale legs">
 		<attribute key="weight" value="4800" />
 		<attribute key="armor" value="10" />
 		<attribute key="slotType" value="legs" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="2470" name="golden legs">
 		<attribute key="weight" value="5600" />
 		<attribute key="armor" value="9" />
 		<attribute key="slotType" value="legs" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="2471" article="a" name="golden helmet">
 		<attribute key="description" value="It's the famous Helmet of the Stars." />
@@ -3812,9 +3887,11 @@
 	</item>
 	<item id="2472" article="a" name="magic plate armor">
 		<attribute key="weight" value="8500" />
-		<attribute key="armor" value="17" />
+		<attribute key="armor" value="19" />
+		<attribute key="absorbPercentFire" value="5"/>
+		<attribute key="absorbPercentEnergy" value="5"/>
+		<attribute key="absorbPercentHoly" value="5"/>
 		<attribute key="slotType" value="body" />
-		<attribute key="imbuingSlots" value="2" />
 	</item>
 	<item id="2473" article="a" name="viking helmet">
 		<attribute key="weight" value="3900" />
@@ -3843,11 +3920,13 @@
 		<attribute key="weight" value="7000" />
 		<attribute key="armor" value="8" />
 		<attribute key="slotType" value="legs" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="2478" name="brass legs">
 		<attribute key="weight" value="3800" />
 		<attribute key="armor" value="5" />
 		<attribute key="slotType" value="legs" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2479" article="a" name="strange helmet">
 		<attribute key="weight" value="4600" />
@@ -3873,6 +3952,7 @@
 		<attribute key="weight" value="10500" />
 		<attribute key="armor" value="9" />
 		<attribute key="slotType" value="body" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2484" article="a" name="studded armor">
 		<attribute key="weight" value="7100" />
@@ -3900,6 +3980,7 @@
 		<attribute key="weight" value="6500" />
 		<attribute key="armor" value="8" />
 		<attribute key="slotType" value="legs" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="2489" article="a" name="dark armor">
 		<attribute key="weight" value="12000" />
@@ -3910,6 +3991,7 @@
 		<attribute key="weight" value="4600" />
 		<attribute key="armor" value="6" />
 		<attribute key="slotType" value="head" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2491" article="a" name="crown helmet">
 		<attribute key="weight" value="2950" />
@@ -3935,13 +4017,13 @@
 		<attribute key="armor" value="16" />
 		<attribute key="slotType" value="body" />
 		<attribute key="imbuingSlots" value="2" />
-		<attribute key="classification" value="2"/>
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="2495" name="demon legs">
 		<attribute key="weight" value="7000" />
 		<attribute key="armor" value="9" />
 		<attribute key="slotType" value="legs" />
-		<attribute key="classification" value="2"/>
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="2496" article="a" name="horned helmet">
 		<attribute key="weight" value="5100" />
@@ -3966,6 +4048,7 @@
 		<attribute key="armor" value="7" />
 		<attribute key="slotType" value="head" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="4" />
 	</item>
 	<item id="2500" article="an" name="amazon armor">
 		<attribute key="weight" value="4500" />
@@ -3973,6 +4056,7 @@
 		<attribute key="skillDist" value="3" />
 		<attribute key="slotType" value="body" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="4" />
 	</item>
 	<item id="2501" article="a" name="ceremonial mask">
 		<attribute key="weight" value="4000" />
@@ -4004,10 +4088,12 @@
 		<attribute key="armor" value="9" />
 		<attribute key="slotType" value="body" />
 		<attribute key="imbuingSlots" value="3" />
+			<attribute key="classification" value="3" />
 	</item>
 	<item id="2506" article="a" name="dragon scale helmet">
 		<attribute key="description" value="It's made of dragon scales." />
 		<attribute key="weight" value="3250" />
+		<attribute key="absorbPercentFire" value="6"/>
 		<attribute key="armor" value="9" />
 		<attribute key="slotType" value="head" />
 	</item>
@@ -4015,6 +4101,7 @@
 		<attribute key="weight" value="3300" />
 		<attribute key="armor" value="4" />
 		<attribute key="slotType" value="legs" />
+			<attribute key="classification" value="3" />
 	</item>
 	<item id="2508" article="a" name="native armor">
 		<attribute key="weight" value="8000" />
@@ -4062,8 +4149,12 @@
 	<item id="2516" article="a" name="dragon shield">
 		<attribute key="weight" value="6000" />
 		<attribute key="defense" value="31" />
+		<attribute key="absorbPercentFire" value="3"/>
+		<attribute key="absorbPercentphysical" value="3"/>
+		<attribute key="absorbpercentholy" value="3"/>
+		<attribute key="absorbpercentenergy" value="3"/>
+		<attribute key="absorbpercentpoison" value="3"/>
 		<attribute key="weaponType" value="shield" />
-		<attribute key="imbuingSlots" value="1" />
 	</item>
 	<item id="2517" article="a" name="shield of honour">
 		<attribute key="description" value="A mighty shield awarded by the gods of Tibia." />
@@ -4491,46 +4582,55 @@
 		<attribute key="weight" value="1000" />
 		<attribute key="armor" value="2" />
 		<attribute key="slotType" value="feet" />
+	                <attribute key="classification" value="4" />
 	</item>
 	<item id="2642" name="sandals">
 		<attribute key="weight" value="600" />
 		<attribute key="slotType" value="feet" />
+	                <attribute key="classification" value="1" />
 	</item>
 	<item id="2643" name="leather boots">
 		<attribute key="weight" value="900" />
 		<attribute key="armor" value="1" />
 		<attribute key="slotType" value="feet" />
+	                <attribute key="classification" value="1" />
 	</item>
 	<item id="2644" name="bunnyslippers">
 		<attribute key="weight" value="600" />
 		<attribute key="slotType" value="feet" />
+	                <attribute key="classification" value="4" />
 	</item>
 	<item id="2645" name="steel boots">
 		<attribute key="weight" value="2900" />
 		<attribute key="armor" value="3" />
 		<attribute key="slotType" value="feet" />
 		<attribute key="imbuingSlots" value="1" />
+	                <attribute key="classification" value="2" />
 	</item>
 	<item id="2646" name="golden boots">
 		<attribute key="weight" value="3100" />
 		<attribute key="armor" value="4" />
 		<attribute key="slotType" value="feet" />
 		<attribute key="imbuingSlots" value="1" />
+	                <attribute key="classification" value="3" />
 	</item>
 	<item id="2647" name="plate legs">
 		<attribute key="weight" value="5000" />
 		<attribute key="armor" value="7" />
 		<attribute key="slotType" value="legs" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2648" name="chain legs">
 		<attribute key="weight" value="3500" />
 		<attribute key="armor" value="3" />
 		<attribute key="slotType" value="legs" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2649" name="leather legs">
 		<attribute key="weight" value="1800" />
 		<attribute key="armor" value="1" />
 		<attribute key="slotType" value="legs" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="2650" article="a" name="jacket">
 		<attribute key="weight" value="2400" />
@@ -4569,6 +4669,7 @@
 		<attribute key="armor" value="11" />
 		<attribute key="slotType" value="body" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="2657" article="a" name="simple dress">
 		<attribute key="weight" value="1000" />
@@ -7389,7 +7490,7 @@
 		<attribute key="weaponType" value="axe" />
 		<attribute key="extradef" value="1" />
 		<attribute key="imbuingSlots" value="2" />
-	</item>
+			<attribute key="classification" value="2" /></item>
 	<item id="3963" article="a" name="templar scytheblade">
 		<attribute key="weight" value="2900" />
 		<attribute key="defense" value="15" />
@@ -7423,6 +7524,7 @@
 		<attribute key="weight" value="2500" />
 		<attribute key="armor" value="2" />
 		<attribute key="slotType" value="head" />
+			<attribute key="classification" value="0" />
 	</item>
 	<item id="3968" article="a" name="leopard armor">
 		<attribute key="weight" value="9500" />
@@ -7479,6 +7581,7 @@
 		<attribute key="armor" value="1" />
 		<attribute key="slotType" value="feet" />
 		<attribute key="imbuingSlots" value="1" />
+	                <attribute key="classification" value="2" />
 	</item>
 	<item id="3983" article="a" name="bast skirt">
 		<attribute key="weight" value="350" />
@@ -8725,6 +8828,7 @@
 		<attribute key="armor" value="2" />
 		<attribute key="slotType" value="feet" />
 		<attribute key="imbuingSlots" value="1" />
+	                <attribute key="classification" value="1" />
 	</item>
 	<item id="5463" article="a" name="sugar cane">
 		<attribute key="description" value="It has just been harvested." />
@@ -9282,30 +9386,38 @@
 		<attribute key="range" value="6" />
 		<attribute key="hitChance" value="2" />
 		<attribute key="attack" value="2" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="5804" article="a" name="nose ring">
 		<attribute key="description" value="It was the favourite trinket of the famous Horned Fox." />
 		<attribute key="weight" value="500" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="5805" article="a" name="golden goblet">
 		<attribute key="weight" value="1500" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="5806" article="a" name="silver goblet">
 		<attribute key="weight" value="1500" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="5807" article="a" name="bronze goblet">
 		<attribute key="weight" value="1500" />
 		<attribute key="loottype" value="decoration" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="5808" name="orshabaal's brain">
 		<attribute key="weight" value="3500" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="5809" article="a" name="soul stone">
 		<attribute key="description" value="It contains the essence of countless tormented souls." />
 		<attribute key="weight" value="30" />
+			<attribute key="classification" value="3" />
 	</item>
 	<item id="5810" article="a" name="pirate voodoo doll">
 		<attribute key="weight" value="650" />
+			<attribute key="classification" value="3" />
 	</item>
 	<item id="5811" article="a" name="mermaid" />
 	<item id="5812" article="a" name="skull candle">
@@ -9314,12 +9426,14 @@
 		<attribute key="decayTo" value="2229" />
 		<attribute key="showduration" value="1" />
 		<attribute key="duration" value="3000" />
+			<attribute key="classification" value="4" />
 	</item>
 	<item id="5813" article="a" name="skull candle">
 		<attribute key="slotType" value="ammo" />
 		<attribute key="weight" value="2200" />
 		<attribute key="stopduration" value="1" />
 		<attribute key="showduration" value="1" />
+			<attribute key="classification" value="4" />
 	</item>
 	<item fromid="5814" toid="5827" name="small lava cracks">
 		<attribute key="description" value="The ground is steaming hot." />
@@ -9535,6 +9649,7 @@
 		<attribute key="weight" value="850" />
 		<attribute key="armor" value="1" />
 		<attribute key="slotType" value="head" />
+			<attribute key="classification" value="1" />
 	</item>
 	<item id="5918" name="pirate knee breeches">
 		<attribute key="weight" value="1200" />
@@ -10718,6 +10833,7 @@
 		<attribute key="transformEquipTo" value="2640" />
 		<attribute key="stopduration" value="1" />
 		<attribute key="showduration" value="1" />
+	                <attribute key="classification" value="0" />
 	</item>
 	<item fromid="6133" toid="6159" article="a" name="tree wall" />
 	<item fromid="6160" toid="6172" article="a" name="grass roof" />
@@ -10884,6 +11000,7 @@
 	<item id="6278" article="a" name="cake">
 		<attribute key="weight" value="500" />
 		<attribute key="loottype" value="food" />
+			<attribute key="classification" value="0" />
 	</item>
 	<item id="6279" article="a" name="decorated cake">
 		<attribute key="weight" value="500" />
@@ -11634,7 +11751,7 @@
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
 		<attribute key="imbuingSlots" value="2" />
-	</item>
+			<attribute key="classification" value="2" /></item>
 	<item fromid="6554" toid="6555" name="" />
 	<item fromid="6556" toid="6557" article="a" name="tic-tac-toe token">
 		<attribute key="description" value="It seems to be rather fragile." />
@@ -12562,6 +12679,7 @@
 		<attribute key="ammoType" value="arrow" />
 		<attribute key="shootType" value="sniperarrow" />
 		<attribute key="maxHitChance" value="100" />
+			<attribute key="classification" value="0" />
 	</item>
 	<item id="7365" article="an" name="onyx arrow">
 		<attribute key="weight" value="70" />
@@ -12571,6 +12689,7 @@
 		<attribute key="ammoType" value="arrow" />
 		<attribute key="shootType" value="onyxarrow" />
 		<attribute key="maxHitChance" value="94" />
+			<attribute key="classification" value="0" />
 	</item>
 	<item id="7366" article="a" name="viper star">
 		<attribute key="weight" value="200" />
@@ -12580,6 +12699,7 @@
 		<attribute key="shootType" value="greenstar" />
 		<attribute key="maxHitChance" value="76" />
 		<attribute key="range" value="4" />
+			<attribute key="classification" value="0" />
 	</item>
 	<item id="7367" article="an" name="enchanted spear">
 		<attribute key="weight" value="2000" />
@@ -12588,6 +12708,7 @@
 		<attribute key="shootType" value="enchantedspear" />
 		<attribute key="maxHitChance" value="80" />
 		<attribute key="range" value="4" />
+			<attribute key="classification" value="0" />
 	</item>
 	<item id="7368" article="an" name="assassin star">
 		<attribute key="weight" value="200" />
@@ -12596,6 +12717,7 @@
 		<attribute key="weaponType" value="distance" />
 		<attribute key="shootType" value="redstar" />
 		<attribute key="range" value="4" />
+			<attribute key="classification" value="0" />
 	</item>
 	<item id="7369" article="a" name="golden trophy">
 		<attribute key="weight" value="3500" />
@@ -12643,6 +12765,7 @@
 		<attribute key="shootType" value="royalspear" />
 		<attribute key="maxHitChance" value="80" />
 		<attribute key="range" value="3" />
+			<attribute key="classification" value="0" />
 	</item>
 	<item id="7379" name="brutetamer's staff">
 		<attribute key="weight" value="3800" />
@@ -12723,7 +12846,7 @@
 		<attribute key="attack" value="43" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="extradef" value="3" />
-	</item>
+			<attribute key="classification" value="2" /></item>
 	<item id="7389" article="a" name="heroic axe">
 		<attribute key="weight" value="6100" />
 		<attribute key="defense" value="24" />
@@ -12808,6 +12931,7 @@
 		<attribute key="weaponType" value="sword" />
 		<attribute key="extradef" value="-2" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="7405" article="a" name="havoc blade">
 		<attribute key="weight" value="7200" />
@@ -12816,6 +12940,7 @@
 		<attribute key="weaponType" value="sword" />
 		<attribute key="slotType" value="two-handed" />
 		<attribute key="imbuingSlots" value="3" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="7406" article="a" name="blacksteel sword">
 		<attribute key="weight" value="5900" />
@@ -12825,6 +12950,7 @@
 		<attribute key="slotType" value="two-handed" />
 		<attribute key="description" value="This sword is only granted to a greenhorn of the Svargrond arena." />
 		<attribute key="imbuingSlots" value="3" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="7407" article="a" name="haunted blade">
 		<attribute key="weight" value="3100" />
@@ -12833,6 +12959,7 @@
 		<attribute key="weaponType" value="sword" />
 		<attribute key="slotType" value="two-handed" />
 		<attribute key="imbuingSlots" value="3" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="7408" article="a" name="wyvern fang">
 		<attribute key="weight" value="2000" />
@@ -12841,6 +12968,7 @@
 		<attribute key="weaponType" value="sword" />
 		<attribute key="extradef" value="1" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="7409" article="a" name="northern star">
 		<attribute key="weight" value="4200" />
@@ -12848,6 +12976,7 @@
 		<attribute key="attack" value="42" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="extradef" value="1" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="7410" article="a" name="queen's sceptre">
 		<attribute key="weight" value="2300" />
@@ -12855,6 +12984,7 @@
 		<attribute key="attack" value="43" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="7411" article="an" name="ornamented axe">
 		<attribute key="weight" value="6150" />
@@ -12862,6 +12992,7 @@
 		<attribute key="attack" value="42" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="extradef" value="2" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="7412" article="a" name="butcher's axe">
 		<attribute key="weight" value="6300" />
@@ -12869,6 +13000,7 @@
 		<attribute key="attack" value="41" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="extradef" value="-2" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="7413" article="a" name="titan axe">
 		<attribute key="weight" value="8100" />
@@ -12876,6 +13008,7 @@
 		<attribute key="attack" value="43" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="7414" article="an" name="abyss hammer">
 		<attribute key="description" value="Floating stones form the tip of this strange weapon, held in place by unspeakable magic." />
@@ -12885,6 +13018,7 @@
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
 		<attribute key="imbuingSlots" value="3" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="7415" article="a" name="cranial basher">
 		<attribute key="weight" value="7800" />
@@ -12894,6 +13028,7 @@
 		<attribute key="extradef" value="-2" />
 		<attribute key="description" value="This club is only granted to a scrapper of the Svargrond arena." />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="7416" article="a" name="bloody edge">
 		<attribute key="weight" value="5200" />
@@ -12902,6 +13037,7 @@
 		<attribute key="weaponType" value="sword" />
 		<attribute key="extradef" value="-3" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="7417" article="a" name="runed sword">
 		<attribute key="weight" value="4600" />
@@ -12910,6 +13046,7 @@
 		<attribute key="weaponType" value="sword" />
 		<attribute key="extradef" value="2" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="7418" article="a" name="nightmare blade">
 		<attribute key="weight" value="4600" />
@@ -12918,6 +13055,7 @@
 		<attribute key="weaponType" value="sword" />
 		<attribute key="extradef" value="-3" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="7419" article="a" name="dreaded cleaver">
 		<attribute key="weight" value="3800" />
@@ -12926,6 +13064,7 @@
 		<attribute key="weaponType" value="axe" />
 		<attribute key="extradef" value="-3" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="7420" article="a" name="reaper's axe">
 		<attribute key="weight" value="5900" />
@@ -12933,6 +13072,7 @@
 		<attribute key="attack" value="46" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="extradef" value="2" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="7421" article="an" name="onyx flail">
 		<attribute key="weight" value="2600" />
@@ -12940,6 +13080,7 @@
 		<attribute key="attack" value="45" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="7422" article="a" name="jade hammer">
 		<attribute key="weight" value="3200" />
@@ -12947,6 +13088,7 @@
 		<attribute key="attack" value="46" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="extradef" value="1" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="7423" article="a" name="skullcrusher">
 		<attribute key="weight" value="12000" />
@@ -12955,6 +13097,7 @@
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="7424" article="a" name="lunar staff">
 		<attribute key="weight" value="3800" />
@@ -12963,6 +13106,7 @@
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
 		<attribute key="imbuingSlots" value="3" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="7425" article="a" name="taurus mace">
 		<attribute key="weight" value="5100" />
@@ -12970,6 +13114,7 @@
 		<attribute key="attack" value="30" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="7426" article="an" name="amber staff">
 		<attribute key="weight" value="3500" />
@@ -12978,6 +13123,7 @@
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
 		<attribute key="imbuingSlots" value="3" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="7427" article="a" name="chaos mace">
 		<attribute key="description" value="Only those who have descended to the deepest depths may wield this hammer without it cursing them." />
@@ -12986,6 +13132,7 @@
 		<attribute key="attack" value="44" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="7428" article="a" name="bonebreaker">
 		<attribute key="description" value="This weapon has to be swung in both hands and requires a lot of strength." />
@@ -12994,6 +13141,7 @@
 		<attribute key="attack" value="46" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="7429" article="a" name="blessed sceptre">
 		<attribute key="description" value="This club is only granted to a warlord of the Svargrond arena." />
@@ -13003,6 +13151,7 @@
 		<attribute key="weaponType" value="club" />
 		<attribute key="extradef" value="3" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="7430" article="a" name="dragonbone staff">
 		<attribute key="description" value="Small flames are dancing around this strange weapon." />
@@ -13011,6 +13160,7 @@
 		<attribute key="attack" value="35" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="7431" article="a" name="demonbone">
 		<attribute key="weight" value="18000" />
@@ -13019,6 +13169,7 @@
 		<attribute key="attack" value="48" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="7432" article="a" name="furry club">
 		<attribute key="weight" value="4200" />
@@ -13026,6 +13177,7 @@
 		<attribute key="attack" value="31" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="extradef" value="1" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="7433" article="a" name="ravenwing">
 		<attribute key="weight" value="5500" />
@@ -13033,6 +13185,7 @@
 		<attribute key="attack" value="45" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="extradef" value="1" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="7434" article="a" name="royal axe">
 		<attribute key="weight" value="9200" />
@@ -13042,6 +13195,7 @@
 		<attribute key="extradef" value="3" />
 		<attribute key="description" value="This axe is only granted to a warlord of the Svargrond arena." />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="7435" article="an" name="impaler">
 		<attribute key="weight" value="8200" />
@@ -13050,6 +13204,7 @@
 		<attribute key="weaponType" value="axe" />
 		<attribute key="extradef" value="-2" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="7436" article="an" name="angelic axe">
 		<attribute key="weight" value="5600" />
@@ -13057,6 +13212,7 @@
 		<attribute key="attack" value="44" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="7437" article="a" name="sapphire hammer">
 		<attribute key="description" value="A beautiful gem is embedded in this weapon." />
@@ -13065,6 +13221,7 @@
 		<attribute key="attack" value="37" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="7438" article="an" name="elvish bow">
 		<attribute key="description" value="This beautifully ornamented bow was made by a skilled elvish bowmaker." />
@@ -13075,40 +13232,49 @@
 		<attribute key="range" value="6" />
 		<attribute key="hitChance" value="5" />
 		<attribute key="imbuingSlots" value="3" />
+			<attribute key="classification" value="3" />
 	</item>
 	<item id="7439" article="a" name="berserk potion">
 		<attribute key="description" value="Drinking this potion increases temporarily your fighting skill while decreasing your defense." />
 		<attribute key="weight" value="200" />
 		<attribute key="loottype" value="potion" />
+			<attribute key="classification" value="3" />
 	</item>
 	<item id="7440" article="a" name="mastermind potion">
 		<attribute key="description" value="Drinking this potion increases temporarily your magic skill while decreasing your magic defense." />
 		<attribute key="weight" value="200" />
 		<attribute key="loottype" value="potion" />
+			<attribute key="classification" value="3" />
 	</item>
 	<item id="7441" article="an" name="ice cube">
 		<attribute key="weight" value="2000" />
+			<attribute key="classification" value="3" />
 	</item>
 	<item id="7442" article="an" name="ice cube">
 		<attribute key="description" value="There is a rough shape of a head." />
 		<attribute key="weight" value="2000" />
+			<attribute key="classification" value="3" />
 	</item>
 	<item id="7443" article="a" name="bullseye potion">
 		<attribute key="description" value="Drinking this potion increases temporarily your distance skill while decreasing your defense." />
 		<attribute key="weight" value="200" />
 		<attribute key="loottype" value="potion" />
+			<attribute key="classification" value="3" />
 	</item>
 	<item id="7444" article="an" name="ice cube">
 		<attribute key="description" value="There is a rough shape of a head with tusks." />
 		<attribute key="weight" value="2000" />
+			<attribute key="classification" value="3" />
 	</item>
 	<item id="7445" article="an" name="ice cube">
 		<attribute key="description" value="There is a rough shape of a mammoth." />
 		<attribute key="weight" value="2000" />
+			<attribute key="classification" value="3" />
 	</item>
 	<item id="7446" article="an" name="ice mammoth">
 		<attribute key="description" value="This small statue has been carefully shaped from an ice cube." />
 		<attribute key="weight" value="2000" />
+			<attribute key="classification" value="3" />
 	</item>
 	<item fromid="7447" toid="7448" article="a" name="small ice statue">
 		<attribute key="weight" value="1000" />
@@ -13119,6 +13285,7 @@
 		<attribute key="attack" value="35" />
 		<attribute key="weaponType" value="sword" />
 		<attribute key="slotType" value="two-handed" />
+			<attribute key="classification" value="4" />
 	</item>
 	<item id="7450" article="a" name="hammer of prophecy">
 		<attribute key="weight" value="11000" />
@@ -13126,6 +13293,7 @@
 		<attribute key="attack" value="52" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
+			<attribute key="classification" value="4" />
 	</item>
 	<item id="7451" article="a" name="shadow sceptre">
 		<attribute key="weight" value="4100" />
@@ -13133,6 +13301,7 @@
 		<attribute key="attack" value="39" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="4" />
 	</item>
 	<item id="7452" article="a" name="spiked squelcher">
 		<attribute key="weight" value="6800" />
@@ -13141,6 +13310,7 @@
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
 		<attribute key="imbuingSlots" value="3" />
+			<attribute key="classification" value="4" />
 	</item>
 	<item id="7453" article="an" name="executioner">
 		<attribute key="weight" value="9900" />
@@ -13149,6 +13319,7 @@
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="4" />
 	</item>
 	<item id="7454" article="a" name="glorious axe">
 		<attribute key="weight" value="9500" />
@@ -13156,6 +13327,7 @@
 		<attribute key="attack" value="40" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
+			<attribute key="classification" value="4" />
 	</item>
 	<item id="7455" article="a" name="mythril axe">
 		<attribute key="weight" value="5500" />
@@ -13164,6 +13336,7 @@
 		<attribute key="weaponType" value="axe" />
 		<attribute key="extradef" value="2" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="4" />
 	</item>
 	<item id="7456" article="a" name="noble axe">
 		<attribute key="weight" value="3800" />
@@ -13171,6 +13344,7 @@
 		<attribute key="attack" value="39" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="4" />
 	</item>
 	<item id="7457" name="fur boots">
 		<attribute key="description" value="These boots keep your toes warm in even the iciest regions, but they feel kind of heavy." />
@@ -13178,6 +13352,7 @@
 		<attribute key="armor" value="2" />
 		<attribute key="slotType" value="feet" />
 		<attribute key="speed" value="-12" />
+	                <attribute key="classification" value="2" />
 	</item>
 	<item id="7458" article="a" name="fur cap">
 		<attribute key="description" value="It feels nice and warm on your ears." />
@@ -13185,28 +13360,33 @@
 		<attribute key="armor" value="3" />
 		<attribute key="slotType" value="head" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="4" />
 	</item>
 	<item id="7459" article="a" name="pair of earmuffs">
 		<attribute key="weight" value="500" />
 		<attribute key="armor" value="0" />
 		<attribute key="slotType" value="head" />
 		<attribute key="absorbPercentIce" value="2" />
+			<attribute key="classification" value="4" />
 	</item>
 	<item id="7460" article="a" name="norse shield">
 		<attribute key="weight" value="4100" />
 		<attribute key="defense" value="28" />
 		<attribute key="weaponType" value="shield" />
 		<attribute key="imbuingSlots" value="1" />
+			<attribute key="classification" value="4" />
 	</item>
 	<item id="7461" article="a" name="krimhorn helmet">
 		<attribute key="weight" value="5100" />
 		<attribute key="armor" value="6" />
 		<attribute key="slotType" value="head" />
+			<attribute key="classification" value="4" />
 	</item>
 	<item id="7462" article="a" name="ragnir helmet">
 		<attribute key="weight" value="3100" />
 		<attribute key="armor" value="6" />
 		<attribute key="slotType" value="head" />
+			<attribute key="classification" value="4" />
 	</item>
 	<item id="7463" article="a" name="mammoth fur cape">
 		<attribute key="weight" value="2000" />
@@ -13214,12 +13394,14 @@
 		<attribute key="slotType" value="body" />
 		<attribute key="description" value="It is imbued with protective magic." />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="4" />
 	</item>
 	<item id="7464" name="mammoth fur shorts">
 		<attribute key="weight" value="150" />
 		<attribute key="armor" value="0" />
 		<attribute key="slotType" value="legs" />
 		<attribute key="description" value="They offer little protection but will at least provide some comfort and warmth." />
+			<attribute key="classification" value="4" />
 	</item>
 	<item fromid="7465" toid="7473" article="a" name="searing fire">
 		<attribute key="type" value="magicfield" />
@@ -13231,69 +13413,87 @@
 	<item fromid="7474" toid="7475" article="a" name="sarcophagus" />
 	<item id="7476" article="a" name="white flower">
 		<attribute key="weight" value="10" />
+			<attribute key="classification" value="4" />
 	</item>
 	<item id="7477" article="a" name="special flask">
 		<attribute key="description" value="It contains the smell of a freshly slain slime." />
 		<attribute key="weight" value="180" />
+			<attribute key="classification" value="4" />
 	</item>
 	<item id="7478" article="a" name="special flask">
 		<attribute key="description" value="Bozo gave it to you to collect certain secret ingredients." />
 		<attribute key="weight" value="180" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="7479" name="the dwarven emperor's beard">
 		<attribute key="weight" value="50" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="7480" article="a" name="bed">
 		<attribute key="description" value="The dwarven emperor is sleeping there." />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="7481" article="a" name="crate">
 		<attribute key="description" value="It contains the daily supply for Xodet's shop." />
+			<attribute key="classification" value="3" />
 	</item>
 	<item id="7482" article="a" name="crate">
 		<attribute key="description" value="It contains a lot of wine flasks." />
 		<attribute key="weight" value="8000" />
+			<attribute key="classification" value="4" />
 	</item>
 	<item id="7483" article="a" name="crate">
 		<attribute key="description" value="You swapped it with Bozo's crate of wine flasks." />
 		<attribute key="weight" value="8000" />
+			<attribute key="classification" value="4" />
 	</item>
 	<item id="7484" article="a" name="box">
 		<attribute key="description" value="It is filled with delicious cream pies." />
 		<attribute key="weight" value="4000" />
+			<attribute key="classification" value="4" />
 	</item>
 	<item id="7485" article="a" name="whoopee cushion">
 		<attribute key="description" value="Bozo gave it to you." />
 		<attribute key="weight" value="1500" />
+			<attribute key="classification" value="4" />
 	</item>
 	<item id="7486" article="a" name="cat basket" />
 	<item id="7487" article="a" name="toy mouse">
 		<attribute key="weight" value="1250" />
+			<attribute key="classification" value="4" />
 	</item>
 	<item id="7488" article="a" name="special flask">
 		<attribute key="weight" value="180" />
+			<attribute key="classification" value="4" />
 	</item>
 	<item id="7489" article="a" name="special flask">
 		<attribute key="weight" value="180" />
 		<attribute key="description" value="It contains the ink of a freshly slain quara." />
+			<attribute key="classification" value="4" />
 	</item>
 	<item id="7490" article="a" name="magical inkwell">
 		<attribute key="weight" value="200" />
+			<attribute key="classification" value="4" />
 	</item>
 	<item id="7491" article="a" name="signed contract">
 		<attribute key="weight" value="200" />
+			<attribute key="classification" value="4" />
 	</item>
 	<item id="7492" article="a" name="contract">
 		<attribute key="weight" value="200" />
 		<attribute key="description" value="It is not signed yet." />
+			<attribute key="classification" value="4" />
 	</item>
 	<item id="7493" article="a" name="scrying crystal ball" />
 	<item id="7494" article="a" name="special flask">
 		<attribute key="description" value="It contains holy water from the white raven monastery." />
 		<attribute key="weight" value="180" />
+			<attribute key="classification" value="4" />
 	</item>
 	<item id="7495" article="a" name="beer bottle">
 		<attribute key="weight" value="250" />
 		<attribute key="description" value="It is filled with the legendary dwarvish brown ale." />
+			<attribute key="classification" value="4" />
 	</item>
 	<item id="7496" article="an" name="empty beer bottle">
 		<attribute key="weight" value="250" />
@@ -14866,6 +15066,7 @@
 		<attribute key="slotType" value="feet" />
 		<attribute key="absorbPercentEarth" value="5" />
 		<attribute key="absorbPercentFire" value="-5" />
+	                <attribute key="classification" value="2" />
 	</item>
 	<item id="7887" article="a" name="terra amulet">
 		<attribute key="weight" value="500" />
@@ -14909,6 +15110,7 @@
 		<attribute key="absorbPercentFire" value="5" />
 		<attribute key="absorbPercentIce" value="-5" />
 		<attribute key="slotType" value="feet" />
+	                <attribute key="classification" value="2" />
 	</item>
 	<item id="7892" name="glacier shoes">
 		<attribute key="weight" value="750" />
@@ -14916,6 +15118,7 @@
 		<attribute key="slotType" value="feet" />
 		<attribute key="absorbPercentIce" value="5" />
 		<attribute key="absorbPercentEnergy" value="-5" />
+	                <attribute key="classification" value="2" />
 	</item>
 	<item id="7893" name="lightning boots">
 		<attribute key="weight" value="750" />
@@ -14923,6 +15126,7 @@
 		<attribute key="absorbPercentEnergy" value="5" />
 		<attribute key="absorbPercentEarth" value="-5" />
 		<attribute key="slotType" value="feet" />
+	                <attribute key="classification" value="2" />
 	</item>
 	<item id="7894" name="magma legs">
 		<attribute key="weight" value="1900" />
@@ -14930,6 +15134,7 @@
 		<attribute key="absorbPercentFire" value="6" />
 		<attribute key="absorbPercentIce" value="-6" />
 		<attribute key="slotType" value="legs" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="7895" name="lightning legs">
 		<attribute key="weight" value="1900" />
@@ -14937,6 +15142,7 @@
 		<attribute key="absorbPercentEnergy" value="6" />
 		<attribute key="absorbPercentEarth" value="-6" />
 		<attribute key="slotType" value="legs" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="7896" article="a" name="glacier kilt">
 		<attribute key="weight" value="1900" />
@@ -15703,7 +15909,7 @@
 		<attribute key="defense" value="10" />
 		<attribute key="attack" value="21" />
 		<attribute key="weaponType" value="axe" />
-	</item>
+			<attribute key="classification" value="1" /></item>
 	<item id="8602" article="a" name="jagged sword">
 		<attribute key="weight" value="2900" />
 		<attribute key="defense" value="14" />
@@ -16050,6 +16256,7 @@
 		<attribute key="hitChance" value="5" />
 		<attribute key="attack" value="3" />
 		<attribute key="imbuingSlots" value="3" />
+			<attribute key="classification" value="3" />
 	</item>
 	<item id="8855" article="a" name="composite hornbow">
 		<attribute key="weight" value="5200" />
@@ -16068,6 +16275,7 @@
 		<attribute key="ammoType" value="arrow" />
 		<attribute key="range" value="7" />
 		<attribute key="hitChance" value="7" />
+			<attribute key="classification" value="4" />
 	</item>
 	<item id="8857" article="a" name="silkweaver bow">
 		<attribute key="weight" value="2200" />
@@ -16077,6 +16285,7 @@
 		<attribute key="range" value="6" />
 		<attribute key="hitChance" value="3" />
 		<attribute key="imbuingSlots" value="3" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="8858" name="Elethriel's elemental bow">
 		<attribute key="weight" value="4400" />
@@ -16444,7 +16653,7 @@
 		<attribute key="weaponType" value="axe" />
 		<attribute key="extradef" value="2" />
 		<attribute key="imbuingSlots" value="1" />
-	</item>
+			<attribute key="classification" value="3" /></item>
 	<item id="8925" article="a" name="solar axe">
 		<attribute key="weight" value="11000" />
 		<attribute key="defense" value="29" />
@@ -16452,7 +16661,7 @@
 		<attribute key="weaponType" value="axe" />
 		<attribute key="extradef" value="3" />
 		<attribute key="imbuingSlots" value="1" />
-	</item>
+			<attribute key="classification" value="4" /></item>
 	<item id="8926" article="a" name="demonwing axe">
 		<attribute key="weight" value="12000" />
 		<attribute key="defense" value="20" />
@@ -16460,7 +16669,7 @@
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
 		<attribute key="imbuingSlots" value="2" />
-	</item>
+			<attribute key="classification" value="3" /></item>
 	<item id="8927" article="a" name="dark trinity mace">
 		<attribute key="weight" value="9900" />
 		<attribute key="defense" value="32" />
@@ -17777,6 +17986,7 @@
 	</item>
 	<item id="9928" article="a" name="leaf legs">
 		<attribute key="weight" value="1200" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="9929" article="a" name="flower dress">
 		<attribute key="slotType" value="body" />
@@ -17789,6 +17999,7 @@
 	<item id="9931" article="a" name="coconut shoes">
 		<attribute key="weight" value="600" />
 		<attribute key="imbuingSlots" value="1" />
+	                <attribute key="classification" value="1" />
 	</item>
 	<item id="9932" article="a" name="firewalker boots">
 		<attribute key="description" value="Wearing these boots reduces the damage gotten from fiery ground." />
@@ -17801,6 +18012,7 @@
 		<attribute key="duration" value="3600" />
 		<attribute key="showduration" value="1" />
 		<attribute key="showattributes" value="1" />
+	                <attribute key="classification" value="0" />
 	</item>
 	<item id="9933" article="a" name="firewalker boots">
 		<attribute key="description" value="Wearing these boots reduces the damage gotten from fiery ground." />
@@ -18170,11 +18382,13 @@
 		<attribute key="description" value="Someone specialised in shoes might be able to repair them for you." />
 		<attribute key="weight" value="800" />
 		<attribute key="slotType" value="feet" />
+	                <attribute key="classification" value="0" />
 	</item>
 	<item id="10022" name="worn firewalker boots">
 		<attribute key="description" value="They can be recharged with an enchanted ruby." />
 		<attribute key="weight" value="950" />
 		<attribute key="slotType" value="feet" />
+	                <attribute key="classification" value="0" />
 	</item>
 	<item id="10024" article="a" name="crystal ball">
 		<attribute key="weight" value="3400" />
@@ -18754,6 +18968,7 @@
 		<attribute key="ammoType" value="arrow" />
 		<attribute key="range" value="4" />
 		<attribute key="imbuingSlots" value="3" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="10296" article="a" name="heavy metal t-shirt">
 		<attribute key="description" value="Oddly enough it is not made of metal at all, but years without washing grant it added protection." />
@@ -19720,6 +19935,7 @@
 		<attribute key="absorbPercentEnergy" value="-3" />
 		<attribute key="slotType" value="feet" />
 		<attribute key="weight" value="1850" />
+	                <attribute key="classification" value="4" />
 	</item>
 	<item id="11118" name="dragon scale boots">
 		<attribute key="armor" value="3" />
@@ -19727,6 +19943,7 @@
 		<attribute key="absorbPercentIce" value="-3" />
 		<attribute key="slotType" value="feet" />
 		<attribute key="weight" value="1850" />
+	                <attribute key="classification" value="4" />
 	</item>
 	<item id="11119" article="a" name="heart backpack">
 		<attribute key="weight" value="1800" />
@@ -20032,6 +20249,7 @@
 		<attribute key="absorbPercentHoly" value="-2" />
 		<attribute key="slotType" value="feet" />
 		<attribute key="weight" value="2250" />
+	                <attribute key="classification" value="2" />
 	</item>
 	<item id="11241" article="an" name="expedition backpack">
 		<attribute key="weight" value="1800" />
@@ -20305,12 +20523,14 @@
 		<attribute key="armor" value="1" />
 		<attribute key="slotType" value="feet" />
 		<attribute key="speed" value="10" />
+	                <attribute key="classification" value="2" />
 	</item>
 	<item id="11304" article="a" name="Zaoan legs">
 		<attribute key="weight" value="6600" />
 		<attribute key="armor" value="8" />
 		<attribute key="slotType" value="legs" />
 		<attribute key="absorbPercentPhysical" value="2" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="11305" article="a" name="drakinata">
 		<attribute key="weight" value="5400" />
@@ -21849,6 +22069,7 @@
 		<attribute key="speed" value="30" />
 		<attribute key="weight" value="2500" />
 		<attribute key="slotType" value="feet" />
+	                <attribute key="classification" value="2" />
 	</item>
 	<item id="12647" article="a" name="snake god's wristguard">
 		<attribute key="description" value="It shows your spells and can also shield against attacks when worn." />
@@ -24230,10 +24451,11 @@
 		<attribute key="defense" value="29" />
 		<attribute key="attack" value="49" />
 		<attribute key="weaponType" value="axe" />
-	</item>
+			<attribute key="classification" value="2" /></item>
 	<item id="15405" article="a" name="sandfish" plural="sandfish">
 		<attribute key="weight" value="660" />
 		<attribute key="loottype" value="food" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="15406" article="an" name="ornate chestplate">
 		<attribute key="weight" value="15600" />
@@ -24243,6 +24465,7 @@
 		<attribute key="absorbPercentPhysical" value="8" />
 		<attribute key="showattributes" value="1" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="15407" article="a" name="depth lorica">
 		<attribute key="weight" value="14500" />
@@ -24252,6 +24475,7 @@
 		<attribute key="absorbPercentDeath" value="5" />
 		<attribute key="showattributes" value="1" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="3" />
 	</item>
 	<item id="15408" article="a" name="depth galea">
 		<attribute key="description" value="Enables underwater exploration." />
@@ -24259,6 +24483,7 @@
 		<attribute key="weight" value="4600" />
 		<attribute key="armor" value="8" />
 		<attribute key="slotType" value="head" />
+			<attribute key="classification" value="3" />
 	</item>
 	<item id="15409" article="a" name="depth ocrea">
 		<attribute key="weight" value="4800" />
@@ -24275,6 +24500,7 @@
 		<attribute key="absorbPercentPhysical" value="5" />
 		<attribute key="showattributes" value="1" />
 		<attribute key="imbuingSlots" value="1" />
+	                <attribute key="classification" value="3" />
 	</item>
 	<item id="15411" article="a" name="depth scutum">
 		<attribute key="weight" value="3000" />
@@ -24290,6 +24516,7 @@
 		<attribute key="slotType" value="legs" />
 		<attribute key="absorbPercentPhysical" value="5" />
 		<attribute key="showattributes" value="1" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="15413" article="an" name="ornate shield">
 		<attribute key="weight" value="7100" />
@@ -24447,7 +24674,7 @@
 		<attribute key="defense" value="21" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="imbuingSlots" value="2" />
-	</item>
+			<attribute key="classification" value="2" /></item>
 	<item id="15452" article="a" name="deepling ridge">
 		<attribute key="weight" value="180" />
 	</item>
@@ -24463,7 +24690,7 @@
 		<attribute key="defense" value="11" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
-	</item>
+			<attribute key="classification" value="2" /></item>
 	<item id="15455" article="a" name="deepling claw">
 		<attribute key="weight" value="180" />
 	</item>
@@ -25729,6 +25956,7 @@
 		<attribute key="absorbPercentEarth" value="8" />
 		<attribute key="absorbPercentFire" value="-8" />
 		<attribute key="magiclevelpoints" value="1" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="18401" article="a" name="spellbook of vigilance">
 		<attribute key="description" value="It shows your spells and can also shield against attacks when worn." />
@@ -25770,6 +25998,7 @@
 		<attribute key="slotType" value="legs" />
 		<attribute key="absorbPercentPhysical" value="3" />
 		<attribute key="skillDist" value="2" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="18406" name="prismatic boots">
 		<attribute key="weight" value="1800" />
@@ -25779,6 +26008,7 @@
 		<attribute key="absorbPercentDeath" value="3" />
 		<attribute key="showattributes" value="1" />
 		<attribute key="imbuingSlots" value="1" />
+	                <attribute key="classification" value="2" />
 	</item>
 	<item id="18407" article="a" name="prismatic necklace">
 		<attribute key="weight" value="650" />
@@ -26018,7 +26248,7 @@
 		<attribute key="description" value="Even in the light of day, the stars seem to reflect in each facet of this crystalline axe." />
 		<attribute key="skillAxe" value="1" />
 		<attribute key="imbuingSlots" value="1" />
-	</item>
+			<attribute key="classification" value="2" /></item>
 	<item id="18452" article="a" name="mycological mace">
 		<attribute key="weight" value="5900" />
 		<attribute key="defense" value="31" />
@@ -26046,6 +26276,7 @@
 		<attribute key="attack" value="4" />
 		<attribute key="hitChance" value="4" />
 		<attribute key="imbuingSlots" value="3" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="18455" article="a" name="pet pig">
 		<attribute key="weight" value="600" />
@@ -30372,6 +30603,7 @@
 		<attribute key="hitChance" value="4" />
 		<attribute key="showattributes" value="1" />
 		<attribute key="imbuingSlots" value="3" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="21697" article="a" name="runic ice shield">
 		<attribute key="weight" value="4900" />
@@ -30417,6 +30649,7 @@
 	<item id="21708" name="vampire silk slippers">
 		<attribute key="weight" value="1150" />
 		<attribute key="imbuingSlots" value="1" />
+	                <attribute key="classification" value="4" />
 	</item>
 	<item fromid="21709" toid="21712" article="a" name="slimy growth" />
 	<item id="21713" article="a" name="chargeless monolith">
@@ -30684,7 +30917,7 @@
 		<attribute key="attack" value="49" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="extradef" value="1" />
-	</item>
+			<attribute key="classification" value="2" /></item>
 	<item id="22405" article="an" name="umbral axe">
 		<attribute key="weight" value="8500" />
 		<attribute key="defense" value="27" />
@@ -30692,7 +30925,7 @@
 		<attribute key="weaponType" value="axe" />
 		<attribute key="extradef" value="2" />
 		<attribute key="imbuingSlots" value="1" />
-	</item>
+			<attribute key="classification" value="3" /></item>
 	<item id="22406" article="an" name="umbral master axe">
 		<attribute key="weight" value="8000" />
 		<attribute key="defense" value="30" />
@@ -30701,13 +30934,14 @@
 		<attribute key="extradef" value="3" />
 		<attribute key="skillAxe" value="1" />
 		<attribute key="imbuingSlots" value="2" />
-	</item>
+			<attribute key="classification" value="4" /></item>
 	<item id="22407" article="a" name="crude umbral chopper">
 		<attribute key="weight" value="12000" />
 		<attribute key="defense" value="27" />
 		<attribute key="attack" value="51" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="22408" article="an" name="umbral chopper">
 		<attribute key="weight" value="11500" />
@@ -30716,6 +30950,7 @@
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
 		<attribute key="imbuingSlots" value="1" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="22409" article="an" name="umbral master chopper">
 		<attribute key="weight" value="11000" />
@@ -30725,6 +30960,7 @@
 		<attribute key="skillAxe" value="3" />
 		<attribute key="slotType" value="two-handed" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="3" />
 	</item>
 	<item id="22410" article="a" name="crude umbral mace">
 		<attribute key="weight" value="9000" />
@@ -30732,6 +30968,7 @@
 		<attribute key="attack" value="48" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="extradef" value="1" />
+			<attribute key="classification" value="3" />
 	</item>
 	<item id="22411" article="an" name="umbral mace">
 		<attribute key="weight" value="8500" />
@@ -30740,6 +30977,7 @@
 		<attribute key="weaponType" value="club" />
 		<attribute key="extradef" value="2" />
 		<attribute key="imbuingSlots" value="1" />
+			<attribute key="classification" value="4" />
 	</item>
 	<item id="22412" article="an" name="umbral master mace">
 		<attribute key="weight" value="8000" />
@@ -30749,6 +30987,7 @@
 		<attribute key="extradef" value="3" />
 		<attribute key="skillClub" value="1" />
 		<attribute key="imbuingSlots" value="1" />
+			<attribute key="classification" value="4" />
 	</item>
 	<item id="22413" article="a" name="crude umbral hammer">
 		<attribute key="weight" value="17000" />
@@ -30756,6 +30995,7 @@
 		<attribute key="attack" value="51" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="22414" article="an" name="umbral hammer">
 		<attribute key="weight" value="16500" />
@@ -30764,6 +31004,7 @@
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
 		<attribute key="imbuingSlots" value="1" />
+			<attribute key="classification" value="3" />
 	</item>
 	<item id="22415" article="an" name="umbral master hammer">
 		<attribute key="weight" value="16000" />
@@ -30773,6 +31014,7 @@
 		<attribute key="skillClub" value="3" />
 		<attribute key="slotType" value="two-handed" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="4" />
 	</item>
 	<item id="22416" article="a" name="crude umbral bow">
 		<attribute key="weight" value="5000" />
@@ -30782,6 +31024,7 @@
 		<attribute key="range" value="7" />
 		<attribute key="attack" value="2" />
 		<attribute key="hitChance" value="5" />
+			<attribute key="classification" value="4" />
 	</item>
 	<item id="22417" article="an" name="umbral bow">
 		<attribute key="weight" value="4500" />
@@ -30792,6 +31035,7 @@
 		<attribute key="attack" value="4" />
 		<attribute key="hitChance" value="5" />
 		<attribute key="imbuingSlots" value="1" />
+			<attribute key="classification" value="3" />
 	</item>
 	<item id="22418" article="an" name="umbral master bow">
 		<attribute key="weight" value="4000" />
@@ -30803,6 +31047,7 @@
 		<attribute key="attack" value="6" />
 		<attribute key="hitChance" value="5" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="22419" article="a" name="crude umbral crossbow">
 		<attribute key="weight" value="13000" />
@@ -30812,6 +31057,7 @@
 		<attribute key="range" value="5" />
 		<attribute key="hitChance" value="1" />
 		<attribute key="attack" value="3" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="22420" article="an" name="umbral crossbow">
 		<attribute key="weight" value="12500" />
@@ -30822,6 +31068,7 @@
 		<attribute key="hitChance" value="2" />
 		<attribute key="attack" value="6" />
 		<attribute key="imbuingSlots" value="1" />
+			<attribute key="classification" value="3" />
 	</item>
 	<item id="22421" article="an" name="umbral master crossbow">
 		<attribute key="weight" value="12000" />
@@ -30833,6 +31080,7 @@
 		<attribute key="hitChance" value="4" />
 		<attribute key="attack" value="9" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="3" />
 	</item>
 	<item id="22422" article="a" name="crude umbral spellbook">
 		<attribute key="weight" value="4000" />
@@ -30843,6 +31091,7 @@
 		<attribute key="absorbPercentEnergy" value="2" />
 		<attribute key="defense" value="14" />
 		<attribute key="weaponType" value="shield" />
+			<attribute key="classification" value="4" />
 	</item>
 	<item id="22423" article="an" name="umbral spellbook">
 		<attribute key="weight" value="3500" />
@@ -30854,6 +31103,7 @@
 		<attribute key="defense" value="16" />
 		<attribute key="weaponType" value="shield" />
 		<attribute key="imbuingSlots" value="1" />
+			<attribute key="classification" value="4" />
 	</item>
 	<item id="22424" article="an" name="umbral master spellbook">
 		<attribute key="weight" value="3000" />
@@ -32132,6 +32382,7 @@
 		<attribute key="slotType" value="feet" />
 		<attribute key="absorbPercentPhysical" value="1" />
 		<attribute key="weight" value="1800" />
+	                <attribute key="classification" value="2" />
 	</item>
 	<item id="23541" article="a" name="gearwheel chain">
 		<attribute key="armor" value="3" />
@@ -32175,7 +32426,7 @@
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
 		<attribute key="weight" value="8200" />
-	</item>
+			<attribute key="classification" value="2" /></item>
 	<item id="23548" article="a" name="cowtana">
 		<attribute key="defense" value="19" />
 		<attribute key="extradef" value="1" />
@@ -32209,9 +32460,10 @@
 		<attribute key="elementEarth" value="26" />
 		<attribute key="charges" value="2" />
 		<attribute key="weight" value="1900" />
-	</item>
+			<attribute key="classification" value="0" /></item>
 	<item id="23553" article="a" name="glob of glooth">
 		<attribute key="weight" value="10" />
+			<attribute key="classification" value="0" />
 	</item>
 	<item id="23554" article="a" name="glooth amulet">
 		<attribute key="slotType" value="necklace" />
@@ -33348,6 +33600,7 @@
 		<attribute key="armor" value="2" />
 		<attribute key="showattributes" value="1" />
 		<attribute key="imbuingSlots" value="1" />
+	                <attribute key="classification" value="2" />
 	</item>
 	<item id="24638" article="a" name="nightmare teddy">
 		<attribute key="weight" value="590" />
@@ -33783,6 +34036,7 @@
 		<attribute key="speed" value="20" />
 		<attribute key="armor" value="2" />
 		<attribute key="showattributes" value="1" />
+	                <attribute key="classification" value="2" />
 	</item>
 	<item id="24743" article="a" name="wereboar loincloth">
 		<attribute key="weight" value="1300" />
@@ -34688,6 +34942,7 @@
 		<attribute key="weight" value="3600" />
 		<attribute key="slotType" value="feet" />
 		<attribute key="imbuingSlots" value="1" />
+	                <attribute key="classification" value="4" />
 	</item>
 	<item id="25413" article="a" name="shroud of despair">
 		<attribute key="armor" value="7" />
@@ -34787,6 +35042,7 @@
 		<attribute key="weight" value="1600" />
 		<attribute key="armor" value="2" />
 		<attribute key="description" value="They are made of dark red buckskin and the golden clasps look like the letter F." />
+	                <attribute key="classification" value="0" />
 	</item>
 	<item id="25430" article="a" name="boots of homecoming">
 		<attribute key="weight" value="1600" />
@@ -34938,6 +35194,7 @@
 		<attribute key="attack" value="5" />
 		<attribute key="hitChance" value="3" />
 		<attribute key="imbuingSlots" value="3" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="25523" article="a" name="rift crossbow">
 		<attribute key="weight" value="13000" />
@@ -35701,6 +35958,7 @@
 		<attribute key="manaTicks" value="6000" />
 		<attribute key="absorbPercentEnergy" value="10" />
 		<attribute key="showattributes" value="1" />
+	                <attribute key="classification" value="0" />
 	</item>
 	<item id="26133" name="void boots">
 		<attribute key="description" value="It can only be wielded properly by players of level 150 or higher." />
@@ -36463,6 +36721,7 @@
 		<attribute key="weight" value="600" />
 		<attribute key="description" value="They clearly have seen better days." />
 		<attribute key="slotType" value="feet" />
+	                <attribute key="classification" value="1" />
 	</item>
 	<item id="27084" article="a" name="flowery carpet">
 		<attribute key="type" value="carpet" />
@@ -39235,7 +39494,7 @@
 		<attribute key="attack" value="51" />
 		<attribute key="weaponType" value="axe" />
 		<attribute key="imbuingSlots" value="3" />
-	</item>
+			<attribute key="classification" value="2" /></item>
 	<item id="30687" article="a" name="chopper of destruction">
 		<attribute key="description" value="It can only be wielded properly by knights of level 100 or higher." />
 		<attribute key="weight" value="7000" />
@@ -39244,6 +39503,7 @@
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
 		<attribute key="imbuingSlots" value="3" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="30688" article="a" name="mace of destruction">
 		<attribute key="description" value="It can only be wielded properly by knights of level 100 or higher." />
@@ -39252,6 +39512,7 @@
 		<attribute key="attack" value="50" />
 		<attribute key="weaponType" value="club" />
 		<attribute key="imbuingSlots" value="3" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="30689" article="a" name="hammer of destruction">
 		<attribute key="description" value="It can only be wielded properly by knights of level 100 or higher." />
@@ -39261,6 +39522,7 @@
 		<attribute key="weaponType" value="club" />
 		<attribute key="slotType" value="two-handed" />
 		<attribute key="imbuingSlots" value="3" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="30690" article="a" name="bow of destruction">
 		<attribute key="weight" value="6500" />
@@ -39272,6 +39534,7 @@
 		<attribute key="ammoType" value="arrow" />
 		<attribute key="range" value="6" />
 		<attribute key="imbuingSlots" value="3" />
+			<attribute key="classification" value="2" />
 	</item>
 	<item id="30691" article="a" name="crossbow of destruction">
 		<attribute key="weight" value="6500" />
@@ -39360,6 +39623,7 @@
 		<attribute key="magiclevelpoints" value="2" />
 		<attribute key="absorbPercentEnergy" value="7" />
 		<attribute key="absorbPercentIce" value="-2" />
+			<attribute key="classification" value="3" />
 	</item>
 	<item id="30885" article="a" name="gnome shield">
 		<attribute key="weight" value="6000" />
@@ -40252,12 +40516,14 @@
 		<attribute key="decayTo" value="33229" />
 		<attribute key="duration" value="10" />
 		<attribute key="corpseType" value="blood" />
+			<attribute key="classification" value="4" />
 	</item>
 	<item id="33229" name="slain falcon paladin">
 		<attribute key="containerSize" value="24" />
 		<attribute key="decayTo" value="33230" />
 		<attribute key="duration" value="300" />
 		<attribute key="corpseType" value="blood" />
+			<attribute key="classification" value="4" />
 	</item>
 	<item id="33230" name="slain falcon paladin">
 		<attribute key="containerSize" value="24" />
@@ -40805,9 +41071,9 @@
 		<attribute key="corpseType" value="venom" />
 	</item>
 	<!--Fim Corpses-->
-	<!-- Início itens de quest -->
+	<!-- InÃ­cio itens de quest -->
 	
-	<!-- Não sei que item é esse
+	<!-- NÃ£o sei que item Ã© esse
 	<item id="32407" article="a" name="hawser">
 		<attribute key="weight" value="600" />
 	</item>
@@ -41246,7 +41512,7 @@
 	<item id="32419" article="a" name="light of change">    <!--verde-->
 		<attribute key="wrapableTo" value="26054" />
 	</item>	
-	<!-- At� aqui -->
+	<!-- Atï¿½ aqui -->
 	<item id="32027" article="a" name="torch of change">    <!--base-->
 		<attribute key="wrapableTo" value="26054" />
 	</item>	
@@ -42041,7 +42307,7 @@
 		<attribute key="absorbPercentEnergy" value="12" />
 		<attribute key="weight" value="9500" />
 		<attribute key="imbuingSlots" value="2" />
-	</item>
+			<attribute key="classification" value="4" /></item>
 	<item id="33227" article="a" name="falcon mace">
 		<attribute key="weaponType" value="club" />
 		<attribute key="attack" value="11" />
@@ -42052,6 +42318,7 @@
 		<attribute key="absorbPercentEnergy" value="7" />
 		<attribute key="weight" value="6800" />
 		<attribute key="imbuingSlots" value="2" />
+			<attribute key="classification" value="4" />
 	</item>
 	<item fromid="33240" toid="33243" name="broken idols"/> <!--revisar nome-->
 	<item fromid="33244" toid="33247" name="zathroth' redeemer">
@@ -42368,7 +42635,7 @@
 		<attribute key="weaponType" value="axe" />
 		<attribute key="slotType" value="two-handed" />
 		<attribute key="description" value="Forged and wielded by a long forgotten dwarf with a heart as black as an adder." />
-	</item>
+			<attribute key="classification" value="1" /></item>
 	<item id="33780" article="a" name="blue crystal">
 		<attribute key="description" value="The crystal is full of energy." />
 		<attribute key="weight" value="30" />
@@ -42471,6 +42738,7 @@
 		<attribute key="absorbPercentEarth" value="4" />
 		<attribute key="ammoType" value="arrow" />
 		<attribute key="imbuingSlots" value="3" />
+			<attribute key="classification" value="3" />
 	</item>
 	<item id="33911" article="a" name="living armor">
 		<attribute key="weight" value="4800" />
@@ -42534,6 +42802,7 @@
 		<attribute key="magiclevelpoints" value="1"/>
 		<attribute key="absorbPercentEarth" value="8" />
 		<attribute key="imbuingSlots" value="1" />
+	                <attribute key="classification" value="3" />
 	</item>
 	<item id="33918" article="an" name="energized limb">
 		<attribute key="weaponType" value="wand" />
@@ -42691,6 +42960,7 @@
 		<attribute key="slotType" value="feet" />
 		<attribute key="armor" value="0" />
 		<attribute key="showattributes" value="1" />
+	                <attribute key="classification" value="2" />
 	</item>
 	<item id="34983" article="a" name="purple fireworks powder">
 		<attribute key="weight" value="100" />
@@ -43865,6 +44135,7 @@
 		<attribute key="speed" value="10" />
 		<attribute key="absorbPercentPhysical" value="6" />
 		<attribute key="imbuingSlots" value="1" />
+	                <attribute key="classification" value="4" />
 	</item>
 	<item id="35109" article="a" name="cobra club">
 		<attribute key="weight" value="2500" />
@@ -43885,7 +44156,7 @@
 		<attribute key="extradef" value="2" />
 		<attribute key="imbuingSlots" value="2" />
 		<attribute key="skillAxe" value="2" />
-	</item>
+			<attribute key="classification" value="4" /></item>
 	<item id="35111" article="a" name="cobra hood">
 		<attribute key="weight" value="2700" />
 		<attribute key="armor" value="9" />
@@ -45304,6 +45575,7 @@
 		<attribute key="absorbPercentEarth" value="7" />
 		<attribute key="skillDist" value="1" />
 		<attribute key="imbuingSlots" value="1" />
+	                <attribute key="classification" value="3" />
 	</item>	
 
 	<item id="36332" article="a" name="veldt flowers">
@@ -46048,6 +46320,7 @@
 		<attribute key="slotType" value="feet" />
 		<attribute key="armor" value="0" />
 		<attribute key="description"  value="Soled with sturdy orc hides, these traditional Orcsoberfest leather shoes are robust and useful." />
+	                <attribute key="classification" value="0" />
 	</item>
 	<item id="36825" name="traditional shirt">
 		<attribute key="weight" value="500" />
@@ -46508,7 +46781,7 @@
 		<attribute key="imbuingSlots" value="3" />
 		<attribute key="skillAxe" value="3" />
 		<attribute key="elementFire" value="48" />
-	</item>
+			<attribute key="classification" value="3" /></item>
 	<item id="37343" name="fabulous legs">
 		<attribute key="slotType" value="legs" />
 		<attribute key="armor" value="9" />
@@ -46534,6 +46807,7 @@
 		<attribute key="magiclevelpoints" value="1" />
 		<attribute key="absorbPercentEnergy" value="6" />
 		<attribute key="imbuingSlots" value="1" />
+	                <attribute key="classification" value="3" />
 	</item>
 
 	<item id="37346" article="a" name="ghost backpack">
@@ -46666,6 +46940,7 @@
 		<attribute key="weight" value="200" />
 		<attribute key="armor" value="1" />
 		<attribute key="slotType" value="body" />
+			<attribute key="classification" value="0" />
 	</item>
 
 	<item id="37437" article="a" name="luminescent crystal pickaxe">
@@ -47249,6 +47524,7 @@
 		<attribute key="absorbPercentIce" value="5" />
 		<attribute key="skillDist" value="2" />
 		<attribute key="imbuingSlots" value="3" />
+			<attribute key="classification" value="4" />
 	</item>
 	
 	<item id="39555" article="a" name="lion rod">
@@ -47360,6 +47636,7 @@
 		<attribute key="weight" value="7000" />
 		<attribute key="armor" value="9" />
 		<attribute key="slotType" value="legs" />
+			<attribute key="classification" value="4" />
 	</item>
 	<item id="43001" article="a" name="green demon armor">
 		<attribute key="weight" value="8000" />
@@ -47378,6 +47655,7 @@
 		<attribute key="weight" value="600" />
 		<attribute key="slotType" value="feet" />
 		<attribute key="imbuingSlots" value="1" />
+	                <attribute key="classification" value="4" />
 	</item>
 	
 	<item id="43004" article="a" name="Morshabaal's mask">
@@ -47395,3 +47673,21 @@
 	
 	
 </items>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

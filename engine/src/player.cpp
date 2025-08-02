@@ -6180,3 +6180,12 @@ void Player::updateImbuementTrackerStats() const {
 	}
 }
 
+// Momentum system functions
+uint32_t Player::getHelmetCooldownReduction() const {
+	return helmetCooldownReduction;
+}
+
+void Player::setHelmetCooldownReduction(uint32_t reduction) {
+	helmetCooldownReduction = reduction;
+}
+
