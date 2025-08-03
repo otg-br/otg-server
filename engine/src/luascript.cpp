@@ -2193,6 +2193,8 @@ void LuaScriptInterface::registerFunctions()
 	registerEnumIn("configKeys", ConfigManager::NETWORK_ATTACK_THRESHOLD)
 	registerEnumIn("configKeys", ConfigManager::AUTOLOOT_MODE)
 	registerEnumIn("configKeys", ConfigManager::TIME_GMT)
+	registerEnumIn("configKeys", ConfigManager::MAX_ALLOWED_ON_A_DUMMY)
+	registerEnumIn("configKeys", ConfigManager::RATE_EXERCISE_TRAINING_SPEED)
 
 	registerEnumIn("configKeys", ConfigManager::RATE_MONSTER_HEALTH)
 	registerEnumIn("configKeys", ConfigManager::RATE_MONSTER_ATTACK)

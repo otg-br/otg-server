@@ -225,6 +225,10 @@ if nextDelayPreyReroll == nil then
     nextDelayPreyReroll = {}
 end
 
+if staminaEvents == nil then
+    staminaEvents = {}
+end
+
 --Boss entry
 if not bosssPlayers then
     bosssPlayers = {

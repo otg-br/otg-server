@@ -231,6 +231,13 @@ function Player:onMoveCreature(creature, fromPosition, toPosition)
     return true
 end
 
+function Player:onStepTile(fromPosition, toPosition)
+    if hasEvent.onStepTile then
+        return Event.onStepTile(self, fromPosition, toPosition)
+    end
+    return true
+end
+
 -- Check if a report already exists
 local function hasPendingReport(name, targetName, reportType)
     local file = io.open(string.format("data/reports/players/%s-%s-%d.txt", name, targetName, reportType), "r")

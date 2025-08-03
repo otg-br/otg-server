@@ -15,6 +15,7 @@ PlayerStorageKeys = {
     afflictedOutfit = 30026,
     afflictedPlagueMask = 30027,
     afflictedPlagueBell = 30028,
+    ExerciseDummyExhaust = 30029,
     nailCaseUseCount = 30031,
     swampDigging = 30032,
     insectoidCell = 30033,
@@ -59,3 +60,5 @@ postman = {
     TravelVenore = 253,
     TravelCormaya = 254
 }
+
+Storage = PlayerStorageKeys
