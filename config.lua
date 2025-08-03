@@ -119,7 +119,7 @@ maxMarketOffersAtATimePerPlayer = 100
 -- MySQL
 mysqlHost = "127.0.0.1"
 mysqlUser = "root"
-mysqlPass = "senha"
+mysqlPass = ""
 mysqlDatabase = "database"
 mysqlPort = 3306
 mysqlSock = ""
@@ -166,6 +166,16 @@ rateMonsterHealth = 1.0
 rateMonsterAttack = 1.2
 rateMonsterDefense = 1.0
 rateMonsterSpeed = 1.95
+
+-- Today regeneration condition over an loop every 1 second,
+-- So values which should regenerated less then 1 second or won't will work
+rateHealthRegen = 1.0
+rateHealthRegenSpeed = 1.0
+rateManaRegen = 1.0
+rateManaRegenSpeed = 1.0
+rateSoulRegen = 1.0
+rateSoulRegenSpeed = 1.0
+rateAttackSpeed = 1.0
 
 -- Monsters
 deSpawnRange = 2
