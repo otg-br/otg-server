@@ -749,36 +749,19 @@ std::string StoreOffer::getDescription(Player* player /*= nullptr */)
 
 uint32_t StoreOffer::getExpBoostPrice(int32_t value)
 {
-	// Try to get price from Lua configuration first
-	extern LuaEnvironment g_luaEnvironment;
-	lua_State* L = g_luaEnvironment.getLuaState();
-	if (L) {
-		lua_getglobal(L, "getExpBoostPriceFromLua");
-		if (lua_isfunction(L, -1)) {
-			lua_pushinteger(L, value);
-			if (lua_pcall(L, 1, 1, 0) == 0) {
-				if (lua_isnumber(L, -1)) {
-					uint32_t price = static_cast<uint32_t>(lua_tonumber(L, -1));
-					lua_pop(L, 1);
-					return price;
-				}
-				lua_pop(L, 1);
-			}
-		}
-		lua_pop(L, 1);
+	// Get prices from config.lua
+	switch (value) {
+		case 1:
+			return g_config.getNumber(ConfigManager::EXP_BOOST_PRICE1);
+		case 2:
+			return g_config.getNumber(ConfigManager::EXP_BOOST_PRICE2);
+		case 3:
+			return g_config.getNumber(ConfigManager::EXP_BOOST_PRICE3);
+		case 4:
+			return g_config.getNumber(ConfigManager::EXP_BOOST_PRICE4);
+		case 5:
+			return g_config.getNumber(ConfigManager::EXP_BOOST_PRICE5);
+		default:
+			return g_config.getNumber(ConfigManager::EXP_BOOST_PRICE1);
 	}
-	
-	// Fallback to hardcoded values if Lua function fails
-	if (value == 1)
-		return 30;
-	else if (value == 2)
-		return 45;
-	else if (value == 3)
-		return 90;
-	else if (value == 4)
-		return 180;
-	else if (value == 5)
-		return 360;
-	else
-		return 30;
 }
