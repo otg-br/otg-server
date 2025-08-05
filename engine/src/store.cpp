@@ -8,6 +8,7 @@
 #include "pugicast.h"
 #include "game.h"
 #include "configmanager.h"
+#include "luascript.h"
 
 extern Game g_game;
 extern ConfigManager g_config;
@@ -744,4 +745,40 @@ std::string StoreOffer::getDescription(Player* player /*= nullptr */)
 	}
 
 	return showDesc;
+}
+
+uint32_t StoreOffer::getExpBoostPrice(int32_t value)
+{
+	// Try to get price from Lua configuration first
+	extern LuaEnvironment g_luaEnvironment;
+	lua_State* L = g_luaEnvironment.getLuaState();
+	if (L) {
+		lua_getglobal(L, "getExpBoostPriceFromLua");
+		if (lua_isfunction(L, -1)) {
+			lua_pushinteger(L, value);
+			if (lua_pcall(L, 1, 1, 0) == 0) {
+				if (lua_isnumber(L, -1)) {
+					uint32_t price = static_cast<uint32_t>(lua_tonumber(L, -1));
+					lua_pop(L, 1);
+					return price;
+				}
+				lua_pop(L, 1);
+			}
+		}
+		lua_pop(L, 1);
+	}
+	
+	// Fallback to hardcoded values if Lua function fails
+	if (value == 1)
+		return 30;
+	else if (value == 2)
+		return 45;
+	else if (value == 3)
+		return 90;
+	else if (value == 4)
+		return 180;
+	else if (value == 5)
+		return 360;
+	else
+		return 30;
 }
