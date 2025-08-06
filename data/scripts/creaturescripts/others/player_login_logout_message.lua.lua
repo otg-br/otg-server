@@ -85,6 +85,70 @@ function loginMessage.onLogin(player)
         player:setVocation(vocation:getDemotion())
     end
 
+    -- VIP System
+    -- Grant 3 VIP days if first time
+    if player:getAccountStorageValue(2) <= 0 then
+        player:addVipDays(3)
+        player:setAccountStorageValue(2, os.stime())
+        player:sendTextMessage(MESSAGE_INFO_DESCR, string.format("[PARABENS] voce recebeu 3 dias VIP."))
+    end
+
+    -- Calculate VIP days and set VIP status
+    local vipTime = player:getVipDays()
+    local days = 0
+    local hasVip = false
+    
+    if vipTime > os.stime() then
+        days = math.ceil((vipTime - os.stime()) / 86400)
+        hasVip = true
+        player:setStorageValue(Storage.VipSystem, 1)
+    else
+        hasVip = false
+        player:setStorageValue(Storage.VipSystem, -1)
+    end
+
+    player:sendTextMessage(MESSAGE_INFO_DESCR, string.format("You have %d day%s vip.", days, (days > 1 and "s" or "")))
+
+    -- Handle VIP expiration
+    if not hasVip and player:getStorageValue(Storage.VipSystem) > -1 then
+        player:setStorageValue(Storage.VipSystem, -1)
+
+        if player:getSex() == 1 then
+            player:setOutfit({lookType = 128, lookAddons = 0})
+        else
+            player:setOutfit({lookType = 136, lookAddons = 0})
+        end
+        player:teleportTo(player:getTown():getTemplePosition(), true)
+        player:sendTextMessage(MESSAGE_INFO_DESCR, string.format("Your vip is over."))
+    end
+
+    -- VIP Mounts for VIP Players (only if has valid VIP)
+    if hasVip then
+        local vipMounts = {
+            113, 114, 115
+        }
+
+        for _, mount in pairs(vipMounts) do
+            if not player:hasMount(mount) then
+                player:addMount(mount)
+            end
+        end
+    end
+
+    -- VIP Outfits for VIP Players (only if has valid VIP)
+    if hasVip then
+        local vipOutfits = {
+            1202, 1203, 1204, 1205, 1206, 1207
+        }
+
+        for _, outfit in pairs(vipOutfits) do
+            player:addOutfit(outfit)
+            player:addOutfitAddon(outfit, 0)
+            player:addOutfitAddon(outfit, 1)
+            player:addOutfitAddon(outfit, 2)
+        end
+    end
+
     -- Display Bank Balance
     local balance = player:getBankBalance()
     if balance > 0 then

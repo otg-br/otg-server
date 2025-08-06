@@ -31,7 +31,8 @@ PlayerStorageKeys = {
         streakDays = DAILYREWARDSTORAGE_STREAKDAYS,
         exhaust = 69802,
         currentIndex = 69803
-    }
+    },
+    VipSystem = 30037
 }
 
 GlobalStorageKeys = {

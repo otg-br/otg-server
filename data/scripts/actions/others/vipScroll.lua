@@ -1,23 +1,11 @@
--- VIP Days Action Revscript
 local vipDaysAction = Action()
 function vipDaysAction.onUse(player, item, fromPosition, target, toPosition, isHotkey)
     local days = 30  -- Fixed 30 days VIP
-    local currentTime = os.time()
-    local currentPremium = player:getPremiumEndsAt()
-    local newTime = 0
-    
-    if currentPremium > currentTime then
-        newTime = currentPremium + (days * 24 * 60 * 60)
-    else
-        newTime = currentTime + (days * 24 * 60 * 60)
-    end
     
     item:remove(1)
-    player:setPremiumEndsAt(newTime)
+    player:addVipDays(days)
     
-    -- Calculate total days remaining
-    local totalDaysLeft = math.ceil((newTime - currentTime) / (24 * 60 * 60))
-    player:sendTextMessage(MESSAGE_INFO_DESCR, string.format("You received %d days of VIP time. You now have %d days of VIP remaining.", days, totalDaysLeft))
+    player:sendTextMessage(MESSAGE_INFO_DESCR, string.format("You won %d days VIP, now you have %d days VIP.", days, math.max(0, math.ceil((player:getVipDays() - os.time()) / 86400))))
     return true
 end
 vipDaysAction:id(16101)
