@@ -48,9 +48,14 @@ local config = {
 }
 
 function Party:onShareExperience(exp)
+	local validExp = tonumber(exp) or 0
+	if validExp <= 0 then
+		return validExp
+	end
+
 	local sharedExperienceMultiplier = 1.20 --20%
 	local vocationsIds = {}
-	local rawExp = exp
+	local rawExp = validExp
 
 	local vocationId = self:getLeader():getVocation():getBase():getId()
 	if vocationId ~= VOCATION_NONE then
@@ -69,6 +74,6 @@ function Party:onShareExperience(exp)
 		sharedExperienceMultiplier = 1.0 + ((size * (5 * (size - 1) + 10)) / 100)
 	end
 
-	exp = math.ceil((exp * sharedExperienceMultiplier) / (#self:getMembers() + 1))
-	return hasEvent.onShareExperience and Event.onShareExperience(self, exp, rawExp) or exp
+	local finalExp = (validExp * sharedExperienceMultiplier) / (#self:getMembers() + 1)
+	return hasEvent.onShareExperience and Event.onShareExperience(self, math.max(0, finalExp), rawExp) or math.max(0, finalExp)
 end

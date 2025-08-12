@@ -95,7 +95,8 @@ xpBonusAction:register()
 
 local xp = Event()
 xp.onGainExperience = function(self, source, exp, rawExp)
-    if not source:isMonster() then
+    -- Check if source exists and is a monster (only apply XP boost for monster kills)
+    if not source or not source:isMonster() then
         return exp
     end
 

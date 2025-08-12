@@ -33,7 +33,13 @@ PlayerStorageKeys = {
         currentIndex = 69803
     },
     VipSystem = 30037,
-    isTrainingStorage = 12835
+    isTrainingStorage = 12835,
+    TaskLinked = {
+        storageBase = 1010000,
+        activeTaskStorage = 1011000,
+        roomStorageBase = 1010500,
+        chestActionId = 49026
+    }
 }
 
 GlobalStorageKeys = {
