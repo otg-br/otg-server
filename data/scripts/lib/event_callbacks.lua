@@ -59,6 +59,7 @@ ec.onSpellCheck = {}
 ec.onInventoryUpdate = {}
 ec.onNetworkMessage = {}
 ec.onUpdateStorage = {}
+ec.onWrapItem = {}
 
 ec.canBeAppliedImbuement = {}
 ec.onApplyImbuement = {}

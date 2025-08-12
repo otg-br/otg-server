@@ -32,7 +32,8 @@ PlayerStorageKeys = {
         exhaust = 69802,
         currentIndex = 69803
     },
-    VipSystem = 30037
+    VipSystem = 30037,
+    isTrainingStorage = 12835
 }
 
 GlobalStorageKeys = {

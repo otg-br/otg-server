@@ -174,6 +174,8 @@ bool ConfigManager::load()
 		integer[PREMIUM_DEPOT_LIMIT] = getGlobalNumber(L, "premiumDepotLimit", 8000);
 		integer[DEPOT_BOXES] = getGlobalNumber(L, "depotBoxes", 17);
 		integer[AUTOLOOT_MODE] = getGlobalNumber(L, "autolootmode", 0); //Autoloot
+		integer[VIP_AUTOLOOT_LIMIT] = getGlobalNumber(L, "vip_autoloot", 25);
+		integer[FREE_AUTOLOOT_LIMIT] = getGlobalNumber(L, "free_autoloot", 15);
 
 		boolean[PROTO_BUFF] = getGlobalNumber(L, "protobuff", false); //Autoloot
 
@@ -270,12 +272,7 @@ bool ConfigManager::load()
 	integer[MAX_ALLOWED_ON_A_DUMMY] = getGlobalNumber(L, "maxAllowedOnADummy", 5);
 	integer[RATE_EXERCISE_TRAINING_SPEED] = getGlobalNumber(L, "rateExerciseTrainingSpeed", 1.0);
 	
-	// Store Configuration
-	integer[EXP_BOOST_PRICE1] = getGlobalNumber(L, "expBoostPrice1", 999);
-	integer[EXP_BOOST_PRICE2] = getGlobalNumber(L, "expBoostPrice2", 500);
-	integer[EXP_BOOST_PRICE3] = getGlobalNumber(L, "expBoostPrice3", 100);
-	integer[EXP_BOOST_PRICE4] = getGlobalNumber(L, "expBoostPrice4", 1);
-	integer[EXP_BOOST_PRICE5] = getGlobalNumber(L, "expBoostPrice5", 50);
+
 
 	floating[RATE_MONSTER_HEALTH] = getGlobalFloat(L, "rateMonsterHealth", 1.0);
 	floating[RATE_MONSTER_ATTACK] = getGlobalFloat(L, "rateMonsterAttack", 1.0);

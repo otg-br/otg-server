@@ -1,7 +1,7 @@
 local loginMessage = CreatureEvent("loginMessage")
 
--- Training storage definition
-local isTrainingStorage = 12835
+-- Training storage definition (now using Storage table)
+-- local isTrainingStorage = 12835 -- Moved to Storage table
 
 -- Function to add initial items for new players
 local function confirmAddItem(playerid)
@@ -38,8 +38,8 @@ end
 
 function loginMessage.onLogin(player)
     -- Check training storage
-    if player:getStorageValue(isTrainingStorage) >= 1 then
-        player:setStorageValue(isTrainingStorage, -1)
+    if player:getStorageValue(Storage.isTrainingStorage) >= 1 then
+        player:setStorageValue(Storage.isTrainingStorage, -1)
     end
 
     -- Check guild and register events
@@ -107,7 +107,7 @@ function loginMessage.onLogin(player)
         player:setStorageValue(Storage.VipSystem, -1)
     end
 
-    player:sendTextMessage(MESSAGE_INFO_DESCR, string.format("You have %d day%s vip.", days, (days > 1 and "s" or "")))
+    player:sendTextMessage(MESSAGE_INFO_DESCR, string.format("You have %d day%s vip (+10%% experience bonus).", days, (days > 1 and "s" or "")))
 
     -- Handle VIP expiration
     if not hasVip and player:getStorageValue(Storage.VipSystem) > -1 then

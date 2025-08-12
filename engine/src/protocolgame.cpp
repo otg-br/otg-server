@@ -369,6 +369,11 @@ void ProtocolGame::addSpectator(ProtocolSpectator_ptr spectatorClient)
 	//DO NOT do any send operations here
 	spectators.emplace_back(spectatorClient);
 	updateLiveCastInfo();
+	
+	if (player) {
+		std::string message = "view" + std::to_string(spectators.size()) + " joined!";
+		sendChannelMessage("", message, TALKTYPE_CHANNEL_O, CHANNEL_CAST);
+	}
 }
 
 void ProtocolGame::removeSpectator(ProtocolSpectator_ptr spectatorClient)
@@ -379,6 +384,11 @@ void ProtocolGame::removeSpectator(ProtocolSpectator_ptr spectatorClient)
 	if (it != spectators.end()) {
 		spectators.erase(it);
 		updateLiveCastInfo();
+		
+		if (player) {
+			std::string message = "view left! Total: " + std::to_string(spectators.size());
+			sendChannelMessage("", message, TALKTYPE_CHANNEL_O, CHANNEL_CAST);
+		}
 	}
 }
 
@@ -599,7 +609,7 @@ void ProtocolGame::parsePacket(NetworkMessage& msg)
 		case 0x88: parseUpArrowContainer(msg); break;
 		case 0x89: parseTextWindow(msg); break;
 		case 0x8A: parseHouseWindow(msg); break;
-		case 0x8B: parseWrapableItem(msg); break;
+		case 0x8B: parseWrapItem(msg); break;
 		case 0x8C: parseLookAt(msg); break;
 		case 0x8D: parseLookInBattleList(msg); break;
 		case 0x8E: /* join aggression */ break;
@@ -1104,12 +1114,12 @@ void ProtocolGame::parseRotateItem(NetworkMessage& msg)
 	addGameTaskTimed(DISPATCHER_TASK_EXPIRATION, &Game::playerRotateItem, player->getID(), pos, stackpos, spriteId);
 }
 
-void ProtocolGame::parseWrapableItem(NetworkMessage& msg)
+void ProtocolGame::parseWrapItem(NetworkMessage& msg)
 {
 	Position pos = msg.getPosition();
 	uint16_t spriteId = msg.get<uint16_t>();
 	uint8_t stackpos = msg.getByte();
-	addGameTaskTimed(DISPATCHER_TASK_EXPIRATION, &Game::playerWrapableItem, player->getID(), pos, stackpos, spriteId);
+	addGameTaskTimed(DISPATCHER_TASK_EXPIRATION, &Game::playerWrapItem, player->getID(), pos, stackpos, spriteId);
 }
 
 void ProtocolGame::parseRuleViolationReport(NetworkMessage &msg)

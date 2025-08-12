@@ -1,0 +1,177 @@
+local soulCondition = Condition(CONDITION_SOUL, CONDITIONID_DEFAULT)
+soulCondition:setTicks(4 * 60 * 1000)
+soulCondition:setParameter(CONDITION_PARAM_SOULGAIN, 1)
+
+-- Manage stamina consumption
+local function useStamina(player)
+    local staminaMinutes = player:getStamina()
+    if staminaMinutes == 0 then
+        return
+    end
+
+    local playerId = player:getId()
+    if not nextUseStaminaTime[playerId] then
+        nextUseStaminaTime[playerId] = 0
+    end
+
+    local currentTime = os.time()
+    local timePassed = currentTime - nextUseStaminaTime[playerId]
+    if timePassed <= 0 then
+        return
+    end
+
+    if timePassed > 60 then
+        if staminaMinutes > 2 then
+            staminaMinutes = staminaMinutes - 2
+        else
+            staminaMinutes = 0
+        end
+        nextUseStaminaTime[playerId] = currentTime + 120
+    else
+        staminaMinutes = staminaMinutes - 1
+        nextUseStaminaTime[playerId] = currentTime + 60
+    end
+    player:setStamina(staminaMinutes)
+end
+
+-- Manage stamina consumption for XP boost
+local function useStaminaXp(player)
+    local staminaMinutes = player:getExpBoostStamina() / 60
+    if staminaMinutes == 0 then
+        return
+    end
+
+    local playerId = player:getId()
+    local currentTime = os.time()
+    local timePassed = currentTime - nextUseXpStamina[playerId]
+    if timePassed <= 0 then
+        return
+    end
+
+    if timePassed > 60 then
+        if staminaMinutes > 2 then
+            staminaMinutes = staminaMinutes - 2
+        else
+            staminaMinutes = 0
+        end
+        nextUseXpStamina[playerId] = currentTime + 120
+    else
+        staminaMinutes = staminaMinutes - 1
+        nextUseXpStamina[playerId] = currentTime + 60
+    end
+    player:setExpBoostStamina(staminaMinutes * 60)
+end
+
+if not CAST_BONUS_STATUS then
+    CAST_BONUS_STATUS = {}
+end
+
+-- Cast System - 5% XP Bonus
+local function sharedExpCast(player, exp)
+    local castConfig = {
+        casterBonusPercent = 5   -- 5% XP bonus for caster
+    }
+    
+    if not player:isLiveCaster() then
+        return exp
+    end
+    
+    local playerId = player:getId()
+
+    if not CAST_BONUS_STATUS[playerId] then
+        CAST_BONUS_STATUS[playerId] = true
+    end
+    
+    if CAST_BONUS_STATUS[playerId] then
+        local casterBonus = exp * castConfig.casterBonusPercent / 100
+        return exp + casterBonus
+    end
+    
+    return exp
+end
+
+local event = Event()
+event.onGainExperience = function(self, source, exp, rawExp, sendText)
+    if not source or source:isPlayer() then
+        if self:getClient().version <= 1100 then
+            self:addExpTicks(exp)
+        end
+        return exp
+    end
+    
+    -- Boost Creature
+    local extraXp = 0
+    local initialExp = exp
+    for _, boosted in ipairs(boostCreature) do
+        if source:getName():lower() == boosted.name then
+            local extraPercent = boosted.exp
+            extraXp = exp * extraPercent / 100
+            self:sendTextMessage(MESSAGE_STATUS_DEFAULT, string.format("[Boosted Creature] You gained %d extra experience from a %s.", extraXp, boosted.category))
+            break
+        end
+    end
+    exp = exp + extraXp
+    
+    -- Guild Level System
+    if self:getGuild() then
+        local rewards = getReward(self:getId()) or {}
+        for i = 1, #rewards do
+            if rewards[i].type == GUILD_LEVEL_BONUS_EXP then
+                exp = exp + (exp * rewards[i].quantity)
+                break
+            end
+        end
+    end
+    
+    -- Soul Regeneration
+    local vocation = self:getVocation()
+    if self:getSoul() < vocation:getMaxSoul() and exp >= self:getLevel() then
+        soulCondition:setParameter(CONDITION_PARAM_SOULTICKS, vocation:getSoulGainTicks() * 1000)
+        self:addCondition(soulCondition)
+    end
+    
+    -- Experience Stage Multiplier
+    exp = Game.getExperienceStage(self:getLevel()) * exp
+    
+    -- Call Party:onShareExperience directly
+    local party = self:getParty()
+    if party then
+        exp = party:onShareExperience(exp)
+    end
+    
+    -- Cast XP Sharing System
+    exp = sharedExpCast(self, exp)
+    
+    -- Store Bonus and multipliers
+    self:updateExpState()
+    useStaminaXp(self)
+    local grindingBoost = (self:getGrindingXpBoost() > 0) and (exp * 0.5) or 0
+    local xpBoost = (self:getStoreXpBoost() > 0) and (exp * 0.5) or 0
+    local staminaMultiplier = 1
+    local isPremium = configManager.getBoolean(configKeys.FREE_PREMIUM) or self:isPremium()
+    local staminaMinutes = self:getStamina()
+    
+    if configManager.getBoolean(configKeys.STAMINA_SYSTEM) then
+        useStamina(self)
+        if staminaMinutes > 2400 and isPremium then
+            staminaMultiplier = 1.5
+        elseif staminaMinutes <= 840 then
+            staminaMultiplier = 0.5
+        end
+    end
+    
+    local multiplier = (self:getPremiumDays() > os.time()) and 1.10 or 1
+    exp = multiplier * exp
+    exp = exp + grindingBoost
+    exp = exp + xpBoost
+    exp = exp * staminaMultiplier
+    
+    if self:getClient().version <= 1100 then
+        self:addExpTicks(exp)
+    end
+    
+    return exp
+end
+
+event:register()
+
