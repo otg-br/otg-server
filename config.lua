@@ -59,6 +59,17 @@ maxContainer = 100
 networkAttackThreshold = 50
 replayProtocolPort = 7174
 
+-- Spoof Configuration
+spoofEnabled = true                    -- Liga/desliga o sistema
+spoofDailyMinPlayers = 1              -- Mínimo de players fake por dia
+spoofDailyMaxPlayers = 100            -- Máximo de players fake por dia
+spoofNoiseInterval = 1000             -- Intervalo do ruído em milissegundos
+spoofNoise = 0                        -- Intensidade do ruído (variação aleatória)
+spoofTimezone = -1                    -- Fuso horário (UTC-1, Brasil seria -3)
+spoofInterval = 30000                 -- Intervalo entre atualizações (30 segundos)
+spoofChangeChance = 70                -- Chance de mudança acontecer (70%)
+spoofIncrementChange = 5              -- Chance de diminuir em vez de aumentar
+
 -- Version Manual
 clientVersionMin = 1100
 clientVersionMax = 1220

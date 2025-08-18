@@ -1138,7 +1138,8 @@ class LuaScriptInterface
 		static int luaPlayerSendBasicData(lua_State* L);
 
 		static int luaPlayerHasLostConnection(lua_State* L);
-		static int luaPlayerGetNoPongTime(lua_State* L);
+        static int luaPlayerGetNoPongTime(lua_State* L);
+        static int luaPlayerHasPing(lua_State* L);
 
 
 		static int luaPlayerGetIdleTime(lua_State* L);

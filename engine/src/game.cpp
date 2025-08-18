@@ -90,6 +90,11 @@ Game::~Game()
 
 void Game::start(ServiceManager* manager)
 {
+	spoofPlayers = 0;
+	spoofNoise = 0;
+	lastSpoofUpdateNoiseTime = 0;
+	lastSpoofUpdateTime = 0;
+
 	serviceManager = manager;
 
 	time_t now = time(0);
@@ -101,6 +106,8 @@ void Game::start(ServiceManager* manager)
 	g_scheduler.addEvent(createSchedulerTask(EVENT_CREATURE_THINK_INTERVAL, std::bind(&Game::checkCreatures, this, 0)));
 	g_scheduler.addEvent(createSchedulerTask(EVENT_IMBUEMENTINTERVAL, std::bind(&Game::checkImbuements, this)));
 
+	// Initialize spoof system
+	g_scheduler.addEvent(createSchedulerTask(1000, std::bind(&Game::updateSpoofPlayers, this)));
 }
 
 GameState_t Game::getGameState() const
@@ -5541,6 +5548,71 @@ void Game::removeCreatureCheck(Creature* creature)
 	if (creature->inCheckCreaturesVector) {
 		creature->creatureCheck = false;
 	}
+}
+
+size_t Game::getMaxSpoofPlayers()
+{
+	auto min_players = g_config.getNumber(ConfigManager::SPOOF_DAILY_MIN_PLAYERS);
+	auto max_players = g_config.getNumber(ConfigManager::SPOOF_DAILY_MAX_PLAYERS);
+	auto spoof_noise_interval = g_config.getNumber(ConfigManager::SPOOF_NOISE_INTERVAL);
+	if ((OTSYS_TIME() - lastSpoofUpdateNoiseTime) >= spoof_noise_interval) {
+		auto spoof_noise_cnf = g_config.getNumber(ConfigManager::SPOOF_NOISE);
+		spoofNoise = uniform_random(-spoof_noise_cnf, spoof_noise_cnf);
+		lastSpoofUpdateNoiseTime = OTSYS_TIME();
+	}
+	auto epoch_time = OTSYS_TIME() + g_config.getNumber(ConfigManager::SPOOF_TIMEZONE) * (60 * 60 * 1000);
+	double pt = ((epoch_time / 1000) % 43200) / 43200.0 * acos(-1.0);
+	return std::max(static_cast<size_t>(min_players + sin(pt) * (max_players - min_players)) + spoofNoise, size_t(0));
+}
+
+void Game::updateSpoofPlayers()
+{
+	if (!g_config.getBoolean(ConfigManager::SPOOF_ENABLED)) {
+		g_scheduler.addEvent(createSchedulerTask(60000, std::bind(&Game::updateSpoofPlayers, this)));
+		return;
+	}
+	auto spoof_update_interval = g_config.getNumber(ConfigManager::SPOOF_INTERVAL);
+	if ((OTSYS_TIME() - lastSpoofUpdateTime) < spoof_update_interval) {
+		g_scheduler.addEvent(createSchedulerTask(spoof_update_interval, std::bind(&Game::updateSpoofPlayers, this)));
+		return;
+	}
+	lastSpoofUpdateTime = OTSYS_TIME();
+	auto spoof_change_chance = g_config.getNumber(ConfigManager::SPOOF_CHANGE_CHANCE);
+	
+	if (uniform_random(0, 100) < spoof_change_chance) {
+		const size_t max_spoof_players = getMaxSpoofPlayers();
+		const size_t real_players = players.size();
+		
+		size_t target_spoof = max_spoof_players;
+		
+		if (real_players > 20) {
+			target_spoof = std::max(size_t(10), max_spoof_players - (real_players / 2));
+		}
+		
+		if (spoofPlayers > target_spoof) {
+			if (spoofPlayers > 0) {
+				spoofPlayers--;
+			}
+		}
+		else if (spoofPlayers < target_spoof) {
+			auto spoof_increment_chance = g_config.getNumber(ConfigManager::SPOOF_INCREMENT_CHANCE);
+			if (spoof_increment_chance > 1 && uniform_random(0, spoof_increment_chance - 1) == 0) {
+				if (spoofPlayers > 0) {
+					spoofPlayers--;
+				}
+			}
+			else {
+				spoofPlayers++;
+			}
+		}
+		checkPlayersRecord();
+	}
+	
+	const size_t max_spoof_players = getMaxSpoofPlayers();
+	std::cout << players.size() << " normal players online, ";
+	std::cout << spoofPlayers << " spoof players online (max allowed: " << max_spoof_players << ")." << std::endl;
+
+	g_scheduler.addEvent(createSchedulerTask(spoof_update_interval, std::bind(&Game::updateSpoofPlayers, this)));
 }
 
 void Game::checkCreatures(size_t index)

@@ -198,6 +198,7 @@ bool ConfigManager::load()
 	boolean[CONVERT_UNSAFE_SCRIPTS] = getGlobalBoolean(L, "convertUnsafeScripts", true);
 	boolean[CLASSIC_EQUIPMENT_SLOTS] = getGlobalBoolean(L, "classicEquipmentSlots", false);
 	boolean[CLASSIC_ATTACK_SPEED] = getGlobalBoolean(L, "classicAttackSpeed", false);
+	boolean[SPOOF_ENABLED] = getGlobalBoolean(L, "spoofEnabled", false);
 	boolean[SCRIPTS_CONSOLE_LOGS] = getGlobalBoolean(L, "showScriptsLogInConsole", true);
 	boolean[ALLOW_BLOCK_SPAWN] = getGlobalBoolean(L, "allowBlockSpawn", true);
 	boolean[REMOVE_WEAPON_AMMO] = getGlobalBoolean(L, "removeWeaponAmmunition", true);
@@ -271,8 +272,15 @@ bool ConfigManager::load()
 	integer[PVP_PROTECTION_LEVEL] = getGlobalNumber(L, "pvpProtectionLevel", 50);
 	integer[MAX_ALLOWED_ON_A_DUMMY] = getGlobalNumber(L, "maxAllowedOnADummy", 5);
 	integer[RATE_EXERCISE_TRAINING_SPEED] = getGlobalNumber(L, "rateExerciseTrainingSpeed", 1.0);
+	integer[SPOOF_DAILY_MIN_PLAYERS] = getGlobalNumber(L, "spoofDailyMinPlayers", 50);
+	integer[SPOOF_DAILY_MAX_PLAYERS] = getGlobalNumber(L, "spoofDailyMaxPlayers", 200);
+	integer[SPOOF_NOISE_INTERVAL] = getGlobalNumber(L, "spoofNoiseInterval", 10 * 60 * 1000);
+	integer[SPOOF_NOISE] = getGlobalNumber(L, "spoofNoise", 10);
+	integer[SPOOF_TIMEZONE] = getGlobalNumber(L, "spoofTimezone", -3);
+	integer[SPOOF_INTERVAL] = getGlobalNumber(L, "spoofInterval", 60 * 1000);
+	integer[SPOOF_CHANGE_CHANCE] = getGlobalNumber(L, "spoofChangeChance", 100);
+	integer[SPOOF_INCREMENT_CHANCE] = getGlobalNumber(L, "spoofIncrementChange", 5);
 	
-
 
 	floating[RATE_MONSTER_HEALTH] = getGlobalFloat(L, "rateMonsterHealth", 1.0);
 	floating[RATE_MONSTER_ATTACK] = getGlobalFloat(L, "rateMonsterAttack", 1.0);

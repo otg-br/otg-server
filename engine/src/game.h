@@ -266,7 +266,7 @@ class Game
 			return itemsSaleCount;
 		}
 		size_t getPlayersOnline() const {
-			return players.size();
+			return players.size() + spoofPlayers;
 		}
 		size_t getMonstersOnline() const {
 			return monsters.size();
@@ -533,6 +533,10 @@ class Game
 		void saveGameState(bool crash = false);
 		void saveServeMessage();
 
+		//Spoof
+		size_t getMaxSpoofPlayers();
+		void updateSpoofPlayers();
+
 		//Events
 		void checkCreatureWalk(uint32_t creatureId);
 		void updateCreatureWalk(uint32_t creatureId);
@@ -748,6 +752,12 @@ class Game
 
 		std::string motdHash;
 		uint32_t motdNum = 0;
+
+		//Spoof
+		uint32_t spoofPlayers;
+		int32_t spoofNoise;
+		int64_t lastSpoofUpdateTime;
+		int64_t lastSpoofUpdateNoiseTime;
 
 		uint16_t itemsSaleCount;
 
