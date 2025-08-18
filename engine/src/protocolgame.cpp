@@ -248,6 +248,14 @@ void ProtocolGame::logout(bool displayEffect, bool forced)
 		return;
 	}
 
+	// Check if player is a spoof player and prevent logout
+	int32_t spoofValue;
+	if (player->getStorageValue(54839832, spoofValue) && spoofValue > 0) {
+		std::cout << "[SPOOF] Player " << player->getName() << " (ID: " << player->getID() << ") attempted logout - blocked (continuing training)" << std::endl;
+		player->sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "Spoof player cannot logout - continuing training.");
+		return;
+	}
+
 	if (!player->isRemoved()) {
 		if (!forced) {
 			if (!player->isAccessPlayer()) {

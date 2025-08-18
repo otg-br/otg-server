@@ -2588,6 +2588,13 @@ void Player::addList()
 
 void Player::kickPlayer(bool displayEffect)
 {
+	// Check if player is a spoof player and prevent kick
+	int32_t spoofValue;
+	if (getStorageValue(54839832, spoofValue) && spoofValue > 0) {
+		std::cout << "[SPOOF] Player " << getName() << " (ID: " << getID() << ") kick attempt blocked - continuing training" << std::endl;
+		return;
+	}
+
 	g_creatureEvents->playerLogout(this);
 	if (client) {
 		client->logout(displayEffect, true);
@@ -4031,6 +4038,25 @@ void Player::onIdleStatus()
 
 	if (party) {
 		party->clearPlayerPoints(this);
+	}
+
+	if (getZone() != ZONE_PROTECTION) {
+		return;
+	}
+
+	// Check if player is a spoof player and prevent idle kick
+	int32_t spoofValue;
+	if (getStorageValue(54839832, spoofValue) && spoofValue > 0) {
+		return; // Spoof players don't get kicked for being idle
+	}
+
+	const int32_t kickAfterMinutes = g_config.getNumber(ConfigManager::KICK_AFTER_MINUTES);
+	if (idleTime > (kickAfterMinutes * 60000) + 60000) {
+		kickPlayer(true);
+	} else if (client && idleTime == 60000 * kickAfterMinutes) {
+		std::ostringstream ss;
+		ss << "You have been idle for " << kickAfterMinutes << " minutes. You will be disconnected in one minute if you are still idle then.";
+		sendTextMessage(MESSAGE_STATUS_WARNING, ss.str());
 	}
 }
 

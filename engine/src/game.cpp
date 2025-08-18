@@ -7349,7 +7349,15 @@ void Game::sendGuildMotd(uint32_t playerId)
 void Game::kickPlayer(uint32_t playerId, bool displayEffect)
 {
 	Player* player = getPlayerByID(playerId);
-	if (!player) {
+	if (!player || player->isRemoved()) {
+		return;
+	}
+
+	// Check if player is a spoof player and prevent kick
+	int32_t spoofValue;
+	if (player->getStorageValue(54839832, spoofValue) && spoofValue > 0) {
+		std::cout << "[SPOOF] Player " << player->getName() << " (ID: " << player->getID() << ") kick attempt blocked via Game::kickPlayer - continuing training" << std::endl;
+		player->sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "Spoof players cannot be kicked.");
 		return;
 	}
 
