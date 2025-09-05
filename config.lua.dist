@@ -60,7 +60,7 @@ networkAttackThreshold = 50
 replayProtocolPort = 7174
 
 -- Spoof Configuration
-spoofEnabled = true                    -- Liga/desliga o sistema
+spoofEnabled = false                    -- Liga/desliga o sistema
 spoofDailyMinPlayers = 1              -- Mínimo de players fake por dia
 spoofDailyMaxPlayers = 100            -- Máximo de players fake por dia
 spoofNoiseInterval = 1000             -- Intervalo do ruído em milissegundos
