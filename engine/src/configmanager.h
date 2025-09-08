@@ -74,6 +74,7 @@ class ConfigManager
 			BLESS_RUNE,
 			ANTI_MULTI_CLIENT_ENABLED,
 			ALLOW_MOUNT_IN_PZ,
+			SHOW_KILLS_DEATHS_ON_LOOK,
 
 			LAST_BOOLEAN_CONFIG /* this must be the last one */
 		};

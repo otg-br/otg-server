@@ -684,8 +684,11 @@ void Creature::onDeath()
 	bool droppedCorpse = dropCorpse(lastHitCreature, mostDamageCreature, lastHitUnjustified, mostDamageUnjustified);
 	
 	Player* player = getPlayer();
-	if (player) {
-		player->addDeath();
+	if (player && lastHitCreature) {
+		Player* killerPlayer = lastHitCreature->getPlayer();
+		if (killerPlayer && killerPlayer != player) {
+			player->addDeath();
+		}
 	}
 	
 	death(lastHitCreature);
