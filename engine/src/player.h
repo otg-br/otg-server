@@ -616,6 +616,25 @@ class Player final : public Creature, public Cylinder
 			lastBestiaryMonster = newvalue;
 		}
 
+		uint32_t getKills() const {
+			return kills;
+		}
+		void setKills(uint32_t newKills) {
+			kills = newKills;
+		}
+		void addKill() {
+			++kills;
+		}
+		uint32_t getDeaths() const {
+			return deaths;
+		}
+		void setDeaths(uint32_t newDeaths) {
+			deaths = newDeaths;
+		}
+		void addDeath() {
+			++deaths;
+		}
+
 		Item* getInventoryItem(slots_t slot) const;
 
 		bool isItemAbilityEnabled(slots_t slot) const {
@@ -1940,6 +1959,10 @@ class Player final : public Creature, public Cylinder
 		uint16_t staminaXpBoost = 100;
 		uint16_t lastBestiaryMonster = 0;
 		int16_t lastDepotId = -1;
+
+		// Kill/Death system
+		uint32_t kills = 0;
+		uint32_t deaths = 0;
 
 		uint8_t soul = 0;
 		uint8_t levelPercent = 0;

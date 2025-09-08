@@ -682,6 +682,12 @@ void Creature::onDeath()
 	}
 
 	bool droppedCorpse = dropCorpse(lastHitCreature, mostDamageCreature, lastHitUnjustified, mostDamageUnjustified);
+	
+	Player* player = getPlayer();
+	if (player) {
+		player->addDeath();
+	}
+	
 	death(lastHitCreature);
 
 	if (master) {
@@ -1122,6 +1128,13 @@ bool Creature::onKilledCreature(Creature* target, bool)
 {
 	if (master) {
 		master->onKilledCreature(target);
+	}
+
+	// Increment kills if this is a player killing another player
+	Player* player = getPlayer();
+	Player* targetPlayer = target->getPlayer();
+	if (player && targetPlayer && player != targetPlayer) {
+		player->addKill();
 	}
 
 	//scripting event - onKill

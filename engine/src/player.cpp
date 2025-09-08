@@ -206,6 +206,8 @@ std::string Player::getDescription(int32_t lookDistance) const
 		}
 	}
 
+	s << " Kills: [" << kills << "]. Deaths: [" << deaths << "]";
+
 	return s.str();
 }
 
