@@ -30,6 +30,7 @@
 #include "game.h"
 #include "iologindata.h"
 #include "iomarket.h"
+#include "account.h"
 #include "waitlist.h"
 #include "ban.h"
 #include "scheduler.h"
@@ -2072,6 +2073,10 @@ void ProtocolGame::sendMarketEnter(uint32_t depotId)
 				continue;
 			}
 
+			if (item->getID() == ITEM_STORECOINS) {
+				continue;
+			}
+
 			if (c && (!itemType.isContainer() || c->capacity() != itemType.maxItems)) {
 				continue;
 			}
@@ -2083,6 +2088,17 @@ void ProtocolGame::sendMarketEnter(uint32_t depotId)
 			depotItems[itemType.wareId] += Item::countByType(item, -1);
 		}
 	} while (!containerList.empty());
+
+	// Add Tibia Coins (account balance) as virtual availability
+	const ItemType& coinType = Item::items[ITEM_STORECOINS];
+	if (coinType.id != 0) {
+		uint32_t coinBalance = IOAccount::getCoinBalance(player->getAccount(), COIN_TYPE_DEFAULT);
+		if (coinBalance > 0) {
+			// Market list uses wareId keys
+			uint16_t marketKey = coinType.wareId != 0 ? coinType.wareId : coinType.id;
+			depotItems[marketKey] += coinBalance;
+		}
+	}
 
 	uint16_t itemsToSend = std::min<size_t>(depotItems.size(), std::numeric_limits<uint16_t>::max());
 	msg.add<uint16_t>(itemsToSend);
