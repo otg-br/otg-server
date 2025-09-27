@@ -171,11 +171,14 @@ void ProtocolLogin::getCharacterList(const std::string& accountName, const std::
 
 	output->addByte(0);
 
-	uint8_t size = std::min<size_t>(std::numeric_limits<uint8_t>::max(), account.characters.size());
-	output->addByte(size);
-	for (uint8_t i = 0; i < size; i++) {
+	uint8_t characters = std::min<size_t>(10, account.characters.size());
+	output->addByte(characters);
+	for (uint8_t i = 0; i < characters; i++) {
 		output->addByte(0);
-		output->addString(account.characters[i]);
+		output->addString(account.characters[i].name);
+		output->add<uint32_t>(account.characters[i].level);
+		output->add<uint16_t>(account.characters[i].vocation);
+		output->addOutfit(account.characters[i].outfit);
 	}
 
 	//Add premium days

@@ -21,6 +21,7 @@
 #define FS_NETWORKMESSAGE_H_B853CFED58D1413A87ACED07B2926E03
 
 #include "const.h"
+#include "enums.h"
 
 class Item;
 class Creature;
@@ -113,6 +114,7 @@ class NetworkMessage
 		// write functions for complex types
 		void addPosition(const Position& pos);
 		void addItemId(uint16_t itemId);
+		void addOutfit(const Outfit_t& outfit);
 
 		MsgSize_t getLength() const {
 			return info.length;
