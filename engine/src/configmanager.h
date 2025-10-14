@@ -76,6 +76,7 @@ class ConfigManager
 			ALLOW_MOUNT_IN_PZ,
 			SHOW_KILLS_DEATHS_ON_LOOK,
 			DISABLE_PUSH_CANCEL_ON_SPELLS,
+			PUSH_WHEN_ATTACKING,
 
 			LAST_BOOLEAN_CONFIG /* this must be the last one */
 		};
@@ -110,7 +111,7 @@ class ConfigManager
 			LAST_STRING_CONFIG /* this must be the last one */
 		};
 
-		enum integer_config_t {
+			enum integer_config_t {
 			SQL_PORT,
 			MAX_PLAYERS,
 			PZ_LOCKED,
@@ -174,10 +175,14 @@ class ConfigManager
 			SPOOF_NOISE,
 			SPOOF_INTERVAL,
 			SPOOF_CHANGE_CHANCE,
-			SPOOF_INCREMENT_CHANCE,
+				SPOOF_INCREMENT_CHANCE,
 
-			LAST_INTEGER_CONFIG /* this must be the last one */
-		};
+				// Push mechanics
+				PUSH_DELAY,
+				PUSH_DISTANCE_DELAY,
+
+				LAST_INTEGER_CONFIG /* this must be the last one */
+			};
 
 		enum floating_config_t {
 			RATE_MONSTER_HEALTH,

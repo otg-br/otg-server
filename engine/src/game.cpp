@@ -790,8 +790,10 @@ void Game::playerMoveCreatureByID(uint32_t playerId, uint32_t movingCreatureId, 
 
 void Game::playerMoveCreature(Player* player, Creature* movingCreature, const Position& movingCreatureOrigPos, Tile* toTile)
 {
-	if (!player->canDoAction()) {
-		uint32_t delay = player->getNextActionTime();
+	bool pushWhenAttacking = g_config.getBoolean(ConfigManager::PUSH_WHEN_ATTACKING);
+	bool canPerformPush = pushWhenAttacking ? player->canPush() : player->canDoAction();
+	if (!canPerformPush) {
+		uint32_t delay = pushWhenAttacking ? player->getNextPushTime() : player->getNextActionTime();
 		SchedulerTask* task = createSchedulerTask(delay, std::bind(&Game::playerMoveCreatureByID,
 			this, player->getID(), movingCreature->getID(), movingCreatureOrigPos, toTile->getPosition()));
 
@@ -989,10 +991,12 @@ void Game::playerMoveItemByPlayerID(uint32_t playerId, const Position& fromPos, 
 }
 
 void Game::playerMoveItem(Player* player, const Position& fromPos,
-						  uint16_t spriteId, uint8_t fromStackPos, const Position& toPos, uint8_t count, Item* item, Cylinder* toCylinder)
+                          uint16_t spriteId, uint8_t fromStackPos, const Position& toPos, uint8_t count, Item* item, Cylinder* toCylinder)
 {
-	if (!player->canDoAction()) {
-		uint32_t delay = player->getNextActionTime();
+	bool pushWhenAttacking = g_config.getBoolean(ConfigManager::PUSH_WHEN_ATTACKING);
+	bool canPerformPush = pushWhenAttacking ? player->canPush() : player->canDoAction();
+	if (!canPerformPush) {
+		uint32_t delay = pushWhenAttacking ? player->getNextPushTime() : player->getNextActionTime();
 		SchedulerTask* task = createSchedulerTask(delay, std::bind(&Game::playerMoveItemByPlayerID, this,
 							  player->getID(), fromPos, spriteId, fromStackPos, toPos, count));
 		player->setNextActionTask(task);
@@ -1160,6 +1164,19 @@ void Game::playerMoveItem(Player* player, const Position& fromPos,
 	} else {
 		// cancelando o push
 		player->cancelPush();
+
+		// apply push delay window when enabled
+		bool pushWhenAttacking = g_config.getBoolean(ConfigManager::PUSH_WHEN_ATTACKING);
+		if (pushWhenAttacking) {
+			bool isAdjacent = Position::areInRange<1, 1>(playerPos, mapFromPos) && playerPos.z == mapFromPos.z;
+			int32_t pushDelay = isAdjacent ?
+				g_config.getNumber(ConfigManager::PUSH_DELAY) :
+				g_config.getNumber(ConfigManager::PUSH_DISTANCE_DELAY);
+
+			if (pushDelay > 0) {
+				player->setNextPushAction(OTSYS_TIME() + pushDelay);
+			}
+		}
 
 		g_events->eventPlayerOnItemMoved(player, item, count, fromPos, toPos, fromCylinder, toCylinder);
 	}
@@ -4610,10 +4627,12 @@ void Game::playerQuickLoot(uint32_t playerId, const Position& pos, uint16_t spri
 		return;
 	}
 
-	if (!player->canDoAction()) {
-		uint32_t delay = player->getNextActionTime();
+	bool pushWhenAttacking = g_config.getBoolean(ConfigManager::PUSH_WHEN_ATTACKING);
+	bool canPerformPush = pushWhenAttacking ? player->canPush() : player->canDoAction();
+	if (!canPerformPush) {
+		uint32_t delay = pushWhenAttacking ? player->getNextPushTime() : player->getNextActionTime();
 		SchedulerTask* task = createSchedulerTask(delay, std::bind(&Game::playerQuickLoot,
-																   this, player->getID(), pos, spriteId, stackPos, defaultItem));
+							   this, player->getID(), pos, spriteId, stackPos, defaultItem));
 		player->setNextActionTask(task);
 		return;
 	}
