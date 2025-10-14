@@ -130,6 +130,11 @@ houseRentPeriod = "never"
 timeBetweenActions = 500
 timeBetweenExActions = 800
 
+-- Controle do cancelamento de push durante spells/poções
+-- true: não cancelar push ao usar spells/runes/poções
+-- false: comportamento padrão (cancela push)
+disablePushCancelOnSpells = false
+
 -- Map
 -- NOTE: set mapName WITHOUT .otbm at the end
 -- NOTE: unzip the map world.rar
