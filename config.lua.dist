@@ -60,15 +60,15 @@ networkAttackThreshold = 50
 replayProtocolPort = 7174
 
 -- Spoof Configuration
-spoofEnabled = false                    -- Liga/desliga o sistema
-spoofDailyMinPlayers = 1              -- Mínimo de players fake por dia
-spoofDailyMaxPlayers = 100            -- Máximo de players fake por dia
-spoofNoiseInterval = 1000             -- Intervalo do ruído em milissegundos
-spoofNoise = 0                        -- Intensidade do ruído (variação aleatória)
-spoofTimezone = -1                    -- Fuso horário (UTC-1, Brasil seria -3)
-spoofInterval = 30000                 -- Intervalo entre atualizações (30 segundos)
-spoofChangeChance = 70                -- Chance de mudança acontecer (70%)
-spoofIncrementChange = 5              -- Chance de diminuir em vez de aumentar
+--spoofEnabled = false                    -- Liga/desliga o sistema
+--spoofDailyMinPlayers = 1              -- Mínimo de players fake por dia
+--spoofDailyMaxPlayers = 100            -- Máximo de players fake por dia
+--spoofNoiseInterval = 1000             -- Intervalo do ruído em milissegundos
+--spoofNoise = 0                        -- Intensidade do ruído (variação aleatória)
+--spoofTimezone = -1                    -- Fuso horário (UTC-1, Brasil seria -3)
+--spoofInterval = 30000                 -- Intervalo entre atualizações (30 segundos)
+--spoofChangeChance = 70                -- Chance de mudança acontecer (70%)
+--spoofIncrementChange = 5              -- Chance de diminuir em vez de aumentar
 
 -- NOTE: Not is configured the ips
 proxyList = "1,0.0.0.0,7000,USA;2,0.0.0.0,7000,BRA"
@@ -103,7 +103,18 @@ depotBoxes = 18
 
 -- Max players allowed on a dummy.
 maxAllowedOnADummy = 5
-rateExerciseTrainingSpeed = rateAttackSpeed
+rateExerciseTrainingSpeed = 1
+
+-- Spoof Configuration
+-- spoofEnabled = false                    -- Liga/desliga o sistema
+-- spoofDailyMinPlayers = 1              -- Mínimo de players fake por dia
+-- spoofDailyMaxPlayers = 100            -- Máximo de players fake por dia
+-- spoofNoiseInterval = 1000             -- Intervalo do ruído em milissegundos
+-- spoofNoise = 0                        -- Intensidade do ruído (variação aleatória)
+-- spoofTimezone = -1                    -- Fuso horário (UTC-1, Brasil seria -3)
+-- spoofInterval = 30000                 -- Intervalo entre atualizações (30 segundos)
+-- spoofChangeChance = 70                -- Chance de mudança acontecer (70%)
+-- spoofIncrementChange = 5              -- Chance de diminuir em vez de aumentar
 
 -- GameStore
 gamestoreByModules = false
