@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="iso-8859-1"?>
 <items>
 	<!-- A Piece of Cake Quest -->
     <item id="13128" article="a" name="slain cake golem">
@@ -36484,7 +36484,7 @@
 		<attribute key="wrapableTo" value="26054" />
 	</item>
 	<item id="26377" article="an" name="loot Pouch">
-		<attribute key="containerSize" value="8" />
+		<attribute key="containerSize" value="100" />
 		<attribute key="description" value="A infinity bag where you can hold coins." />
 	</item>
 	<item id="26378" article="a" name="gold converter">

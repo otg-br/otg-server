@@ -92,7 +92,9 @@ function AutoLootList.addItem(self, playerId, itemId)
 
     local currentCount = self:countList(playerId)
     local isVip = player:getVipDays() > os.time()
-    local maxItems = isVip and 25 or 15
+    local vipMax = configManager.getNumber(configKeys.VIP_AUTOLOOT_LIMIT)
+    local freeMax = configManager.getNumber(configKeys.FREE_AUTOLOOT_LIMIT)
+    local maxItems = isVip and vipMax or freeMax
     
     if currentCount >= maxItems then
         local accountType = isVip and "VIP" or "Free"

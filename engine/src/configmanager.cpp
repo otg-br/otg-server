@@ -176,6 +176,7 @@ bool ConfigManager::load()
 		integer[AUTOLOOT_MODE] = getGlobalNumber(L, "autolootmode", 0); //Autoloot
 		integer[VIP_AUTOLOOT_LIMIT] = getGlobalNumber(L, "vip_autoloot", 25);
 		integer[FREE_AUTOLOOT_LIMIT] = getGlobalNumber(L, "free_autoloot", 15);
+        integer[GOLD_POUCH_CAPACITY] = getGlobalNumber(L, "gold_pouch_capacity", 50);
 
 		boolean[PROTO_BUFF] = getGlobalNumber(L, "protobuff", false); //Autoloot
 

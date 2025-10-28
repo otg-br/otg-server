@@ -22,17 +22,18 @@
 #include "container.h"
 #include "iomap.h"
 #include "game.h"
+#include "configmanager.h"
 
 extern Game g_game;
+extern ConfigManager g_config;
 
 Container::Container(uint16_t type) :
-	Container(type, items[type].maxItems) {
-	if (getID() == ITEM_GOLD_POUCH) {
-		pagination = true;
-		maxSize = 25;
-	} else if (getID() == ITEM_INBOX || getID() == ITEM_DEPOT) {
-		islocker = true;
-	}
+    Container(type, (type == ITEM_GOLD_POUCH ? static_cast<uint16_t>(g_config.getNumber(ConfigManager::GOLD_POUCH_CAPACITY)) : items[type].maxItems)) {
+    if (getID() == ITEM_GOLD_POUCH) {
+        pagination = true;
+    } else if (getID() == ITEM_INBOX || getID() == ITEM_DEPOT) {
+        islocker = true;
+    }
 }
 
 Container::Container(uint16_t type, uint16_t size, bool unlocked /*= true*/, bool pagination /*= false*/, bool islocker /*= false*/) :
