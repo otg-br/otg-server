@@ -105,17 +105,6 @@ depotBoxes = 18
 maxAllowedOnADummy = 5
 rateExerciseTrainingSpeed = 1
 
--- Spoof Configuration
--- spoofEnabled = false                    -- Liga/desliga o sistema
--- spoofDailyMinPlayers = 1              -- Mínimo de players fake por dia
--- spoofDailyMaxPlayers = 100            -- Máximo de players fake por dia
--- spoofNoiseInterval = 1000             -- Intervalo do ruído em milissegundos
--- spoofNoise = 0                        -- Intensidade do ruído (variação aleatória)
--- spoofTimezone = -1                    -- Fuso horário (UTC-1, Brasil seria -3)
--- spoofInterval = 30000                 -- Intervalo entre atualizações (30 segundos)
--- spoofChangeChance = 70                -- Chance de mudança acontecer (70%)
--- spoofIncrementChange = 5              -- Chance de diminuir em vez de aumentar
-
 -- GameStore
 gamestoreByModules = false
 
