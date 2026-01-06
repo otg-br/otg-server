@@ -36,6 +36,9 @@
 #include "groups.h"
 #include "town.h"
 #include "mounts.h"
+#include "auras.h"
+#include "wings.h"
+#include "shaders.h"
 #include "reward.h"
 #include "rewardchest.h"
 #include "imbuements.h"
@@ -119,7 +122,6 @@ struct Kill {
 
 using MuteCountMap = std::map<uint32_t, uint32_t>;
 
-static constexpr int32_t PLAYER_MAX_SPEED = 1500;
 static constexpr int32_t PLAYER_MIN_SPEED = 10;
 
 class Player final : public Creature, public Cylinder
@@ -170,14 +172,42 @@ class Player final : public Creature, public Cylinder
 
 		uint8_t getCurrentMount() const;
 		void setCurrentMount(uint8_t mountId);
-		bool isMounted() const {
+		bool isMounted() const
+		{
 			return defaultOutfit.lookMount != 0;
+		}
+		bool hasMount() const
+		{
+			return defaultOutfit.lookMount != 0;
+		}
+		bool hasAura() const
+		{
+			return defaultOutfit.lookAura != 0;
+		}
+		bool hasWings() const
+		{
+			return defaultOutfit.lookWings != 0;
+		}
+		bool hasShader() const
+		{
+			return defaultOutfit.lookShader != 0;
 		}
 		bool toggleMount(bool mount);
 		bool tameMount(uint8_t mountId);
 		bool untameMount(uint8_t mountId);
 		bool hasMount(const Mount* mount) const;
 		void dismount();
+
+		bool hasWing(const Wing* wing) const;
+		bool addWing(uint8_t wingId);
+		uint8_t getCurrentAura() const;
+		void setCurrentAura(uint8_t auraId);
+		bool hasAura(const Aura* aura) const;
+		bool addAura(uint8_t auraId);
+		uint8_t getCurrentWing() const;
+		void setCurrentWing(uint8_t wingId);
+		bool hasShader(const Shader* shader) const;
+		bool addShader(uint8_t shaderId);
 
 		void sendFYIBox(const std::string& message) {
 			if (client) {
@@ -981,6 +1011,11 @@ class Player final : public Creature, public Cylinder
 				client->sendCreatureShield(creature);
 			}
 		}
+		void sendAnimatedText(const std::string& message, const Position& pos, TextColor_t color) {
+            if (client) {
+                client->sendAnimatedText(message, pos, color);
+            }
+        }
 		void sendCreatureType(const Creature* creature, uint8_t creatureType) {
 			if (client) {
 				client->sendCreatureType(creature, creatureType);
@@ -2009,14 +2044,23 @@ class Player final : public Creature, public Cylinder
 		static uint32_t maxPlayerAutoID;
 
 		void updateItemsLight(bool internal = false);
+
+		int32_t getMaxSpeed() const
+	{
+		if (group && group->access) {
+			return 5000; // GOD Speed
+		}
+		return 900; // Player Speed
+	}
+	
 		int32_t getStepSpeed() const final {
-			return std::max<int32_t>(PLAYER_MIN_SPEED, std::min<int32_t>(PLAYER_MAX_SPEED, getSpeed()));
+			return std::max<int32_t>(PLAYER_MIN_SPEED, std::min<int32_t>(getMaxSpeed(), getSpeed()));
 		}
 		void updateBaseSpeed() {
 			if (!hasFlag(PlayerFlag_SetMaxSpeed)) {
 				baseSpeed = vocation->getBaseSpeed() + (2 * (level - 1));
 			} else {
-				baseSpeed = PLAYER_MAX_SPEED;
+				baseSpeed = getMaxSpeed();
 			}
 		}
 

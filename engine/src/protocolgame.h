@@ -365,6 +365,8 @@ class ProtocolGame final : public ProtocolGameBase
 		void sendAddMarker(const Position& pos, uint8_t markType, const std::string& desc);
 		void sendMapManage(uint8_t action);
 
+		void sendAnimatedText(const std::string& message, const Position& pos, TextColor_t color);
+
 		void sendCreatureWalkthrough(const Creature* creature, bool walkthrough);
 		void sendCreatureShield(const Creature* creature);
 		void sendCreatureSkull(const Creature* creature);
@@ -448,6 +450,7 @@ class ProtocolGame final : public ProtocolGameBase
 		void parseBestiaryTracker(NetworkMessage& msg);
 
 		friend class Player;
+		friend class ProtocolGameBase;
 		
 		uint16_t otclientV8 = 0;
 

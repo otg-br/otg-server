@@ -585,6 +585,7 @@ class LuaScriptInterface
 		static int luaGameGetClientVersion(lua_State* L);
 
 		static int luaGameReload(lua_State* L);
+		static int luaGameSendAnimatedText(lua_State* L);
 
 		static int luaGameGetItemByClientId(lua_State* L);
 		static int luaGameGetOfflinePlayer(lua_State* L);
@@ -1153,6 +1154,10 @@ class LuaScriptInterface
 
 		// Monster
 		static int luaMonsterCreate(lua_State* L);
+
+		static int luaPlayerAddAura(lua_State* L);
+        static int luaPlayerAddWings(lua_State* L);
+        static int luaPlayerAddShader(lua_State* L);
 
 		static int luaMonsterIsMonster(lua_State* L);
 

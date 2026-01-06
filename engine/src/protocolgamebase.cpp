@@ -20,6 +20,7 @@
 #include "otpch.h"
 #include <boost/range/adaptor/reversed.hpp>
 #include "protocolgamebase.h"
+#include "protocolgame.h"
 #include "game.h"
 #include "iologindata.h"
 #include "tile.h"
@@ -194,7 +195,17 @@ void ProtocolGameBase::AddOutfit(NetworkMessage& msg, const Outfit_t& outfit)
 	}
 
 	msg.add<uint16_t>(outfit.lookMount);
-}
+
+// OTCv8 extended outfit attributes: wings, aura and shader
+	if (auto protoGame = dynamic_cast<ProtocolGame*>(this)) {
+		if (protoGame->otclientV8) {
+			msg.add<uint16_t>(outfit.lookWings);
+			msg.add<uint16_t>(outfit.lookAura);
+			Shader* shader = g_game.shaders.getShaderByID(outfit.lookShader);
+			msg.addString(shader ? shader->name : "");
+		}
+	}
+	}
 
 void ProtocolGameBase::checkCreatureAsKnown(uint32_t id, bool& known, uint32_t& removedKnown)
 {
@@ -746,6 +757,20 @@ void ProtocolGameBase::sendChannel(uint16_t channelId, const std::string& channe
 		msg.add<uint16_t>(0x00);
 	}
 	writeToOutputBuffer(msg);
+}
+
+void ProtocolGame::sendAnimatedText(const std::string& message, const Position& pos, TextColor_t color)
+{
+    if (!canSee(pos)) {
+        return;
+    }
+
+    NetworkMessage msg;
+    msg.addByte(0x84);
+    msg.addPosition(pos);
+    msg.addByte(color);
+    msg.addString(message);
+    writeToOutputBuffer(msg);
 }
 
 void ProtocolGameBase::sendMagicEffect(const Position& pos, uint16_t type)

@@ -790,6 +790,8 @@ Outfit_t LuaScriptInterface::getOutfit(lua_State* L, int32_t arg)
 {
 	Outfit_t outfit;
 	outfit.lookMount = getField<uint16_t>(L, arg, "lookMount");
+	outfit.lookWings = getField<uint16_t>(L, arg, "lookWings");
+	outfit.lookAura = getField<uint16_t>(L, arg, "lookAura");
 	outfit.lookAddons = getField<uint8_t>(L, arg, "lookAddons");
 
 	outfit.lookFeet = getField<uint8_t>(L, arg, "lookFeet");
@@ -799,6 +801,8 @@ Outfit_t LuaScriptInterface::getOutfit(lua_State* L, int32_t arg)
 
 	outfit.lookTypeEx = getField<uint16_t>(L, arg, "lookTypeEx");
 	outfit.lookType = getField<uint16_t>(L, arg, "lookType");
+
+	outfit.lookShader = getField<uint16_t>(L, arg, "lookShader");
 
 	lua_pop(L, 8);
 	return outfit;
@@ -1001,6 +1005,9 @@ void LuaScriptInterface::pushOutfit(lua_State* L, const Outfit_t& outfit)
 	setField(L, "lookFeet", outfit.lookFeet);
 	setField(L, "lookAddons", outfit.lookAddons);
 	setField(L, "lookMount", outfit.lookMount);
+	setField(L, "lookWings", outfit.lookWings);
+	setField(L, "lookAura", outfit.lookAura);
+	setField(L, "lookShader", outfit.lookShader);
 }
 
 #define registerEnum(value) { std::string enumName = #value; registerGlobalVariable(enumName.substr(enumName.find_last_of(':') + 1), value); }
@@ -2044,6 +2051,7 @@ void LuaScriptInterface::registerFunctions()
 
 	registerEnum(RELOAD_TYPE_ALL)
 	registerEnum(RELOAD_TYPE_ACTIONS)
+	registerEnum(RELOAD_TYPE_AURAS)
 	registerEnum(RELOAD_TYPE_BESTIARY)
 	registerEnum(RELOAD_TYPE_CHAT)
 	registerEnum(RELOAD_TYPE_CONFIG)
@@ -2059,6 +2067,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(RELOAD_TYPE_NPCS)
 	registerEnum(RELOAD_TYPE_QUESTS)
 	registerEnum(RELOAD_TYPE_RAIDS)
+	registerEnum(RELOAD_TYPE_SHADERS)
 	registerEnum(RELOAD_TYPE_SCRIPTS)
 	registerEnum(RELOAD_TYPE_SPELLS)
 	registerEnum(RELOAD_TYPE_TALKACTIONS)
@@ -2067,6 +2076,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(RELOAD_TYPE_STORE)
 	registerEnum(RELOAD_TYPE_FREE_PASS)
 
+	registerEnum(RELOAD_TYPE_WINGS)
 	//DailyRewardStorages
 	registerEnum(DAILYREWARDSTORAGE_LASTREWARDPICK)
 	registerEnum(DAILYREWARDSTORAGE_NEXTREWARDPICK)
@@ -2258,6 +2268,7 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Game", "getClientVersion", LuaScriptInterface::luaGameGetClientVersion);
 
 	registerMethod("Game", "reload", LuaScriptInterface::luaGameReload);
+	registerMethod("Game", "sendAnimatedText", LuaScriptInterface::luaGameSendAnimatedText);
 
 	registerMethod("Game", "getItemIdByClientId", LuaScriptInterface::luaGameGetItemByClientId);
 
@@ -2860,6 +2871,10 @@ void LuaScriptInterface::registerFunctions()
 	// Monster
 	registerClass("Monster", "Creature", LuaScriptInterface::luaMonsterCreate);
 	registerMetaMethod("Monster", "__eq", LuaScriptInterface::luaUserdataCompare);
+
+	registerMethod("Player", "addAura", LuaScriptInterface::luaPlayerAddAura);
+    registerMethod("Player", "addWings", LuaScriptInterface::luaPlayerAddWings);
+    registerMethod("Player", "addShader", LuaScriptInterface::luaPlayerAddShader);
 
 	registerMethod("Monster", "isMonster", LuaScriptInterface::luaMonsterIsMonster);
 
@@ -5155,6 +5170,29 @@ int LuaScriptInterface::luaGameReload(lua_State* L)
 	}
 	lua_gc(g_luaEnvironment.getLuaState(), LUA_GCCOLLECT, 0);
 	return 1;
+}
+
+int LuaScriptInterface::luaGameSendAnimatedText(lua_State* L)
+{
+    // Game.sendAnimatedText(message, position, color)
+    int parameters = lua_gettop(L);
+    if (parameters < 3) {
+        pushBoolean(L, false);
+        return 1;
+    }
+
+    TextColor_t color = getNumber<TextColor_t>(L, 3);
+    const Position& position = getPosition(L, 2);
+    const std::string& message = getString(L, 1);
+
+    if (!position.x || !position.y) {
+        pushBoolean(L, false);
+        return 1;
+    }
+
+    g_game.addAnimatedText(message, position, color);
+    pushBoolean(L, true);
+    return 1;
 }
 
 int LuaScriptInterface::luaGameHasEffect(lua_State* L)
@@ -12463,6 +12501,78 @@ int LuaScriptInterface::luaMonsterCreate(lua_State* L)
 	return 1;
 }
 
+int LuaScriptInterface::luaPlayerAddWings(lua_State* L) {
+    // player:addWing(wingId or wingName)
+    Player* player = getUserdata<Player>(L, 1);
+    if (!player) {
+        lua_pushnil(L);
+        return 1;
+    }
+
+    uint8_t wingId;
+    if (isNumber(L, 2)) {
+        wingId = getNumber<uint8_t>(L, 2);
+    }
+    else {
+        Wing* wing = g_game.wings.getWingByName(getString(L, 2));
+        if (!wing) {
+            lua_pushnil(L);
+            return 1;
+        }
+        wingId = wing->id;
+    }
+    pushBoolean(L, player->addWing(wingId));
+    return 1;
+}
+
+int LuaScriptInterface::luaPlayerAddAura(lua_State* L) {
+    // player:addAura(auraId or auraName)
+    Player* player = getUserdata<Player>(L, 1);
+    if (!player) {
+        lua_pushnil(L);
+        return 1;
+    }
+
+    uint8_t auraId;
+    if (isNumber(L, 2)) {
+        auraId = getNumber<uint8_t>(L, 2);
+    }
+    else {
+        Aura* aura = g_game.auras.getAuraByName(getString(L, 2));
+        if (!aura) {
+            lua_pushnil(L);
+            return 1;
+        }
+        auraId = aura->id;
+    }
+    pushBoolean(L, player->addAura(auraId));
+    return 1;
+}
+
+int LuaScriptInterface::luaPlayerAddShader(lua_State* L) {
+    // player:addShader(shaderId or shaderName)
+    Player* player = getUserdata<Player>(L, 1);
+    if (!player) {
+        lua_pushnil(L);
+        return 1;
+    }
+
+    uint8_t shaderId;
+    if (isNumber(L, 2)) {
+        shaderId = getNumber<uint8_t>(L, 2);
+    }
+    else {
+        Shader* shader = g_game.shaders.getShaderByName(getString(L, 2));
+        if (!shader) {
+            lua_pushnil(L);
+            return 1;
+        }
+        shaderId = shader->id;
+    }
+    pushBoolean(L, player->addShader(shaderId));
+    return 1;
+}
+
 int LuaScriptInterface::luaMonsterIsMonster(lua_State* L)
 {
 	// monster:isMonster()
@@ -15252,11 +15362,14 @@ int LuaScriptInterface::luaConditionSetFormula(lua_State* L)
 int LuaScriptInterface::luaConditionSetOutfit(lua_State* L)
 {
 	// condition:setOutfit(outfit)
-	// condition:setOutfit(lookTypeEx, lookType, lookHead, lookBody, lookLegs, lookFeet[, lookAddons[, lookMount]])
+	// condition:setOutfit(lookTypeEx, lookType, lookHead, lookBody, lookLegs, lookFeet[, lookAddons[, lookMount, lookWings, lookAura, lookShader]])
 	Outfit_t outfit;
 	if (isTable(L, 2)) {
 		outfit = getOutfit(L, 2);
 	} else {
+		outfit.lookShader = getNumber<uint16_t>(L, 12, outfit.lookShader);
+		outfit.lookAura = getNumber<uint16_t>(L, 11, outfit.lookAura);
+		outfit.lookWings = getNumber<uint16_t>(L, 10, outfit.lookWings);
 		outfit.lookMount = getNumber<uint16_t>(L, 9, outfit.lookMount);
 		outfit.lookAddons = getNumber<uint8_t>(L, 8, outfit.lookAddons);
 		outfit.lookFeet = getNumber<uint8_t>(L, 7);

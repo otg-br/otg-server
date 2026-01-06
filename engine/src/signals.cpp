@@ -32,6 +32,8 @@
 #include "raids.h"
 #include "quests.h"
 #include "mounts.h"
+#include "auras.h"
+#include "wings.h"
 #include "globalevent.h"
 #include "monster.h"
 #include "events.h"
