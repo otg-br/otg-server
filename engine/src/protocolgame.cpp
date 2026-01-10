@@ -3098,6 +3098,26 @@ void ProtocolGame::sendCreatureHealth(const Creature* creature)
 	writeToOutputBuffer(msg);
 }
 
+void ProtocolGame::sendUpdateCreature(const Creature* creature)
+{
+	if (!canSee(creature)) {
+		return;
+	}
+
+	const Position& pos = creature->getPosition();
+	int32_t stackpos = creature->getTile()->getClientIndexOfCreature(player, creature);
+	if (stackpos == -1) {
+		return;
+	}
+
+	NetworkMessage msg;
+	msg.addByte(0x6B);
+	msg.addPosition(pos);
+	msg.addByte(stackpos);
+	AddCreature(msg, creature, false, 0);
+	writeToOutputBuffer(msg);
+}
+
 void ProtocolGame::sendFYIBox(const std::string& message)
 {
 	NetworkMessage msg;

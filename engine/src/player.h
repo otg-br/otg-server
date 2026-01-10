@@ -1124,6 +1124,11 @@ class Player final : public Creature, public Cylinder
 				client->sendCreatureHealth(creature);
 			}
 		}
+		void sendUpdateCreature(const Creature* creature) const {
+			if (client) {
+				client->sendUpdateCreature(creature);
+			}
+		}
 		void sendPlayerMana(const Player* player) const {
 			if (client) {
 				client->sendPlayerMana(player);

@@ -344,6 +344,7 @@ class ProtocolGame final : public ProtocolGameBase
 
 		void sendDistanceShoot(const Position& from, const Position& to, uint8_t type);
 		void sendCreatureHealth(const Creature* creature);
+		void sendUpdateCreature(const Creature* creature);
 		void sendPlayerMana(const Player* target);
 		void sendBestiaryTracker();
 		void sendCreatureTurn(const Creature* creature, uint32_t stackpos);

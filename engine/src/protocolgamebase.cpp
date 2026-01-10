@@ -295,7 +295,11 @@ void ProtocolGameBase::AddCreature(NetworkMessage& msg, const Creature* creature
 			}
 		}
 
-		msg.addString(creature->getName());
+		if (const Player* p = creature->getPlayer()) {
+			msg.addString(p->getName() + " Lv." + std::to_string(p->getLevel()));
+		} else {
+			msg.addString(creature->getName());
+		}
 	}
 
 	if (creature->isHealthHidden()) {

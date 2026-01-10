@@ -6501,6 +6501,17 @@ void Game::addCreatureHealth(const SpectatorHashSet& spectators, const Creature*
 	}
 }
 
+void Game::updateCreature(const Creature* creature)
+{
+	SpectatorHashSet spectators;
+	map.getSpectators(spectators, creature->getPosition(), true, true);
+	for (Creature* spectator : spectators) {
+		if (Player* tmpPlayer = spectator->getPlayer()) {
+			tmpPlayer->sendUpdateCreature(creature);
+		}
+	}
+}
+
 void Game::addMagicEffect(const Position& pos, uint8_t effect)
 {
 	SpectatorHashSet spectators;
