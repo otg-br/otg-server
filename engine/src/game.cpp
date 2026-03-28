@@ -3832,7 +3832,7 @@ void Game::playerBuyStoreOffer(uint32_t playerId, const StoreOffer& offer, std::
 		player->updateCoinBalance();
 
 		player->sendStorePurchaseSuccessful(returnmessage.str(), IOAccount::getCoinBalance(player->getAccount()) );
-		IOAccount::registerTransaction(player->getAccount(), OS_TIME(nullptr), static_cast<uint8_t>(HISTORY_TYPE_NONE), thisOffer->getCount(true), static_cast<uint8_t>(thisOffer->getCoinType()), std::move(thisOffer->getName()), offerPrice);
+		IOAccount::registerTransaction(player->getAccount(), OS_TIME(nullptr), static_cast<uint8_t>(HISTORY_TYPE_NONE), thisOffer->getCount(true), static_cast<uint8_t>(thisOffer->getCoinType()), thisOffer->getName(), offerPrice);
 	} else {
 		player->sendStoreError(STORE_ERROR_PURCHASE, "Something went wrong with your purchase.");
 	}
